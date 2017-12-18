@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <com.szw.framelibrary.view.ClearWriteEditText
+            android:id="@+id/ed_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:hint="@string/action_settings"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="@dimen/margin_15"
+            android:textColor="@color/MaterialGrey600"
+            android:textColorHint="@color/MaterialGrey400"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="@dimen/sp_14" />
+
+        <com.szw.framelibrary.view.ClearWriteEditText
+            android:id="@+id/ed_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/White"
+            android:hint="@string/action_settings"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:padding="@dimen/margin_15"
+            android:textColor="@color/MaterialGrey600"
+            android:textColorHint="@color/MaterialGrey400"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="@dimen/sp_14" />
+
+    </LinearLayout>
+
+</RelativeLayout>
