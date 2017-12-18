@@ -1,11 +1,6 @@
 package com.exz.firecontrol.bean
 
 import com.szw.framelibrary.utils.net.AbsNetBean
-
-/**
- * Created by pc on 2017/12/18.
- */
-
 class LoginBean : AbsNetBean {
 
     /**

@@ -3,9 +3,11 @@ package com.exz.firecontrol.module
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DisasterAdapter
 import com.exz.firecontrol.bean.DisasterBean
+import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.BaseActivity
@@ -16,17 +18,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), OnRefreshListener {
 
-    private lateinit var mAdapter:DisasterAdapter
+    private lateinit var mAdapter: DisasterAdapter
     private lateinit var headerView: View
     override fun setInflateId(): Int {
-     return R.layout.activity_main
+        return R.layout.activity_main
     }
 
     override fun initToolbar(): Boolean {
         mTitle.text = "首页"
         mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.White))
-        toolbar.setNavigationIcon(ContextCompat.getDrawable(mContext,R.mipmap.icon_uerinfo))
+        toolbar.navigationIcon = ContextCompat.getDrawable(mContext, R.mipmap.icon_uerinfo)
         //状态栏透明和间距处理
+        SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
         StatusBarUtil.immersive(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, blurView)
@@ -42,6 +45,7 @@ class MainActivity : BaseActivity(), OnRefreshListener {
         super.init()
         initRecycler()
     }
+
     private var data = ArrayList<DisasterBean>()
     private fun initRecycler() {
         data.add(DisasterBean())
@@ -64,8 +68,12 @@ class MainActivity : BaseActivity(), OnRefreshListener {
         refreshLayout.setOnRefreshListener(this)
 
     }
+
     override fun onRefresh(refreshlayout: RefreshLayout?) {
         refreshlayout?.finishRefresh()
+        DataCtrlClass.userLogin(this) {
+
+        }
     }
 
 }

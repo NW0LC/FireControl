@@ -1,4 +1,4 @@
-package com.exz.hscal.hscoal.utils;
+package com.exz.firecontrol.utils
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
