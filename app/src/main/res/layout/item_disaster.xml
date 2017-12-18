@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/White"
+    android:padding="@dimen/margin_15">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="111"
+        android:drawableStart="@mipmap/icon_disaster_title"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/dp_10"
+        android:textColor="@color/MaterialGrey600"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/tv_subTitle"
+        android:layout_below="@id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="222"
+        android:drawableStart="@mipmap/icon_disaster_date"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/dp_10"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/MaterialGrey600"
+        android:textSize="@dimen/sp_14" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/iv_state"
+        android:src="@mipmap/icon_disaster_state1"
+        />
+</RelativeLayout>

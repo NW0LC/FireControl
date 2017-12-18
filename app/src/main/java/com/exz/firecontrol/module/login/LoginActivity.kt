@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.view.View
 import com.exz.firecontrol.R
+import com.exz.firecontrol.module.MainActivity
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_login.*
@@ -44,6 +45,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
             }
             bt_commit -> {
+                startActivity(Intent(mContext,MainActivity::class.java))
                 val accont = ed_account.text.toString().trim()
                 if (TextUtils.isEmpty(accont)) {
                     ed_account.setShakeAnimation()
