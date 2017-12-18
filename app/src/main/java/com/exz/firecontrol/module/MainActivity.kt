@@ -1,7 +1,8 @@
-package com.exz.firecontrol
+package com.exz.firecontrol.module
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.exz.firecontrol.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
