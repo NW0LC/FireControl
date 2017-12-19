@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+    <include layout="@layout/lay_firefighting"></include>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:drawableEnd="@mipmap/icon_main_gray_next"
+        android:drawablePadding="8dp"
+        android:text="@string/fire_department_area"
+        android:id="@+id/tv_more"
+        android:textColor="@color/MaterialGrey800"
+        android:textSize="@dimen/sp_14" />
+</LinearLayout>

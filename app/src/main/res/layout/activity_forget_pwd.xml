@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
                     android:background="@color/White"
-                    android:hint="@string/input_new_password"
+                    android:hint="@string/input_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:drawablePadding="@dimen/dp_10"

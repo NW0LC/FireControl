@@ -8,6 +8,7 @@
     <string name="forget_pwd_input_code">请输入验证码</string>
     <string name="get_code">获取验证码</string>
     <string name="input_new_password">请输入新密码</string>
+    <string name="input_password">请再次输入密码</string>
     <string name="forget_pwd_commit_changes">提交修改</string>
     <string name="login_hint_get_reGetCode">重发(%s)s</string>
     <string name="main_tab_1">消防机构</string>
@@ -18,4 +19,13 @@
     <string name="main_tab_6">灾害预估</string>
     <string name="main_new_disaster">最新灾情</string>
     <string name="main_view_all">查看全部</string>
+    <string name="people">%s人</string>
+    <string name="fire_department_area">查看辖区内大队</string>
+    <string name="organization_name">组织名称</string>
+    <string name="leader">负责人</string>
+    <string name="person_num">人员数量</string>
+    <string name="vehicle_type">车辆类型</string>
+    <string name="fire_equipment">消防器材</string>
+    <string name="telephone">电话</string>
+    <string name="address">地址</string>
 </resources>
