@@ -50,6 +50,11 @@
         <activity android:name=".module.firefighting.FireBrigadeActivity" android:screenOrientation="portrait"/>
         <!--搜索队-->
         <activity android:name=".module.firefighting.SearchFireBrigadeActivity" android:screenOrientation="portrait"/>
+        <!--搜索队-->
+        <activity android:name=".module.unit.KeyUnitActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".module.unit.UnitTabLayoutActivity" android:screenOrientation="portrait"/>
+        <!--单位详情-->
+        <activity android:name=".module.unit.UnitDetailActivity" android:screenOrientation="portrait"/>
         <!-- 如果您腾讯地图key确认无误，却依然授权没有通过，请检查您的key的白名单配置 -->
         <meta-data
             android:name="TencentMapSDK"

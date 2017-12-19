@@ -8,6 +8,7 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DisasterAdapter
 import com.exz.firecontrol.bean.DisasterBean
 import com.exz.firecontrol.module.firefighting.FireDepartmentActivity
+import com.exz.firecontrol.module.unit.KeyUnitActivity
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
@@ -88,6 +89,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener {
                 startActivity(Intent(mContext, FireDepartmentActivity::class.java))
             }
             headerView.bt_tab_2 -> {
+                startActivity(Intent(mContext, KeyUnitActivity::class.java))
             }
             headerView.bt_tab_3 -> {
             }

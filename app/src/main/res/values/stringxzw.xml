@@ -28,4 +28,9 @@
     <string name="fire_equipment">消防器材</string>
     <string name="telephone">电话</string>
     <string name="address">地址</string>
+    <string name="search_unit_name">搜索单位名称</string>
+    <string name="petrochemical">石油化工类</string>
+    <string name="tall_buildings">高层建筑类</string>
+    <string name="personnel_intensive_class">人员密集类</string>
+    <string name="other_categories">其他类</string>
 </resources>

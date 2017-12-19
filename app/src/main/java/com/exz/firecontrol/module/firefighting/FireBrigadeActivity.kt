@@ -40,6 +40,7 @@ class FireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.
         toolbar.setNavigationOnClickListener {
             finish()
         }
+
         return false
     }
 
