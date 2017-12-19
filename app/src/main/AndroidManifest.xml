@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.exz.firecontrol">
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!--腾讯地图 SDK 要求的权限(开始)-->
+    <!--访问网络获取地图服务-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--检查网络可用性-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 访问WiFi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--需要外部存储写权限用于保存地图缓存-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--获取 device id 辨别设备-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--腾讯地图 SDK 要求的权限(结束)-->
     <application
         android:name=".app.ToolApplication"
         android:allowBackup="true"
@@ -22,6 +40,25 @@
         <activity android:name=".module.MainActivity" android:screenOrientation="portrait"/>
         <!--忘记密码-->
         <activity android:name=".module.login.ForgetPwdActivity" android:screenOrientation="portrait"/>
+        <!--消防机构-->
+        <activity android:name=".module.firefighting.FireDepartmentActivity" android:screenOrientation="portrait"/>
+        <!--机构详情-->
+        <activity android:name=".module.firefighting.FireDepartmentDetailActivity" android:screenOrientation="portrait"/>
+        <!--机构详情-->
+        <activity android:name=".module.MapLocationActivity" android:screenOrientation="portrait"/>
+        <!--消防队-->
+        <activity android:name=".module.firefighting.FireBrigadeActivity" android:screenOrientation="portrait"/>
+        <!--搜索队-->
+        <activity android:name=".module.firefighting.SearchFireBrigadeActivity" android:screenOrientation="portrait"/>
+        <!--搜索队-->
+        <activity android:name=".module.unit.KeyUnitActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".module.unit.UnitTabLayoutActivity" android:screenOrientation="portrait"/>
+        <!--单位详情-->
+        <activity android:name=".module.unit.UnitDetailActivity" android:screenOrientation="portrait"/>
+        <!-- 如果您腾讯地图key确认无误，却依然授权没有通过，请检查您的key的白名单配置 -->
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="MJYBZ-T3XWX-6NT4P-ZFZ5C-AURI6-OOB6W"/>
     </application>
 
 </manifest>
