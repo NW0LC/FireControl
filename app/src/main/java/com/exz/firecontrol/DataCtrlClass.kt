@@ -126,11 +126,11 @@ object DataCtrlClass {
 
     private fun changeFun(hashMap: HashMap<String, String>): HashMap<String, String> {
         val params = HashMap<String, String>()
-        var param=""
+        var param = ""
         for (mutableEntry in hashMap) {
-            param+=mutableEntry.key+"="+mutableEntry.value+"&"
+            param += mutableEntry.key + "=" + mutableEntry.value + "&"
         }
-        params.put("param", encry2String(param.substring(0,param.length-1), ToolApplication.changeKey?.rc4Key ?: ""))
+        params.put("param", encry2String(param.substring(0, param.length - 1), ToolApplication.changeKey?.rc4Key ?: ""))
         params.put("token", ToolApplication.changeKey?.token ?: "")
         return params
     }
@@ -193,9 +193,9 @@ object DataCtrlClass {
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<LoginBean>(context) {
-                        val function = { userLogin(context,userNO,password,listener) }
+                        val function = { userLogin(context, userNO, password, listener) }
                         override fun onSuccess(response: Response<LoginBean>) {
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -204,7 +204,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<LoginBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -234,7 +234,7 @@ object DataCtrlClass {
                         val function = { updateIsOnline(context, IsOnline, listener) }
                         override fun onSuccess(response: Response<AbsNetBean>) {
 
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -243,7 +243,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<AbsNetBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -276,7 +276,7 @@ object DataCtrlClass {
                         val function = { changePwd(context, current_pwd, changed_pwd, listener) }
                         override fun onSuccess(response: Response<AbsNetBean>) {
 
-                            if (isSuccess(context, response.body().getCode(), response.body().messError,function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -285,7 +285,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<AbsNetBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -314,7 +314,7 @@ object DataCtrlClass {
                         val function = { updatePwd(context, phone, password, listener) }
                         override fun onSuccess(response: Response<AbsNetBean>) {
 
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -323,7 +323,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<AbsNetBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -377,7 +377,7 @@ object DataCtrlClass {
                         val function = { getEnterPriseAllList(context, RoleId, Pid, comId, nameKey, Type, Level, nowPage, listener) }
                         override fun onSuccess(response: Response<EnterPriseAllListBean>) {
 
-                            if (isSuccess(context, response.body().getCode(), response.body().messError,function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -386,7 +386,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<EnterPriseAllListBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -418,7 +418,7 @@ object DataCtrlClass {
                         val function = { getDrawFileList(context, EnterpriseId, comId, listener) }
                         override fun onSuccess(response: Response<DrawFileListBean>) {
 
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -427,7 +427,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<DrawFileListBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -455,7 +455,7 @@ object DataCtrlClass {
                         val function = { getEnterPrise(context, Id, listener) }
                         override fun onSuccess(response: Response<EnterPriseBean>) {
 
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -464,7 +464,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<EnterPriseBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -515,7 +515,7 @@ object DataCtrlClass {
                         val function = { getFireManLocAllList(context, RoleId, Pid, comId, nameKey, isOnline, nowPage, listener) }
                         override fun onSuccess(response: Response<FireMainLocAllListBean>) {
 
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -524,7 +524,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<FireMainLocAllListBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -578,7 +578,7 @@ object DataCtrlClass {
                         val function = { getFireCarLocAllList(context, RoleId, Pid, comId, carType, carNum, isOnline, nowPage, listener) }
                         override fun onSuccess(response: Response<FireCarLocAllListBean>) {
 
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -587,7 +587,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<FireCarLocAllListBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -619,7 +619,7 @@ object DataCtrlClass {
                         val function = { getEnterPriseData(context, flag, enterpriseId, listener) }
                         override fun onSuccess(response: Response<EnterPriseDataBean>) {
 
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -628,7 +628,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<EnterPriseDataBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -643,7 +643,6 @@ object DataCtrlClass {
      * */
     fun getPathPlanByRoleId(context: Context?,
                             RoleId: String,
-                            enterpriseId: String,
                             listener: (l: PathPlanByRoleIdBean?) -> Unit) {
 //       参数名	参数含义	必选	类型及范围	说明
 //       RoleId	角色id	    Y	    int
@@ -654,10 +653,10 @@ object DataCtrlClass {
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<PathPlanByRoleIdBean>(context) {
-                        val function = { getPathPlanByRoleId(context, RoleId, enterpriseId, listener) }
+                        val function = { getPathPlanByRoleId(context, RoleId,  listener) }
                         override fun onSuccess(response: Response<PathPlanByRoleIdBean>) {
 
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
@@ -666,7 +665,7 @@ object DataCtrlClass {
 
                         override fun onError(response: Response<PathPlanByRoleIdBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }
@@ -676,7 +675,7 @@ object DataCtrlClass {
     }
 
     /**
-     * 获取消防单位列表
+     * 获取灾情列表
      * @param  oid        组织结构id
      * @param  comId        顶级单位ID
      * @param  nowPage    当前页
@@ -687,7 +686,7 @@ object DataCtrlClass {
                         comId: String,
                         status: String = "",
                         nowPage: Int = 1,
-                        listener: (l: FireCarLocAllListBean?) -> Unit) {
+                        listener: (l: FireInfoListBean?) -> Unit) {
 //       参数名	    参数含义	                    必选	类型及范围	说明
 //       oid	    组织结构id	                    Y	    int
 //       comId	    顶级单位ID	                    Y	    int
@@ -701,23 +700,188 @@ object DataCtrlClass {
         params.put("pageSize", pageSize.toString())
         params.put("nowPage", nowPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<FireCarLocAllListBean>(Urls.getFireInfoList)
+            OkGo.post<FireInfoListBean>(Urls.getFireInfoList)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<FireCarLocAllListBean>(context) {
+                    .execute(object : DialogCallback<FireInfoListBean>(context) {
                         val function = { getFireInfoList(context, oid, comId, status, nowPage, listener) }
-                        override fun onSuccess(response: Response<FireCarLocAllListBean>) {
+                        override fun onSuccess(response: Response<FireInfoListBean>) {
 
-                            if (isSuccess(context, response.body().getCode(),response.body().messError, function)) {
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
                                 listener.invoke(null)
                             }
                         }
 
-                        override fun onError(response: Response<FireCarLocAllListBean>) {
+                        override fun onError(response: Response<FireInfoListBean>) {
                             if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey,"", function)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+
+    /**
+     * 根据id获取灾情详情
+     * @param id        灾情id
+     * */
+    fun getFireInfoById(context: Context?,
+                        id: String,
+                            listener: (l: FireInfoListBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      id	灾情id	Y	int
+        val params = HashMap<String, String>()
+        params.put("id", id)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<FireInfoListBean>(Urls.getFireInfoById)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<FireInfoListBean>(context) {
+                        val function = { getFireInfoById(context, id,  listener) }
+                        override fun onSuccess(response: Response<FireInfoListBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<FireInfoListBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 获取组织机构列表
+     * @param  oid	    组织机构id
+     * @param  nameKey	组织机构名称关键字
+     * @param  nowPage	当前页
+     * */
+    fun getOrgListByOid(context: Context?,
+                        oid: String,
+                        nameKey: String="",
+                        nowPage: Int = 1,
+                        listener: (l: OrgListByOidBean?) -> Unit) {
+//       参数名	    参数含义	        必选	类型及范围	说明
+//       oid	    组织机构id	        Y	    int	        1=消防机构  17=测试   30=环保保护部
+//       namekey	组织机构名称关键字	N	    String
+//       pageSize	页大小	            N	    Int
+//       nowPage	当前页	            N	    Int
+        val params = HashMap<String, String>()
+        params.put("oid", oid)
+        params.put("namekey", nameKey)
+        params.put("pageSize", pageSize.toString())
+        params.put("nowPage", nowPage.toString())
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<OrgListByOidBean>(Urls.getOrgListByOid)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<OrgListByOidBean>(context) {
+                        val function = { getOrgListByOid(context, oid, nameKey,  nowPage, listener) }
+                        override fun onSuccess(response: Response<OrgListByOidBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<OrgListByOidBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 获取消防大数据信息
+     * @param flag		                Y	    int	        1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
+     * @param comId	    顶级单位列表	Y	    int
+     * @param nowPage	当前页	        N	    Int
+     * */
+    fun getFireDataList(context: Context?,
+                        flag: String,
+                        comId: String,
+                        nowPage: Int = 1,
+                        listener: (l: FireDataListBean?) -> Unit) {
+//       参数名	    参数含义	    必选	类型及范围	说明
+//       flag		                Y	    int	        1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
+//       comid	    顶级单位列表	Y	    int
+//       pageSize	页大小	        N	    Int
+//       nowPage	当前页	        N	    Int
+        val params = HashMap<String, String>()
+        params.put("flag", flag)
+        params.put("comid", comId)
+        params.put("pageSize", pageSize.toString())
+        params.put("nowPage", nowPage.toString())
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<FireDataListBean>(Urls.getFireDataList)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<FireDataListBean>(context) {
+                        val function = { getFireDataList(context, flag, comId,  nowPage, listener) }
+                        override fun onSuccess(response: Response<FireDataListBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<FireDataListBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 根据id获取消防员信息
+     * @param id        消防员id
+     * */
+    fun getFireManById(context: Context?,
+                        id: String,
+                        listener: (l: FireMainIdBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      Id	    消防员id	Y	    int
+        val params = HashMap<String, String>()
+        params.put("id", id)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<FireMainIdBean>(Urls.getFireManById)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<FireMainIdBean>(context) {
+                        val function = { getFireManById(context, id,  listener) }
+                        override fun onSuccess(response: Response<FireMainIdBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<FireMainIdBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
                             else
                                 listener.invoke(null)
                         }

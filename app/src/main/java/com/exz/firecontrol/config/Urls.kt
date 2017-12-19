@@ -57,7 +57,23 @@ object Urls{
      */
     val getPathPlanByRoleId=url+"user/getPathPlanByRoleId.jn"
     /**
-     * 获取数据路线
+     * 获取灾情列表
      */
     val getFireInfoList=url+"user/getFireInfoList.jn"
+    /**
+     * 根据id获取灾情详情
+     */
+    val getFireInfoById=url+"user/getFireInfoById.jn"
+    /**
+     * 获取组织机构列表
+     */
+    val getOrgListByOid=url+"user/getOrgListByOid.jn"
+    /**
+     * 获取消防大数据信息
+     */
+    val getFireDataList=url+"user/getFireDataList.jn"
+    /**
+     * 根据id获取消防员信息
+     */
+    val getFireManById=url+"user/getFireManById.jn"
 }
