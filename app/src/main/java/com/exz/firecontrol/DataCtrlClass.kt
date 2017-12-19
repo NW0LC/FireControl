@@ -22,6 +22,8 @@ import java.security.interfaces.RSAPublicKey
  */
 
 object DataCtrlClass {
+    private const val NetCode_Success=0
+    private const val NetCode_NoKey=6
     /**
      *  0;//成功
      * -1;//参数错误
@@ -32,42 +34,42 @@ object DataCtrlClass {
      * -9;//登录失败
      * -10;//帐户冻结
      */
-    fun isSuccess(context: Context, code: Int = 6, listener: () -> Unit): Boolean {
+    fun isSuccess(context: Context?, code: Int = 6, listener: () -> Unit): Boolean {
         return when (code) {
-            0 -> {
+            NetCode_Success -> {
                 listener.invoke()
                 true
             }
             1 -> {
-                context.toast("参数错误")
+                context?.toast("参数错误")
                 false
             }
             -2 -> {
-                context.toast("用户名或密码错误")
+                context?.toast("用户名或密码错误")
                 false
             }
             -6 -> {
-                context.toast("用户已存在")
+                context?.toast("用户已存在")
                 false
             }
             -7 -> {
-                context.toast("用户不存在")
+                context?.toast("用户不存在")
                 false
             }
             -8 -> {
-                context.toast("注册失败")
+                context?.toast("注册失败")
                 false
             }
             -9 -> {
-                context.toast("登录失败")
+                context?.toast("登录失败")
                 false
             }
             -10 -> {
-                context.toast("帐户冻结")
+                context?.toast("帐户冻结")
                 false
             }
 
-            6 -> {
+            NetCode_NoKey -> {
 //                    交换密钥接口
                 changeKey(context) {
                     listener.invoke()
@@ -89,9 +91,8 @@ object DataCtrlClass {
     /**
      * 交换密钥接口
      *
-     *
      * */
-    private fun changeKey(context: Context, listener: (code: Int) -> Unit) {
+    private fun changeKey(context: Context?, listener: (code: Int) -> Unit) {
 //        @param[rsa_m] string	必填	rsa公钥模数
 //        @param[rsa_e] string	必填	rsa公钥指数
         val map = RSAUtils.getKeys()
@@ -121,17 +122,16 @@ object DataCtrlClass {
     }
 
     /**
-     * 交换密钥接口
-     *
+     * 登录接口
      *
      * */
-     fun userLogin(context: Context, listener: (l: LoginBean) -> Unit) {
+     fun userLogin(context: Context?,userNO:String,password:String, listener: (l: LoginBean?) -> Unit) {
 //        userNO	账号	Y	string
 //        password	密码	Y	string
         val params = HashMap<String, String>()
-        params.put("userNO", "hhadmin")
-        params.put("password", "888888")
-        isSuccess(context,if (ToolApplication.changeKey==null)6 else 0) {
+        params.put("userNO", userNO)
+        params.put("password", password)
+        isSuccess(context,if (ToolApplication.changeKey==null) NetCode_NoKey else NetCode_Success) {
             OkGo.post<LoginBean>(Urls.userLogin)
                     .params(changeFun(params))
                     .tag(this)
@@ -139,7 +139,13 @@ object DataCtrlClass {
                         override fun onSuccess(response: Response<LoginBean>) {
                             if (isSuccess(context, response.body().getCode()) {}) {
                                 listener.invoke(response.body())
+                            }else{
+                                listener.invoke(null)
                             }
+                        }
+
+                        override fun onError(response: Response<LoginBean>) {
+                            listener.invoke(null)
                         }
 
                     })
