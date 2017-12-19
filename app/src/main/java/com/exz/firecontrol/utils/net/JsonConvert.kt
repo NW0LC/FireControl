@@ -1,6 +1,10 @@
 package com.exz.firecontrol.utils.net
 
 import android.util.Log
+import com.exz.carprofitmuch.config.Urls
+import com.exz.firecontrol.DataCtrlClass.HttpCode_Error
+import com.exz.firecontrol.DataCtrlClass.HttpCode_Error_Key
+import com.exz.firecontrol.DataCtrlClass.HttpCode_Success
 import com.exz.firecontrol.app.ToolApplication
 import com.exz.firecontrol.utils.RC4
 import com.google.gson.stream.JsonReader
@@ -67,7 +71,7 @@ class JsonConvert<T : AbsNetBean> : Converter<T> {
         if (rawType == null) return null
         val body = response.body() ?: return null
         var jsonReader = body.string()
-        if (ToolApplication.changeKey!=null) {
+        if (ToolApplication.changeKey!=null&& Urls.changeKey!=response.request().url().toString()) {
             jsonReader = RC4.decry(jsonReader, ToolApplication.changeKey?.rc4Key ?: "")
         }
 //        val jsonReader = JsonReader(body.charStream())
@@ -103,7 +107,7 @@ class JsonConvert<T : AbsNetBean> : Converter<T> {
         val body = response.body() ?: return null
 //        val jsonReader = JsonReader(body.charStream())
         var jsonReader = body.string()
-        if (ToolApplication.changeKey!=null) {
+        if (ToolApplication.changeKey!=null&& Urls.changeKey!=response.request().url()?:"") {
             jsonReader = RC4.decry(jsonReader, ToolApplication.changeKey?.rc4Key ?: "")
         }
         val rawType = type.rawType                     // 泛型的实际类型
@@ -134,9 +138,9 @@ class JsonConvert<T : AbsNetBean> : Converter<T> {
 //                500	服务器内部出现未知异常，无须处理正文内容
 //                511	token已经失效，请重新申请token（使用交换密钥接口申请token并获得新的rc4的密钥），无须处理正文内容
                 when (code) {
-                    200 -> return netEntity
-                    500 -> throw  IllegalStateException("服务器内部出现未知异常，无须处理正文内容")
-                    511 -> throw  IllegalStateException("token已经失效，请重新申请token（使用交换密钥接口申请token并获得新的rc4的密钥），无须处理正文内容")
+                    HttpCode_Success -> return netEntity
+                    HttpCode_Error -> throw  IllegalStateException("服务器内部出现未知异常，无须处理正文内容")
+                    HttpCode_Error_Key -> throw  IllegalStateException("token已经失效，请重新申请token（使用交换密钥接口申请token并获得新的rc4的密钥），无须处理正文内容")
                     else -> //直接将服务端的错误信息抛出，onError中可以获取
                         throw IllegalStateException(netEntity.messError)
                 }

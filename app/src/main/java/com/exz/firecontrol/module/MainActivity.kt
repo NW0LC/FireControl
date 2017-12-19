@@ -3,7 +3,6 @@ package com.exz.firecontrol.module
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DisasterAdapter
 import com.exz.firecontrol.bean.DisasterBean
@@ -71,9 +70,6 @@ class MainActivity : BaseActivity(), OnRefreshListener {
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {
         refreshlayout?.finishRefresh()
-        DataCtrlClass.userLogin(this) {
-
-        }
     }
 
 }
