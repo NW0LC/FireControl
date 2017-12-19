@@ -17,10 +17,11 @@ import java.net.UnknownHostException
  * 修订历史：
  * ================================================
  */
-abstract class DialogCallback<T : AbsNetBean>( val context: Context) : JsonCallback<T>() {
+abstract class DialogCallback<T : AbsNetBean>(private val context: Context?) : JsonCallback<T>() {
 
     override fun onStart(request: Request<T, out Request<*, *>>?) {
         super.onStart(request)
+        if (context!=null)
         CustomProgress.show(context, "加载中", false, null)
     }
 
