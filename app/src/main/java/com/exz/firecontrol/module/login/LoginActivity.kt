@@ -4,8 +4,10 @@ import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.view.View
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.module.MainActivity
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_login.*
@@ -27,8 +29,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun init() {
-        super.init()
         initView()
+        ed_account.setText(MyApplication.getSPUtils(this)?.getString(USER_NAME) ?: "")
+        ed_pwd.setText(MyApplication.getSPUtils(this)?.getString(USER_PWD) ?: "")
     }
 
     private fun initView() {
@@ -45,7 +48,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
             }
             bt_commit -> {
-                startActivity(Intent(mContext,MainActivity::class.java))
+
                 val accont = ed_account.text.toString().trim()
                 if (TextUtils.isEmpty(accont)) {
                     ed_account.setShakeAnimation()
@@ -56,9 +59,25 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     ed_pwd.setShakeAnimation()
                     return
                 }
+                DataCtrlClass.changeKey(this){
+                    if (it!=null)
+                    DataCtrlClass.userLogin(this,ed_account.text.toString(),ed_pwd.text.toString()){
+                        if (it!=null){
+                            MyApplication.getSPUtils(this)?.put(USER_NAME,ed_account.text.toString())
+                            MyApplication.getSPUtils(this)?.put(USER_PWD,ed_pwd.text.toString())
+                            startActivity(Intent(mContext,MainActivity::class.java))
+                            finish()
+                        }
+                    }
+
+                }
 
 
             }
         }
+    }
+    companion object {
+        var USER_NAME = "user_name"
+        var USER_PWD = "user_pwd"
     }
 }
