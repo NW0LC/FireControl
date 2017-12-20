@@ -926,23 +926,23 @@ object DataCtrlClass {
         }
     }
     /**
-     * 根据id获取消防车信息
+     * 获取组织机构详情信息
      * @param id        组织机构id
      * */
     fun getOrgDetailById(context: Context?,
                         id: String,
-                        listener: (l: FireCarLocAllListBean?) -> Unit) {
+                        listener: (l: OrganizationBean?) -> Unit) {
 //      参数名	参数含义	必选	类型及范围	说明
 //      oid	    组织机构id	Y	    Int
         val params = HashMap<String, String>()
         params.put("oid", id)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<FireCarLocAllListBean>(Urls.getOrgDetailById)
+            OkGo.post<OrganizationBean>(Urls.getOrgDetailById)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<FireCarLocAllListBean>(context) {
-                        val function = { getFireCarById(context, id,  listener) }
-                        override fun onSuccess(response: Response<FireCarLocAllListBean>) {
+                    .execute(object : DialogCallback<OrganizationBean>(context) {
+                        val function = { getOrgDetailById(context, id,  listener) }
+                        override fun onSuccess(response: Response<OrganizationBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
@@ -951,7 +951,7 @@ object DataCtrlClass {
                             }
                         }
 
-                        override fun onError(response: Response<FireCarLocAllListBean>) {
+                        override fun onError(response: Response<OrganizationBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else

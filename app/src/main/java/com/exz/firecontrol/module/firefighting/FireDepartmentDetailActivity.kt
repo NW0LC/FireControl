@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.module.MapLocationActivity
 import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Class_Name
@@ -46,6 +47,13 @@ class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
     override fun init() {
         super.init()
         initView()
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.getOrgDetailById(this,intent.getStringExtra(Intent_getOrgDetailById_oId)?:""){
+
+        }
     }
 
     private fun initView() {
@@ -101,6 +109,7 @@ class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     companion object {
+        var Intent_getOrgDetailById_oId = "Intent_getOrgDetailById_oId"
         var Intent_Type = "type" // 1  支队 大队 中队 2 微型消防站
     }
 

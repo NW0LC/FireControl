@@ -1,10 +1,14 @@
 package com.exz.firecontrol.bean
 
+import com.szw.framelibrary.utils.net.AbsNetBean
+
 /**
  * Created by 史忠文
  * on 2017/12/20.
  */
-open class OrganizationBean{
+open class OrganizationBean: AbsNetBean {
+    override  var result=""
+    override var messError=""
     var id: Int = 0
     var cname: String? = null
     var addr: String? = null
