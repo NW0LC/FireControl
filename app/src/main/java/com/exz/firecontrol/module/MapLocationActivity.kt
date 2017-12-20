@@ -62,9 +62,6 @@ class MapLocationActivity : BaseActivity(), TencentLocationListener, TencentMap.
 
         locationManager.requestLocationUpdates(
                 locationRequest, this)
-
-
-
 //设置缩放级别
         tencentMap.setZoom(13)
         var lat:LatLng
@@ -73,12 +70,28 @@ class MapLocationActivity : BaseActivity(), TencentLocationListener, TencentMap.
         }else{
             lat= LatLng(34.253505, 117.155179)
         }
+        var  icLction = "" //宝藏地图页数据
+        when (intent.getStringExtra(Intent_Class_Name)) {
+            "地址" -> {
+                icLction="icon_firefighting1.png"
+            }
+            "消防栓" -> {
+                icLction="icon_firefighting1.png"
+            }
+            "消防水池" -> {
+                icLction="icon_firefighting2.png"
+            }
+            "消防水罐" -> {
+                icLction="icon_firefighting3.png"
+            }
+        }
+
 
         //标记点击事件
         tencentMap.setOnMarkerClickListener(this)
         tencentMap.addMarker(MarkerOptions()
-                .position(lat))
-//                .icon(BitmapDescriptorFactory.fromAsset(icLction))
+                .position(lat).icon(BitmapDescriptorFactory.fromAsset(icLction)))
+
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean {
@@ -92,9 +105,9 @@ class MapLocationActivity : BaseActivity(), TencentLocationListener, TencentMap.
             tencentMap.setCenter(latLng)
             myLocation = if (myLocation != null) {
                 myLocation?.remove()
-                tencentMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_red_location)).anchor(0.5f, 0.5f))
+                tencentMap.addMarker(MarkerOptions().position(latLng).anchor(0.5f, 0.5f))
             } else {
-                tencentMap.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_red_location)).anchor(0.5f, 0.5f))
+                tencentMap.addMarker(MarkerOptions().position(latLng).anchor(0.5f, 0.5f))
             }
             myLocation?.position = latLng
             myLocation?.rotation = arg0.bearing //仅当定位来源于gps有效，或者使用方向传感器

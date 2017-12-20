@@ -11,7 +11,9 @@ import com.exz.firecontrol.adapter.DisasterAdapter
 import com.exz.firecontrol.bean.FireInfoListBean
 import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.firefighting.FireDepartmentActivity
+import com.exz.firecontrol.module.firefighting.RepositoryActivity
 import com.exz.firecontrol.module.unit.KeyUnitActivity
+import com.exz.firecontrol.module.vehicle.VehicleActivity
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
@@ -68,6 +70,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
+
     }
 
     private fun initHeader() {
@@ -82,15 +85,17 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
 
     override fun onClick(p0: View) {
         when (p0) {
-            headerView.bt_tab_1 -> {
+            headerView.bt_tab_1 -> {//消防机构
                 startActivity(Intent(mContext, FireDepartmentActivity::class.java))
             }
-            headerView.bt_tab_2 -> {
+            headerView.bt_tab_2 -> {//重点单位
                 startActivity(Intent(mContext, KeyUnitActivity::class.java))
             }
-            headerView.bt_tab_3 -> {
+            headerView.bt_tab_3 -> {//消防知识库
+                startActivity(Intent(mContext, RepositoryActivity::class.java))
             }
-            headerView.bt_tab_4 -> {
+            headerView.bt_tab_4 -> {//消防车辆
+                startActivity(Intent(mContext, VehicleActivity::class.java))
             }
             headerView.bt_tab_5 -> {
             }
