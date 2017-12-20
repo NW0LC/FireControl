@@ -25,6 +25,9 @@
     <string name="leader">负责人</string>
     <string name="person_num">人员数量</string>
     <string name="vehicle_type">车辆类型</string>
+    <string name="vehicle_state">车辆状态</string>
+    <string name="vehicles">%s部车辆</string>
+    <string name="on_line">在线</string>
     <string name="fire_equipment">消防器材</string>
     <string name="telephone">电话</string>
     <string name="address">地址</string>
@@ -33,4 +36,9 @@
     <string name="tall_buildings">高层建筑类</string>
     <string name="personnel_intensive_class">人员密集类</string>
     <string name="other_categories">其他类</string>
+    <string name="fire_hydrant">消防栓</string>
+    <string name="fire_pool">消防水池</string>
+    <string name="firefighting_jug">消防水罐</string>
+    <string name="vehicle_number">车辆编号</string>
+    <string name="affiliated_unit">所属单位</string>
 </resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:padding="@dimen/margin_15"
+    android:background="@color/White"
+    android:textColor="@color/MaterialGrey600"
+    android:id="@+id/tv_name"
+    android:textSize="@dimen/sp_14"
+    android:drawableStart="@mipmap/icon_knowledge_category"
+    android:text="类别一"
+    android:drawablePadding="@dimen/dp_10"
+    android:drawableEnd="@mipmap/icon_main_gray_next"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content">
+
+</TextView>

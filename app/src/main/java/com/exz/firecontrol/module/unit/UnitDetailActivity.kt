@@ -9,7 +9,9 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.UnitDetailAdapter
 import com.exz.firecontrol.bean.UnitDetailBean
+import com.exz.firecontrol.module.MapLocationActivity
 import com.exz.firecontrol.utils.SZWUtils
+import com.exz.firecontrol.widget.MyWebActivity
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -67,7 +69,27 @@ class UnitDetailActivity : BaseActivity() {
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 10, ContextCompat.getColor(mContext, R.color.app_bg)))
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(mContext, UnitDetailActivity::class.java))
+                    when (mAdapter.data.get(position).name) {
+                        "单位基本信息" -> {
+                            startActivity(Intent(mContext, InfoActivity::class.java).putExtra(InfoActivity.Intent_Class_Name,mAdapter.data.get(position).name))
+                        }
+                        "消防基本信息" -> {
+                            startActivity(Intent(mContext, InfoActivity::class.java).putExtra(InfoActivity.Intent_Class_Name,mAdapter.data.get(position).name))
+                        }
+                        "图纸资料" -> {
+                            startActivity(Intent(mContext, DrawingsActivity::class.java))
+                        }
+                        "救援预案" -> {
+                            startActivity(Intent(mContext, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title,"救援预案").putExtra(MyWebActivity.Intent_Url,"http://www.baidu.com"))
+                        }
+                        "消防水源" -> {
+                            startActivity(Intent(mContext, FirewaterSupplyActivity::class.java))
+                        }
+                        "地图导航" -> {
+                            startActivity(Intent(mContext, MapLocationActivity::class.java).putExtra(MapLocationActivity.Intent_Class_Name,"地址"))
+                        }
+                    }
+
             }
         })
     }

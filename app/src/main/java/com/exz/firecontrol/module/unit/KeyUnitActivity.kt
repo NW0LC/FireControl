@@ -44,6 +44,7 @@ class KeyUnitActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initView() {
+        bt_search.setOnClickListener(this)
         bt_tab_1.setOnClickListener(this)
         bt_tab_2.setOnClickListener(this)
         bt_tab_3.setOnClickListener(this)
@@ -53,6 +54,9 @@ class KeyUnitActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(p0: View) {
         when (p0) {
+            bt_search->{//
+                startActivity(Intent(mContext,SearchUnitActivity::class.java))
+            }
             bt_tab_1 -> {
                 startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,mContext.getString(R.string.petrochemical)))
             }
