@@ -76,4 +76,24 @@ object Urls{
      * 根据id获取消防员信息
      */
     val getFireManById=url+"user/getFireManById.jn"
+    /**
+     * 根据id获取消防车信息
+     */
+    val getFireCarById=url+"user/getFireCarById.jn"
+    /**
+     * 获取组织机构详情信息
+     */
+    val getOrgDetailById=url+"user/getOrgDetailById.jn"
+    /**
+     * 获取消防大数据详情信息
+     */
+    val getFireDataById=url+"user/getFireDataById.jn"
+    /**
+     * 获取下一级组织机构列表
+     */
+    val findLowerLevel=url+"user/findLowerLevel.jn"
+    /**
+     * 获取消防知识库类别列表
+     */
+    val getKnowledgeCategoryList=url+"user/getKnowledgeCategoryList.jn"
 }

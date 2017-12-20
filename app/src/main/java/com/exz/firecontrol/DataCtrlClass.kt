@@ -863,7 +863,7 @@ object DataCtrlClass {
 //      参数名	参数含义	必选	类型及范围	说明
 //      Id	    消防员id	Y	    int
         val params = HashMap<String, String>()
-        params.put("id", id)
+        params.put("Id", id)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
             OkGo.post<FireMainIdBean>(Urls.getFireManById)
                     .params(changeFun(params))
@@ -880,6 +880,200 @@ object DataCtrlClass {
                         }
 
                         override fun onError(response: Response<FireMainIdBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 根据id获取消防车信息
+     * @param id        消防车id
+     * */
+    fun getFireCarById(context: Context?,
+                        id: String,
+                        listener: (l: FireCarLocAllListBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      Id	    消防车id	Y	    int
+        val params = HashMap<String, String>()
+        params.put("Id", id)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<FireCarLocAllListBean>(Urls.getFireCarById)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<FireCarLocAllListBean>(context) {
+                        val function = { getFireCarById(context, id,  listener) }
+                        override fun onSuccess(response: Response<FireCarLocAllListBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<FireCarLocAllListBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 根据id获取消防车信息
+     * @param id        组织机构id
+     * */
+    fun getOrgDetailById(context: Context?,
+                        id: String,
+                        listener: (l: FireCarLocAllListBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      oid	    组织机构id	Y	    Int
+        val params = HashMap<String, String>()
+        params.put("oid", id)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<FireCarLocAllListBean>(Urls.getOrgDetailById)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<FireCarLocAllListBean>(context) {
+                        val function = { getFireCarById(context, id,  listener) }
+                        override fun onSuccess(response: Response<FireCarLocAllListBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<FireCarLocAllListBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 获取消防大数据详情信息
+     * @param id        组织机构id
+     * */
+    fun getFireDataById(context: Context?,
+                        id: String,
+                        listener: (l: FireDataListBean.FireDataBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      Id	    组织机构id	Y	    int
+        val params = HashMap<String, String>()
+        params.put("Id", id)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<FireDataListBean.FireDataBean>(Urls.getFireDataById)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<FireDataListBean.FireDataBean>(context) {
+                        val function = { getFireDataById(context, id,  listener) }
+                        override fun onSuccess(response: Response<FireDataListBean.FireDataBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<FireDataListBean.FireDataBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 获取下一级组织机构列表
+     * @param oid	    组织机构id
+     * @param nowPage	当前页
+     * */
+    fun findLowerLevel(context: Context?,
+                       oid: String,
+                        nowPage: Int = 1,
+                        listener: (l: FindLowerLevelBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      oid	    组织机构id	Y	    Int
+//      pageSize页大小	    N	    Int
+//      nowPage	当前页	    N	    Int
+//
+        val params = HashMap<String, String>()
+        params.put("oid", oid)
+        params.put("pageSize", pageSize.toString())
+        params.put("nowPage", nowPage.toString())
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<FindLowerLevelBean>(Urls.findLowerLevel)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<FindLowerLevelBean>(context) {
+                        val function = { findLowerLevel(context,oid,nowPage, listener) }
+                        override fun onSuccess(response: Response<FindLowerLevelBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<FindLowerLevelBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 获取消防知识库类别列表
+     * @param nameKey	    类别名称查询关键字
+     * @param nowPage	当前页
+     * */
+    fun getKnowledgeCategoryList(context: Context?,
+                                 nameKey: String="",
+                        nowPage: Int = 1,
+                        listener: (l: KnowledgeCategoryListBean?) -> Unit) {
+//      参数名	参数含义	        必选	类型及范围	说明
+//      nameKey	类别名称查询关键字	N	    String
+//      pageSize页大小	            N	    Int
+//      nowPage	当前页	            N	    Int
+//
+        val params = HashMap<String, String>()
+        params.put("nameKey", nameKey)
+        params.put("pageSize", pageSize.toString())
+        params.put("nowPage", nowPage.toString())
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<KnowledgeCategoryListBean>(Urls.getKnowledgeCategoryList)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<KnowledgeCategoryListBean>(context) {
+                        val function = { getKnowledgeCategoryList(context,nameKey,nowPage, listener) }
+                        override fun onSuccess(response: Response<KnowledgeCategoryListBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<KnowledgeCategoryListBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else

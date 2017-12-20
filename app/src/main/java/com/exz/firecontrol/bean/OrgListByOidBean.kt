@@ -18,7 +18,7 @@ class OrgListByOidBean : AbsNetBean {
     override var messError=""
     var organizationList: List<OrganizationListBean>? = null
 
-    class OrganizationListBean {
+    class OrganizationListBean : AbsNetBean{
         /**
          * id : 1
          * cname : 消防总局
@@ -30,7 +30,8 @@ class OrgListByOidBean : AbsNetBean {
          * fid : 0
          * levels : 0
          */
-
+        override  var result=""
+        override var messError=""
         var id: Int = 0
         var cname: String? = null
         var addr: String? = null
@@ -40,5 +41,18 @@ class OrgListByOidBean : AbsNetBean {
         var placeName: String? = null
         var fid: Int = 0
         var levels: Int = 0
+        var fireManCount: Int = 0
+        var carInfo: List<CarInfoBean>? = null
+
+        class CarInfoBean {
+            /**
+             * carType : 1
+             * carCount : 3
+             */
+
+            var carType: Int = 0
+            var carCount: Int = 0
+        }
+
     }
 }

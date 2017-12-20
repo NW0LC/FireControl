@@ -18,7 +18,7 @@ class FireDataListBean: AbsNetBean {
     override var messError=""
     var fireDatas: List<FireDataBean>? = null
 
-    class FireDataBean {
+    class FireDataBean : AbsNetBean {
         /**
          * Id		Y	int
          * Name	名称	Y	String
@@ -33,8 +33,10 @@ class FireDataListBean: AbsNetBean {
          * phone	电话	Y	String
          * flag	标志	Y	int	1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
          * comid	顶级单位id		int
+         * firedatacol	flag=6微型消防站消防人员数量	Y	String
          */
-
+        override  var result=""
+        override var messError=""
         var id: Int = 0
         var name: String? = null
         var longitude: Double = 0.toDouble()
@@ -47,6 +49,6 @@ class FireDataListBean: AbsNetBean {
         var liable: String? = null
         var phone: String? = null
         var flag: Int = 0
-        var comid: Int = 0
+        var firedatacol: String? = null
     }
 }
