@@ -71,6 +71,8 @@
         <activity android:name=".module.firefighting.RepositoryCategoryActivity" android:screenOrientation="portrait"/>
         <!--消防车辆-->
         <activity android:name=".module.vehicle.VehicleActivity" android:screenOrientation="portrait"/>
+        <!--消防车辆详情-->
+        <activity android:name=".module.vehicle.VehicleDetailActivity" android:screenOrientation="portrait"/>
 
         <!--图片预览-->
         <activity android:name="com.szw.framelibrary.view.preview.PreviewActivity" />
