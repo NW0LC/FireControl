@@ -21,7 +21,7 @@
         android:layout_below="@id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="222"
+        android:text="@string/main_disaster_create_time"
         android:drawableStart="@mipmap/icon_disaster_date"
         android:gravity="center_vertical"
         android:drawablePadding="@dimen/dp_10"

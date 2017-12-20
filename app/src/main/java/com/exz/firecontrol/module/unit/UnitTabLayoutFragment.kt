@@ -9,9 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.UnitTabLayoutAdapter
-import com.exz.firecontrol.bean.UnitTabLayoutBean
+import com.exz.firecontrol.bean.EnterPriseAllListBean
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
@@ -28,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_unit_tab.*
 class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     private var refreshState = Constants.RefreshState.STATE_REFRESH
     private var currentPage = 1
-    private lateinit var mAdapter: UnitTabLayoutAdapter
+    private lateinit var mAdapter: UnitTabLayoutAdapter<EnterPriseAllListBean.EnterpriseInfoBean>
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_unit_tab, container, false)
         return rootView
@@ -48,21 +49,10 @@ class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdap
         return false
     }
 
-    private var data = ArrayList<UnitTabLayoutBean>()
     private fun initRecycler() {
-        data.add(UnitTabLayoutBean())
-        data.add(UnitTabLayoutBean())
-        data.add(UnitTabLayoutBean())
-        data.add(UnitTabLayoutBean())
-        data.add(UnitTabLayoutBean())
-        data.add(UnitTabLayoutBean())
-        data.add(UnitTabLayoutBean())
-        data.add(UnitTabLayoutBean())
         mAdapter = UnitTabLayoutAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
-        mAdapter.setNewData(data)
-        mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(context!!, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(context!!, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
@@ -74,22 +64,48 @@ class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdap
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout?) {
-        refreshLayout?.finishRefresh()
-        currentPage = 1
+        currentPage = 0
         refreshState = Constants.RefreshState.STATE_REFRESH
+        iniData()
 
     }
 
+
     override fun onLoadMoreRequested() {
+        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.getEnterPriseAllList(context,Type = arguments?.getString(Arguments_type)?:"",Level = arguments?.getString(Arguments_level)?:"",currentPage= currentPage) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it.enterpriseInfos)
+                } else {
+                    mAdapter.addData(it.enterpriseInfos ?: ArrayList())
+                }
+                if (it.enterpriseInfos?.isNotEmpty() == true) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
     }
 
 
     companion object {
-        var Arguments = "arguments"
-        fun newInstance(type: Int): UnitTabLayoutFragment {
+        var Arguments_level = "Arguments_level"
+        var Arguments_type = "Arguments_type"
+        fun newInstance(level: Int,type:String): UnitTabLayoutFragment {
             val bundle = Bundle()
-            bundle.putInt(Arguments, type)
+            bundle.putString(Arguments_level, level.toString())
+            bundle.putString(Arguments_type, type)
             val fragment = UnitTabLayoutFragment()
             fragment.arguments = bundle
             return fragment

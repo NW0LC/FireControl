@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">消防作战</string>
+    <string name="main_disaster_create_time">发生时间：%s</string>
 </resources>

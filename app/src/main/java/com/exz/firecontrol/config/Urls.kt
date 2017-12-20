@@ -31,7 +31,7 @@ object Urls{
     /**
      * 获取消防单位列表
      */
-    val getEnterPriseAllList=url+"user/getEnterPriseAllList.jn"
+    val getEnterPriseAllListByPage =url+"user/getEnterPriseAllListByPage.jn"
     /**
      * 查询消防单位的图纸资料列表
      */

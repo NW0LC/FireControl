@@ -13,6 +13,9 @@ class FirefightingAdapter<T: OrganizationBean> : BaseQuickAdapter<T, BaseViewHol
 
     override fun convert(helper: BaseViewHolder, item:T) {
         val v = helper.itemView
+        v.tv_title.text=item.cname
+        v.tv_location.text=item.addr
+        v.tv_people.text=String.format(mContext.getString(R.string.people),item.fireManCount)
         when (item.levels) {
             1 -> {//微型消防站
                 v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_stand)

@@ -19,7 +19,7 @@ class EnterPriseAllListBean :AbsNetBean {
 
     var enterpriseInfos: List<EnterpriseInfoBean>? = null
 
-    class EnterpriseInfoBean {
+    open class EnterpriseInfoBean {
         /**
          * Id : 14
          * Name : 天津油库
