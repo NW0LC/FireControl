@@ -59,7 +59,7 @@ object Urls{
     /**
      * 获取灾情列表
      */
-    val getFireInfoList=url+"user/getFireInfoList.jn"
+    val getFireInfoListByPage =url+"user/getFireInfoListByPage.jn"
     /**
      * 根据id获取灾情详情
      */
@@ -67,7 +67,7 @@ object Urls{
     /**
      * 获取组织机构列表
      */
-    val getOrgListByOid=url+"user/getOrgListByOid.jn"
+    val getOrgListByPage =url+"user/getOrgListByPage.jn"
     /**
      * 获取消防大数据信息
      */

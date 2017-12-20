@@ -6,20 +6,23 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.FirefightingAdapter
-import com.exz.firecontrol.bean.FirefightingBean
+import com.exz.firecontrol.bean.OrganizationBean
+import com.exz.firecontrol.bean.UserBean
+import com.exz.firecontrol.module.firefighting.FireBrigadeActivity.Companion.Intent_Class_Name
+import com.exz.firecontrol.module.firefighting.FireBrigadeActivity.Companion.Intent_Lower_oid
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_fire_department.*
-import kotlinx.android.synthetic.main.header_firefighting.view.*
-import kotlinx.android.synthetic.main.lay_firefighting.view.*
 
 /**
  * Created by pc on 2017/12/19.
@@ -30,9 +33,8 @@ class FireDepartmentActivity : BaseActivity(), OnRefreshListener, View.OnClickLi
 
 
     private var refreshState = Constants.RefreshState.STATE_REFRESH
-    private var currentPage = 1
-    private lateinit var mAdapter: FirefightingAdapter
-    private lateinit var headerView: View
+    private var currentPage = 0
+    private lateinit var mAdapter: FirefightingAdapter<OrganizationBean>
     override fun initToolbar(): Boolean {
         mTitle.text = "消防机构"
         mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.White))
@@ -56,38 +58,25 @@ class FireDepartmentActivity : BaseActivity(), OnRefreshListener, View.OnClickLi
     }
 
     override fun init() {
-        super.init()
         initRecycler()
-        initHeader()
+        refreshLayout.autoRefresh()
     }
 
-
-    private var data = ArrayList<FirefightingBean>()
     private fun initRecycler() {
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        mAdapter = FirefightingAdapter(1)
-        headerView = View.inflate(mContext, R.layout.header_firefighting, null)
-        mAdapter.addHeaderView(headerView)
-        mAdapter.setHeaderAndEmpty(true)
+        mAdapter = FirefightingAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
-        mAdapter.setNewData(data)
-        mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 15, ContextCompat.getColor(mContext, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
-        mRecyclerView.addOnItemTouchListener(object :OnItemChildClickListener(){
+        mRecyclerView.addOnItemTouchListener(object : OnItemChildClickListener() {
             override fun onSimpleItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
                 when (view.id) {
-                    R.id.tv_see_details  -> {
-                         startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(FireDepartmentDetailActivity.Intent_Type, "2"))
-                     }
+                    R.id.tv_see_details -> {
+                        startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(FireDepartmentDetailActivity.Intent_Type, "2"))
+                    }
+                    R.id.tv_more -> {
+                        startActivity(Intent(mContext, FireBrigadeActivity::class.java).putExtra(Intent_Class_Name, mAdapter.data[position].cname).putExtra(Intent_Lower_oid,mAdapter.data[position].id))
+                    }
                 }
             }
         })
@@ -95,33 +84,46 @@ class FireDepartmentActivity : BaseActivity(), OnRefreshListener, View.OnClickLi
         bt_search.setOnClickListener(this)
     }
 
-    private fun initHeader() {
-        headerView.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_detachment)
-        headerView.rlLay.setOnClickListener(this)
-        headerView.tv_more.setOnClickListener(this)
-    }
 
     override fun onClick(p0: View) {
         when (p0) {
-            bt_search->{//搜索
-                startActivity(Intent(mContext,SearchFireBrigadeActivity::class.java))
-            }
-            headerView.rlLay -> {//机构详情
-                startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(FireDepartmentDetailActivity.Intent_Type, "1"))
-            }
-            headerView.tv_more -> {//消防队
-                startActivity(Intent(mContext, FireBrigadeActivity::class.java).putExtra(FireBrigadeActivity.Intent_Class_Name, "消防大队"))
+            bt_search -> {//搜索
+                startActivity(Intent(mContext, SearchFireBrigadeActivity::class.java))
             }
         }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout?) {
-        currentPage = 1
+        currentPage = 0
         refreshState = Constants.RefreshState.STATE_REFRESH
-
+        iniData()
     }
 
+
     override fun onLoadMoreRequested() {
+        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.getOrgListByPage(this, (MyApplication.user as UserBean).oid, "", currentPage) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it.OrganizationList)
+                } else {
+                    mAdapter.addData(it.OrganizationList ?: ArrayList())
+                }
+                if (it.OrganizationList?.isNotEmpty() == true) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
     }
 }

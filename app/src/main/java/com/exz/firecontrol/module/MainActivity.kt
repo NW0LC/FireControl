@@ -4,25 +4,33 @@ import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DisasterAdapter
-import com.exz.firecontrol.bean.DisasterBean
+import com.exz.firecontrol.bean.FireInfoListBean
+import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.firefighting.FireDepartmentActivity
 import com.exz.firecontrol.module.unit.KeyUnitActivity
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
+import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_main.view.*
 
-class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener {
+class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, BaseQuickAdapter.RequestLoadMoreListener {
 
-    private lateinit var mAdapter: DisasterAdapter
+
+    private lateinit var mAdapter: DisasterAdapter<FireInfoListBean.FireInfoBean>
     private lateinit var headerView: View
+    private var refreshState = Constants.RefreshState.STATE_REFRESH
+    private var currentPage = 0
     override fun setInflateId(): Int {
         return R.layout.activity_main
     }
@@ -50,25 +58,14 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener {
         initHeader()
     }
 
-
-    private var data = ArrayList<DisasterBean>()
     private fun initRecycler() {
-        data.add(DisasterBean())
-        data.add(DisasterBean())
-        data.add(DisasterBean())
-        data.add(DisasterBean())
-        data.add(DisasterBean())
-        data.add(DisasterBean())
-        data.add(DisasterBean())
-        data.add(DisasterBean())
         mAdapter = DisasterAdapter()
         headerView = View.inflate(mContext, R.layout.header_main, null)
         mAdapter.addHeaderView(headerView)
         mAdapter.setHeaderAndEmpty(true)
         mAdapter.bindToRecyclerView(mRecyclerView)
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
-        mAdapter.setNewData(data)
-        mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
     }
@@ -102,9 +99,39 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener {
         }
     }
 
+    override fun onRefresh(refreshLayout: RefreshLayout?) {
+        currentPage = 0
+        refreshState = Constants.RefreshState.STATE_REFRESH
+        iniData()
 
-    override fun onRefresh(refreshlayout: RefreshLayout?) {
-        refreshlayout?.finishRefresh()
+    }
+
+
+    override fun onLoadMoreRequested() {
+        currentPage = mAdapter.data.size
+        refreshState = Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.getFireInfoListByPage(this, (MyApplication.user as UserBean).oid, (MyApplication.user as UserBean).comid,currentPage= currentPage) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it.fireInfoList)
+                } else {
+                    mAdapter.addData(it.fireInfoList ?: ArrayList())
+                }
+                if (it.fireInfoList?.isNotEmpty() == true) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
     }
 
 }

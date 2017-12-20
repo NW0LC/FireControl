@@ -182,19 +182,19 @@ object DataCtrlClass {
     fun userLogin(context: Context?,
                   userNO: String,
                   password: String,
-                  listener: (l: LoginBean?) -> Unit) {
+                  listener: (l: UserBean?) -> Unit) {
 //        userNO	账号	Y	string
 //        password	密码	Y	string
         val params = HashMap<String, String>()
         params.put("userNO", userNO)
         params.put("password", password)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<LoginBean>(Urls.userLogin)
+            OkGo.post<UserBean>(Urls.userLogin)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<LoginBean>(context) {
+                    .execute(object : DialogCallback<UserBean>(context) {
                         val function = { userLogin(context, userNO, password, listener) }
-                        override fun onSuccess(response: Response<LoginBean>) {
+                        override fun onSuccess(response: Response<UserBean>) {
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
@@ -202,7 +202,7 @@ object DataCtrlClass {
                             }
                         }
 
-                        override fun onError(response: Response<LoginBean>) {
+                        override fun onError(response: Response<UserBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else
@@ -340,7 +340,7 @@ object DataCtrlClass {
      * @param nameKey    名称查询关键字
      * @param Type        分类
      * @param Level        级别
-     * @param nowPage    当前页
+     * @param start_postion    当前页
      * */
     fun getEnterPriseAllList(context: Context?,
                              RoleId: String,
@@ -349,7 +349,7 @@ object DataCtrlClass {
                              nameKey: String = "",
                              Type: String = "",
                              Level: String = "",
-                             nowPage: Int = 1,
+                             currentPage: Int = 1,
                              listener: (l: EnterPriseAllListBean?) -> Unit) {
 //        参数名	参数含义	    必选	类型及范围	说明
 //        RoleId	角色编号	    Y	    int
@@ -358,8 +358,8 @@ object DataCtrlClass {
 //        nameKey	名称查询关键字	N	    String
 //        Type	    分类	        N	    String	    例如：石油化工类
 //        Level	    级别	        N	    String	    例如：一级重点单位
-//        pageSize	页大小	        N	    Int
-//        nowPage	当前页	        N	    Int
+//        fetch_count	页大小	        N	    Int
+//        start_postion	当前页	        N	    Int
         val params = HashMap<String, String>()
         params.put("RoleId", RoleId)
         params.put("Pid", Pid)
@@ -367,14 +367,14 @@ object DataCtrlClass {
         params.put("nameKey", nameKey)
         params.put("Type", Type)
         params.put("Level", Level)
-        params.put("pageSize", pageSize.toString())
-        params.put("nowPage", nowPage.toString())
+        params.put("fetch_count", pageSize.toString())
+        params.put("start_postion", currentPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
             OkGo.post<EnterPriseAllListBean>(Urls.getEnterPriseAllList)
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<EnterPriseAllListBean>(context) {
-                        val function = { getEnterPriseAllList(context, RoleId, Pid, comId, nameKey, Type, Level, nowPage, listener) }
+                        val function = { getEnterPriseAllList(context, RoleId, Pid, comId, nameKey, Type, Level, currentPage, listener) }
                         override fun onSuccess(response: Response<EnterPriseAllListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
@@ -481,7 +481,7 @@ object DataCtrlClass {
      * @param comId        顶级单位id
      * @param nameKey    姓名查询关键字
      * @param isOnline    人员状态，是否在线
-     * @param nowPage    当前页
+     * @param start_postion    当前页
      * */
     fun getFireManLocAllList(context: Context?,
                              RoleId: String,
@@ -489,7 +489,7 @@ object DataCtrlClass {
                              comId: String,
                              nameKey: String = "",
                              isOnline: String = "1",
-                             nowPage: Int = 1,
+                             currentPage: Int = 1,
                              listener: (l: FireMainLocAllListBean?) -> Unit) {
 //       参数名	    参数含义	        必选	类型及范围	说明
 //       RoleId	    角色编号	        Y	    int
@@ -497,22 +497,22 @@ object DataCtrlClass {
 //       comid	    顶级单位id	        Y	    int
 //       nameKey	姓名查询关键字	    N	    String
 //       isOnline	人员状态，是否在线	N	    int	        1.在线0.不在线
-//       pageSize	页大小	            N	    Int
-//       nowPage	当前页	            N	    Int
+//       fetch_count	页大小	            N	    Int
+//       start_postion	当前页	            N	    Int
         val params = HashMap<String, String>()
         params.put("RoleId", RoleId)
         params.put("Pid", Pid)
         params.put("comid", comId)
         params.put("nameKey", nameKey)
         params.put("isOnline", isOnline)
-        params.put("pageSize", pageSize.toString())
-        params.put("nowPage", nowPage.toString())
+        params.put("fetch_count", pageSize.toString())
+        params.put("start_postion", currentPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
             OkGo.post<FireMainLocAllListBean>(Urls.getFireManLocAllList)
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<FireMainLocAllListBean>(context) {
-                        val function = { getFireManLocAllList(context, RoleId, Pid, comId, nameKey, isOnline, nowPage, listener) }
+                        val function = { getFireManLocAllList(context, RoleId, Pid, comId, nameKey, isOnline, currentPage, listener) }
                         override fun onSuccess(response: Response<FireMainLocAllListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
@@ -541,7 +541,7 @@ object DataCtrlClass {
      * @param carType    车辆类型
      * @param carNum        车辆编号
      * @param isOnline    车辆状态，是否在线
-     * @param nowPage    当前页
+     * @param start_postion    当前页
      * */
     fun getFireCarLocAllList(context: Context?,
                              RoleId: String,
@@ -550,7 +550,7 @@ object DataCtrlClass {
                              carType: String = "",
                              carNum: String = "",
                              isOnline: String = "1",
-                             nowPage: Int = 1,
+                             currentPage: Int = 1,
                              listener: (l: FireCarLocAllListBean?) -> Unit) {
 //       参数名	    参数含义	        必选	类型及范围	说明
 //       RoleId	    角色编号	        Y	    int
@@ -559,8 +559,8 @@ object DataCtrlClass {
 //       carType	车辆类型	        N	    int	        1.登高车2.指挥车3.泡沫车4.水罐车5.干粉车6.高鹏车 7越野摩托车
 //       carNum	    车辆编号	        N	    String
 //       isOnline	车辆状态，是否在线	N	    Int	        1.在线0.不在线
-//       pageSize	页大小	            N	    Int
-//       nowPage	当前页	            N	    Int
+//       fetch_count	页大小	            N	    Int
+//       start_postion	当前页	            N	    Int
         val params = HashMap<String, String>()
         params.put("RoleId", RoleId)
         params.put("Pid", Pid)
@@ -568,14 +568,14 @@ object DataCtrlClass {
         params.put("carType", carType)
         params.put("carNum", carNum)
         params.put("isOnline", isOnline)
-        params.put("pageSize", pageSize.toString())
-        params.put("nowPage", nowPage.toString())
+        params.put("fetch_count", pageSize.toString())
+        params.put("start_postion", currentPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
             OkGo.post<FireCarLocAllListBean>(Urls.getFireCarLocAllList)
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<FireCarLocAllListBean>(context) {
-                        val function = { getFireCarLocAllList(context, RoleId, Pid, comId, carType, carNum, isOnline, nowPage, listener) }
+                        val function = { getFireCarLocAllList(context, RoleId, Pid, comId, carType, carNum, isOnline, currentPage, listener) }
                         override fun onSuccess(response: Response<FireCarLocAllListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
@@ -678,33 +678,33 @@ object DataCtrlClass {
      * 获取灾情列表
      * @param  oid        组织结构id
      * @param  comId        顶级单位ID
-     * @param  nowPage    当前页
+     * @param  start_postion    当前页
      * @param  status        处理状态，多个状态用逗号隔开
      * */
-    fun getFireInfoList(context: Context?,
+    fun getFireInfoListByPage(context: Context?,
                         oid: String,
                         comId: String,
                         status: String = "",
-                        nowPage: Int = 1,
+                        currentPage: Int = 1,
                         listener: (l: FireInfoListBean?) -> Unit) {
-//       参数名	    参数含义	                    必选	类型及范围	说明
-//       oid	    组织结构id	                    Y	    int
-//       comId	    顶级单位ID	                    Y	    int
-//       pageSize	页大小	                        N	    Int
-//       nowPage	当前页	                        N	    Int
-//       status	    处理状态，多个状态用逗号隔开	N	    String	    1=未处理  2=出动  3=归队
+//       参数名	        参数含义	                    必选	类型及范围	说明
+//       oid	        组织结构id	                    Y	    int
+//       comId	        顶级单位ID	                    Y	    int
+//       fetch_count	页大小	                        N	    Int
+//       start_postion	当前页	                        N	    Int
+//       status	        处理状态，多个状态用逗号隔开	N	    String	    1=未处理  2=出动  3=归队
         val params = HashMap<String, String>()
         params.put("oid", oid)
-        params.put("comid", comId)
+        params.put("comId", comId)
         params.put("status", status)
-        params.put("pageSize", pageSize.toString())
-        params.put("nowPage", nowPage.toString())
+        params.put("fetch_count", pageSize.toString())
+        params.put("start_postion", currentPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<FireInfoListBean>(Urls.getFireInfoList)
+            OkGo.post<FireInfoListBean>(Urls.getFireInfoListByPage)
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<FireInfoListBean>(context) {
-                        val function = { getFireInfoList(context, oid, comId, status, nowPage, listener) }
+                        val function = { getFireInfoListByPage(context, oid, comId, status, currentPage, listener) }
                         override fun onSuccess(response: Response<FireInfoListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
@@ -765,30 +765,30 @@ object DataCtrlClass {
      * 获取组织机构列表
      * @param  oid	    组织机构id
      * @param  nameKey	组织机构名称关键字
-     * @param  nowPage	当前页
+     * @param  start_postion	当前页
      * */
-    fun getOrgListByOid(context: Context?,
+    fun getOrgListByPage(context: Context?,
                         oid: String,
                         nameKey: String="",
-                        nowPage: Int = 1,
-                        listener: (l: OrgListByOidBean?) -> Unit) {
+                        currentPage: Int = 1,
+                        listener: (l: OrgListByPageBean?) -> Unit) {
 //       参数名	    参数含义	        必选	类型及范围	说明
 //       oid	    组织机构id	        Y	    int	        1=消防机构  17=测试   30=环保保护部
 //       namekey	组织机构名称关键字	N	    String
-//       pageSize	页大小	            N	    Int
-//       nowPage	当前页	            N	    Int
+//       fetch_count	页大小	            N	    Int
+//       start_postion	当前页	            N	    Int
         val params = HashMap<String, String>()
         params.put("oid", oid)
         params.put("namekey", nameKey)
-        params.put("pageSize", pageSize.toString())
-        params.put("nowPage", nowPage.toString())
+        params.put("fetch_count", pageSize.toString())
+        params.put("start_postion", currentPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<OrgListByOidBean>(Urls.getOrgListByOid)
+            OkGo.post<OrgListByPageBean>(Urls.getOrgListByPage)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<OrgListByOidBean>(context) {
-                        val function = { getOrgListByOid(context, oid, nameKey,  nowPage, listener) }
-                        override fun onSuccess(response: Response<OrgListByOidBean>) {
+                    .execute(object : DialogCallback<OrgListByPageBean>(context) {
+                        val function = { getOrgListByPage(context, oid, nameKey,  currentPage, listener) }
+                        override fun onSuccess(response: Response<OrgListByPageBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
@@ -797,7 +797,7 @@ object DataCtrlClass {
                             }
                         }
 
-                        override fun onError(response: Response<OrgListByOidBean>) {
+                        override fun onError(response: Response<OrgListByPageBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else
@@ -811,29 +811,29 @@ object DataCtrlClass {
      * 获取消防大数据信息
      * @param flag		                Y	    int	        1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
      * @param comId	    顶级单位列表	Y	    int
-     * @param nowPage	当前页	        N	    Int
+     * @param start_postion	当前页	        N	    Int
      * */
     fun getFireDataList(context: Context?,
                         flag: String,
                         comId: String,
-                        nowPage: Int = 1,
+                        currentPage: Int = 1,
                         listener: (l: FireDataListBean?) -> Unit) {
 //       参数名	    参数含义	    必选	类型及范围	说明
 //       flag		                Y	    int	        1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
 //       comid	    顶级单位列表	Y	    int
-//       pageSize	页大小	        N	    Int
-//       nowPage	当前页	        N	    Int
+//       fetch_count	页大小	        N	    Int
+//       start_postion	当前页	        N	    Int
         val params = HashMap<String, String>()
         params.put("flag", flag)
         params.put("comid", comId)
-        params.put("pageSize", pageSize.toString())
-        params.put("nowPage", nowPage.toString())
+        params.put("fetch_count", pageSize.toString())
+        params.put("start_postion", currentPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
             OkGo.post<FireDataListBean>(Urls.getFireDataList)
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<FireDataListBean>(context) {
-                        val function = { getFireDataList(context, flag, comId,  nowPage, listener) }
+                        val function = { getFireDataList(context, flag, comId,  currentPage, listener) }
                         override fun onSuccess(response: Response<FireDataListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
@@ -1000,27 +1000,27 @@ object DataCtrlClass {
     /**
      * 获取下一级组织机构列表
      * @param oid	    组织机构id
-     * @param nowPage	当前页
+     * @param start_postion	当前页
      * */
     fun findLowerLevel(context: Context?,
                        oid: String,
-                        nowPage: Int = 1,
+                        currentPage: Int = 1,
                         listener: (l: FindLowerLevelBean?) -> Unit) {
 //      参数名	参数含义	必选	类型及范围	说明
 //      oid	    组织机构id	Y	    Int
-//      pageSize页大小	    N	    Int
-//      nowPage	当前页	    N	    Int
+//      fetch_count页大小	    N	    Int
+//      start_postion	当前页	    N	    Int
 //
         val params = HashMap<String, String>()
         params.put("oid", oid)
-        params.put("pageSize", pageSize.toString())
-        params.put("nowPage", nowPage.toString())
+        params.put("fetch_count", pageSize.toString())
+        params.put("start_postion", currentPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
             OkGo.post<FindLowerLevelBean>(Urls.findLowerLevel)
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<FindLowerLevelBean>(context) {
-                        val function = { findLowerLevel(context,oid,nowPage, listener) }
+                        val function = { findLowerLevel(context,oid,currentPage, listener) }
                         override fun onSuccess(response: Response<FindLowerLevelBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
@@ -1043,27 +1043,27 @@ object DataCtrlClass {
     /**
      * 获取消防知识库类别列表
      * @param nameKey	    类别名称查询关键字
-     * @param nowPage	当前页
+     * @param start_postion	当前页
      * */
     fun getKnowledgeCategoryList(context: Context?,
                                  nameKey: String="",
-                        nowPage: Int = 1,
+                        currentPage: Int = 1,
                         listener: (l: KnowledgeCategoryListBean?) -> Unit) {
 //      参数名	参数含义	        必选	类型及范围	说明
 //      nameKey	类别名称查询关键字	N	    String
-//      pageSize页大小	            N	    Int
-//      nowPage	当前页	            N	    Int
+//      fetch_count页大小	            N	    Int
+//      start_postion	当前页	            N	    Int
 //
         val params = HashMap<String, String>()
         params.put("nameKey", nameKey)
-        params.put("pageSize", pageSize.toString())
-        params.put("nowPage", nowPage.toString())
+        params.put("fetch_count", pageSize.toString())
+        params.put("start_postion", currentPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
             OkGo.post<KnowledgeCategoryListBean>(Urls.getKnowledgeCategoryList)
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<KnowledgeCategoryListBean>(context) {
-                        val function = { getKnowledgeCategoryList(context,nameKey,nowPage, listener) }
+                        val function = { getKnowledgeCategoryList(context,nameKey,currentPage, listener) }
                         override fun onSuccess(response: Response<KnowledgeCategoryListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {

@@ -1,7 +1,10 @@
 package com.exz.firecontrol.bean
 
+import com.szw.framelibrary.entities.AbsUser
 import com.szw.framelibrary.utils.net.AbsNetBean
-class LoginBean : AbsNetBean {
+class UserBean : AbsUser(), AbsNetBean {
+    override val userId: String
+        get() = uid
 
     /**
      * 参数名	参数含义	必选	类型及范围	说明

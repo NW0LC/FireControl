@@ -9,18 +9,20 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemChildClickListener
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.FirefightingAdapter
-import com.exz.firecontrol.bean.FirefightingBean
+import com.exz.firecontrol.bean.OrganizationBean
+import com.exz.firecontrol.bean.UserBean
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_search.*
 import kotlinx.android.synthetic.main.activity_search_frie_brigade.*
-import java.util.*
 
 /**
  * Created by pc on 2017/12/19.
@@ -30,8 +32,8 @@ import java.util.*
 class SearchFireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private var refreshState = Constants.RefreshState.STATE_REFRESH
-    private var currentPage = 1
-    private lateinit var mAdapter: FirefightingAdapter
+    private var currentPage = 0
+    private lateinit var mAdapter: FirefightingAdapter<OrganizationBean>
     override fun initToolbar(): Boolean {
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this)
@@ -69,21 +71,10 @@ class SearchFireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAd
         })
     }
 
-    private var data = ArrayList<FirefightingBean>()
     private fun initRecycler() {
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        data.add(FirefightingBean())
-        mAdapter = FirefightingAdapter(1)
+        mAdapter = FirefightingAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
-        mAdapter.setNewData(data)
-        mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 15, ContextCompat.getColor(mContext, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemChildClickListener() {
@@ -99,13 +90,37 @@ class SearchFireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAd
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout?) {
-        currentPage = 1
+        currentPage = 0
         refreshState = Constants.RefreshState.STATE_REFRESH
-
+        iniData()
     }
 
+
     override fun onLoadMoreRequested() {
+        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.getOrgListByPage(this, (MyApplication.user as UserBean).oid, "", currentPage) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it.OrganizationList)
+                } else {
+                    mAdapter.addData(it.OrganizationList ?: ArrayList())
+                }
+                if (it.OrganizationList?.isNotEmpty() == true) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
     }
 
 }

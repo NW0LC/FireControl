@@ -16,10 +16,10 @@ class FireInfoListBean : AbsNetBean {
 
     override  var result=""
     override var messError=""
-    private val fireInfoList: List<FireInfoBean>? = null
+    var fireInfoList: ArrayList<FireInfoBean>? = null
 
 
-    class FireInfoBean {
+    open class FireInfoBean {
         /**
          * id : 11
          * name : 徐州市公安总局3

@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.exz.firecontrol.R
-import com.exz.firecontrol.adapter.FirefightingAdapter
 import com.exz.firecontrol.module.MapLocationActivity
 import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Class_Name
 import com.szw.framelibrary.base.BaseActivity
@@ -25,8 +24,6 @@ import org.jetbrains.anko.textColor
 
 class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
 
-    private lateinit var mAdapter: FirefightingAdapter
-    private lateinit var headerView: View
     override fun initToolbar(): Boolean {
         mTitle.text = "机构详情"
         mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.White))
