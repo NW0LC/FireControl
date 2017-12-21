@@ -10,8 +10,10 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.UnitDetailAdapter
 import com.exz.firecontrol.bean.UnitDetailBean
 import com.exz.firecontrol.module.MapLocationActivity
+import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_id
+import com.exz.firecontrol.module.unit.EnterPriseDataActivity.Companion.Intent_EnterPriseDataActivity_id
+import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
 import com.exz.firecontrol.utils.SZWUtils
-import com.exz.firecontrol.widget.MyWebActivity
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -45,7 +47,6 @@ class UnitDetailActivity : BaseActivity() {
     }
 
     override fun init() {
-        super.init()
         initView()
         initRecycler()
     }
@@ -65,22 +66,21 @@ class UnitDetailActivity : BaseActivity() {
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
         mAdapter.setNewData(data)
-        mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 10, ContextCompat.getColor(mContext, R.color.app_bg)))
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                    when (mAdapter.data.get(position).name) {
+                    when (mAdapter.data[position].name) {
                         "单位基本信息" -> {
-                            startActivity(Intent(mContext, InfoActivity::class.java).putExtra(InfoActivity.Intent_Class_Name,mAdapter.data.get(position).name))
+                            startActivity(Intent(mContext, InfoActivity::class.java).putExtra(Intent_getEnterPrise_id,intent.getStringExtra(Intent_getEnterPrise_id)?:"").putExtra(InfoActivity.Intent_Class_Name, mAdapter.data[position].name))
                         }
                         "消防基本信息" -> {
-                            startActivity(Intent(mContext, InfoActivity::class.java).putExtra(InfoActivity.Intent_Class_Name,mAdapter.data.get(position).name))
+                            startActivity(Intent(mContext, InfoActivity::class.java).putExtra(Intent_getEnterPrise_id,intent.getStringExtra(Intent_getEnterPrise_id)?:"").putExtra(InfoActivity.Intent_Class_Name, mAdapter.data[position].name))
                         }
                         "图纸资料" -> {
-                            startActivity(Intent(mContext, DrawingsActivity::class.java))
+                            startActivity(Intent(mContext, DrawingsActivity::class.java).putExtra(Intent_getDrawFileList_id,intent.getStringExtra(Intent_getEnterPrise_id)?:""))
                         }
                         "救援预案" -> {
-                            startActivity(Intent(mContext, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title,"救援预案").putExtra(MyWebActivity.Intent_Url,"http://www.baidu.com"))
+                            startActivity(Intent(mContext, EnterPriseDataActivity::class.java).putExtra(Intent_EnterPriseDataActivity_id,intent.getStringExtra(Intent_getEnterPrise_id)?:""))
                         }
                         "消防水源" -> {
                             startActivity(Intent(mContext, FirewaterSupplyActivity::class.java))

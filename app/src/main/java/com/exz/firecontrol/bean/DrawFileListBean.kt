@@ -16,9 +16,9 @@ class DrawFileListBean :AbsNetBean{
 
     override  var result=""
     override var messError=""
-    var drawingFiles: List<DrawingFilesBean>? = null
+    var DrawingFiles: List<DrawingFilesBean>? = null
 
-    class DrawingFilesBean {
+    open class DrawingFilesBean {
         /**
          * Id : 1
          * Name : 工艺流程图

@@ -13,7 +13,8 @@ import kotlinx.android.synthetic.main.item_unit_tab_layout.view.*
 class UnitTabLayoutAdapter<T: EnterPriseAllListBean.EnterpriseInfoBean> : BaseQuickAdapter<T, BaseViewHolder>(R.layout.item_unit_tab_layout, ArrayList<T>()) {
 
     override fun convert(helper: BaseViewHolder, item: T) {
-        var v = helper.itemView
+        val v = helper.itemView
         v.tv_oval_num.text = (helper.adapterPosition + 1).toString()
+        v.tv_title.text=item.Name
     }
 }

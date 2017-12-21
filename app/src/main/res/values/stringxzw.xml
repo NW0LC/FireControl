@@ -35,6 +35,8 @@
     <string name="petrochemical">石油化工类</string>
     <string name="tall_buildings">高层建筑类</string>
     <string name="personnel_intensive_class">人员密集类</string>
+    <string name="large_storage">大型仓储类</string>
+    <string name="underground_building">地下建筑类</string>
     <string name="other_categories">其他类</string>
     <string name="fire_hydrant">消防栓</string>
     <string name="fire_pool">消防水池</string>

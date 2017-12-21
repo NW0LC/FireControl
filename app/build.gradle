@@ -67,6 +67,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.github.NW0LC:KtFramework:1.1.6'
+    compile 'com.android.support:gridlayout-v7:27.0.2'
     //图片压缩
     compile 'top.zibin:Luban:+'
     // 微信支付

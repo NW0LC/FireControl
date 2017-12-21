@@ -17,7 +17,7 @@ class EnterPriseAllListBean :AbsNetBean {
     override  var result=""
     override var messError=""
 
-    var enterpriseInfos: List<EnterpriseInfoBean>? = null
+    var EnterpriseInfos: List<EnterpriseInfoBean>? = null
 
     open class EnterpriseInfoBean {
         /**

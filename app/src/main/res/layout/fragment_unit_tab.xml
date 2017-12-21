@@ -13,6 +13,7 @@
         app:srlEnablePreviewInEditMode="false">
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:id="@+id/header"
+            android:visibility="gone"
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -13,6 +13,7 @@ import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.UnitTabLayoutAdapter
 import com.exz.firecontrol.bean.EnterPriseAllListBean
+import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
@@ -21,10 +22,6 @@ import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.fragment_unit_tab.*
-
-/**
- * Created by pc on 2017/12/19.
- */
 
 class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     private var refreshState = Constants.RefreshState.STATE_REFRESH
@@ -38,14 +35,16 @@ class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdap
     override fun initView() {
         initToolbar()
         initRecycler()
+        SZWUtils.setRefreshAndHeaderCtrl(this,header,refreshLayout)
+        refreshLayout.autoRefresh()
     }
 
     fun initToolbar(): Boolean {
         //状态栏透明和间距处理
         StatusBarUtil.setPaddingSmart(activity, mRecyclerView)
         StatusBarUtil.setMargin(activity, header)
-        SZWUtils.setPaddingSmart(mRecyclerView, 65f)
-        SZWUtils.setMargin(header, 65f)
+        SZWUtils.setPaddingSmart(mRecyclerView, 45f)
+        SZWUtils.setMargin(header, 45f)
         return false
     }
 
@@ -57,7 +56,7 @@ class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdap
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(context, UnitDetailActivity::class.java))
+                startActivity(Intent(context, UnitDetailActivity::class.java).putExtra(Intent_getEnterPrise_id,mAdapter.data[position].Id))
             }
         })
         mAdapter.setOnLoadMoreListener(this, mRecyclerView)
@@ -82,11 +81,11 @@ class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdap
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {
-                    mAdapter.setNewData(it.enterpriseInfos)
+                    mAdapter.setNewData(it.EnterpriseInfos)
                 } else {
-                    mAdapter.addData(it.enterpriseInfos ?: ArrayList())
+                    mAdapter.addData(it.EnterpriseInfos ?: ArrayList())
                 }
-                if (it.enterpriseInfos?.isNotEmpty() == true) {
+                if (it.EnterpriseInfos?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
                     currentPage++
                 } else {
@@ -102,9 +101,9 @@ class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdap
     companion object {
         var Arguments_level = "Arguments_level"
         var Arguments_type = "Arguments_type"
-        fun newInstance(level: Int,type:String): UnitTabLayoutFragment {
+        fun newInstance(level: String,type:String): UnitTabLayoutFragment {
             val bundle = Bundle()
-            bundle.putString(Arguments_level, level.toString())
+            bundle.putString(Arguments_level, level)
             bundle.putString(Arguments_type, type)
             val fragment = UnitTabLayoutFragment()
             fragment.arguments = bundle

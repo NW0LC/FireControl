@@ -28,121 +28,114 @@
             android:overScrollMode="never"
             android:paddingTop="?attr/actionBarSize">
 
-            <LinearLayout
+            <android.support.v7.widget.GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/margin_10"
+                app:columnCount="2"
+                app:orientation="horizontal"
+                app:rowCount="3">
 
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_tab_1"
+                    android:padding="@dimen/margin_5"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_15"
-                    android:orientation="horizontal">
-
-                    <com.flyco.roundview.RoundLinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dp_10"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:padding="@dimen/margin_15"
-                        android:id="@+id/bt_tab_1"
-                        app:rv_backgroundColor="@color/White"
-                        app:rv_cornerRadius="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableTop="@mipmap/icon_petrochemical"
-                            android:gravity="center"
-                            android:text="@string/petrochemical"
-                            android:textColor="@color/MaterialGrey600"
-                            android:textSize="@dimen/sp_14" />
-
-                    </com.flyco.roundview.RoundLinearLayout>
-
-                    <com.flyco.roundview.RoundLinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:id="@+id/bt_tab_2"
-                        android:padding="@dimen/margin_15"
-                        app:rv_backgroundColor="@color/White"
-                        app:rv_cornerRadius="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableTop="@mipmap/icon_tall_buildings"
-                            android:gravity="center"
-                            android:text="@string/tall_buildings"
-                            android:textColor="@color/MaterialGrey600"
-                            android:textSize="@dimen/sp_14" />
-
-                    </com.flyco.roundview.RoundLinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    android:drawableTop="@mipmap/icon_petrochemical"
+                    android:gravity="center"
+                    android:text="@string/personnel_intensive_class"
+                    android:textColor="@color/MaterialGrey600"
+                    android:textSize="@dimen/sp_14"
+                    app:rv_backgroundColor="@color/White"
+                    app:rv_cornerRadius="10dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0" />
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_tab_2"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:padding="@dimen/margin_5"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_15"
-                    android:layout_marginEnd="@dimen/margin_15"
-                    android:layout_marginStart="@dimen/margin_15"
-                    android:orientation="horizontal">
+                    android:drawableTop="@mipmap/icon_petrochemical"
+                    android:gravity="center"
+                    android:text="@string/petrochemical"
+                    android:textColor="@color/MaterialGrey600"
+                    android:textSize="@dimen/sp_14"
+                    app:rv_backgroundColor="@color/White"
+                    app:rv_cornerRadius="10dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="0" />
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_tab_3"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:padding="@dimen/margin_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@mipmap/icon_tall_buildings"
+                    android:gravity="center"
+                    android:text="@string/tall_buildings"
+                    android:textColor="@color/MaterialGrey600"
+                    android:textSize="@dimen/sp_14"
+                    app:rv_backgroundColor="@color/White"
+                    app:rv_cornerRadius="10dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="1" />
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_tab_4"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:padding="@dimen/margin_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@mipmap/icon_personnel_intensive_class"
+                    android:gravity="center"
+                    android:text="@string/large_storage"
+                    android:textColor="@color/MaterialGrey600"
+                    android:textSize="@dimen/sp_14"
+                    app:rv_backgroundColor="@color/White"
+                    app:rv_cornerRadius="10dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="1" />
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_tab_5"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:padding="@dimen/margin_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@mipmap/icon_personnel_intensive_class"
+                    android:gravity="center"
+                    android:text="@string/underground_building"
+                    android:textColor="@color/MaterialGrey600"
+                    android:textSize="@dimen/sp_14"
+                    app:rv_backgroundColor="@color/White"
+                    app:rv_cornerRadius="10dp"
+                    app:layout_column="0"
+                    app:layout_columnWeight="1"
+                    app:layout_row="2" />
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_tab_6"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:padding="@dimen/margin_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@mipmap/icon_other_categories"
+                    android:gravity="center"
+                    android:text="@string/other_categories"
+                    android:textColor="@color/MaterialGrey600"
+                    android:textSize="@dimen/sp_14"
+                    app:rv_backgroundColor="@color/White"
+                    app:rv_cornerRadius="10dp"
+                    app:layout_column="1"
+                    app:layout_columnWeight="1"
+                    app:layout_row="2" />
 
-                    <com.flyco.roundview.RoundLinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dp_10"
-                        android:layout_weight="1"
-                        android:id="@+id/bt_tab_3"
-                        android:gravity="center"
-                        android:padding="@dimen/margin_15"
-                        app:rv_backgroundColor="@color/White"
-                        app:rv_cornerRadius="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableTop="@mipmap/icon_personnel_intensive_class"
-                            android:gravity="center"
-                            android:text="@string/personnel_intensive_class"
-                            android:textColor="@color/MaterialGrey600"
-                            android:textSize="@dimen/sp_14" />
-
-                    </com.flyco.roundview.RoundLinearLayout>
-
-                    <com.flyco.roundview.RoundLinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp_10"
-                        android:layout_weight="1"
-                        android:id="@+id/bt_tab_4"
-                        android:gravity="center"
-                        android:padding="@dimen/margin_15"
-                        app:rv_backgroundColor="@color/White"
-                        app:rv_cornerRadius="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableTop="@mipmap/icon_other_categories"
-                            android:gravity="center"
-                            android:text="@string/other_categories"
-                            android:textColor="@color/MaterialGrey600"
-                            android:textSize="@dimen/sp_14" />
-
-                    </com.flyco.roundview.RoundLinearLayout>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
+            </android.support.v7.widget.GridLayout>
 
         </android.support.v4.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
@@ -163,6 +156,7 @@
                 android:layout_height="match_parent"
                 app:realtimeBlurRadius="10dp"
                 app:realtimeOverlayColor="@color/blur_bg_white" />
+
             <com.flyco.roundview.RoundTextView
                 android:id="@+id/bt_search"
                 android:layout_width="match_parent"
@@ -173,9 +167,9 @@
                 android:layout_marginStart="@dimen/margin_15"
                 android:layout_marginTop="@dimen/dp_10"
                 android:drawablePadding="@dimen/dp_10"
+                android:drawableStart="@mipmap/icon_search"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/margin_15"
-                android:drawableStart="@mipmap/icon_search"
                 android:text="@string/search_unit_name"
                 android:textColor="@color/MaterialGrey600"
                 android:textSize="14sp"
