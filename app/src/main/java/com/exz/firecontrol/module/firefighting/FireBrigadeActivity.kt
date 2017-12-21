@@ -91,7 +91,7 @@ class FireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.
     }
 
     private fun iniData() {
-        DataCtrlClass.findLowerLevel(this, intent.getStringExtra(Intent_Lower_oid)?:"", currentPage) {
+        DataCtrlClass.findLowerLevel(this, intent.getIntExtra(Intent_Lower_oid,0).toString(), currentPage) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {

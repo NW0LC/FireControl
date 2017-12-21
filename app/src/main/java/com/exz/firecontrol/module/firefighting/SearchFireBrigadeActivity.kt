@@ -34,6 +34,7 @@ class SearchFireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAd
     private var refreshState = Constants.RefreshState.STATE_REFRESH
     private var currentPage = 0
     private lateinit var mAdapter: FirefightingAdapter<OrganizationBean>
+    private var searchContent=""
     override fun initToolbar(): Boolean {
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this)
@@ -61,9 +62,9 @@ class SearchFireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAd
         edTitle.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // do something
-                val searchContent = edTitle.text.toString().trim { it <= ' ' }
+                searchContent = edTitle.text.toString().trim { it <= ' ' }
                 if (!TextUtils.isEmpty(searchContent)) {
-
+                    onRefresh(refreshLayout)
                 }
                 return@OnEditorActionListener true
             }
@@ -103,7 +104,7 @@ class SearchFireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAd
     }
 
     private fun iniData() {
-        DataCtrlClass.getOrgListByPage(this, (MyApplication.user as UserBean).oid, "", currentPage) {
+        DataCtrlClass.getOrgListByPage(this, (MyApplication.user as UserBean).oid, searchContent, currentPage) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {

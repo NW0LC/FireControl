@@ -9,9 +9,11 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.SearchUnitAdapter
-import com.exz.firecontrol.bean.InfoBean
+import com.exz.firecontrol.bean.EnterPriseAllListBean
+import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.BaseActivity
@@ -20,7 +22,6 @@ import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_search.*
 import kotlinx.android.synthetic.main.activity_search_frie_brigade.*
-import java.util.*
 
 /**
  * Created by pc on 2017/12/20.
@@ -30,10 +31,11 @@ import java.util.*
 class SearchUnitActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private var refreshState = Constants.RefreshState.STATE_REFRESH
-    private var currentPage = 1
-    private lateinit var mAdapter:SearchUnitAdapter
+    private var currentPage = 0
+    private var searchContent=""
+    private lateinit var mAdapter:SearchUnitAdapter<EnterPriseAllListBean.EnterpriseInfoBean>
     override fun initToolbar(): Boolean {
-        edTitle.setHint("搜索单位名称")
+        edTitle.hint = "搜索单位名称"
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
@@ -55,37 +57,26 @@ class SearchUnitActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.R
         initRecycler()
         
     }
-    private var data = ArrayList<InfoBean>()
     private fun initRecycler() {
         edTitle.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // do something
-                val searchContent = edTitle.text.toString().trim { it <= ' ' }
+                 searchContent = edTitle.text.toString().trim { it <= ' ' }
                 if (!TextUtils.isEmpty(searchContent)) {
-
+                    onRefresh(refreshLayout)
                 }
                 return@OnEditorActionListener true
             }
             false
         })
-        data.add(InfoBean("中国石化徐州分公司",""))
-        data.add(InfoBean("中国石化徐州分公司",""))
-        data.add(InfoBean("中国石化徐州分公司",""))
-        data.add(InfoBean("中国石化徐州分公司",""))
-        data.add(InfoBean("中国石化徐州分公司",""))
-        data.add(InfoBean("中国石化徐州分公司",""))
-        data.add(InfoBean("中国石化徐州分公司",""))
-        data.add(InfoBean("中国石化徐州分公司",""))
         mAdapter = SearchUnitAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
-        mAdapter.setNewData(data)
-        mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(mContext, InfoActivity::class.java).putExtra(InfoActivity.Intent_Class_Name, "单位基本信息"))
+                startActivity(Intent(mContext, InfoActivity::class.java).putExtra(InfoActivity.Intent_Class_Name, "单位基本信息").putExtra(Intent_getEnterPrise_id,mAdapter.data[position].Id))
 
             }
         })
@@ -93,13 +84,38 @@ class SearchUnitActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.R
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout?) {
-        currentPage = 1
+        currentPage = 0
         refreshState = Constants.RefreshState.STATE_REFRESH
+        iniData()
 
     }
 
+
     override fun onLoadMoreRequested() {
+        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.getEnterPriseAllList(this,nameKey=searchContent,currentPage= currentPage) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it.enterpriseInfos)
+                } else {
+                    mAdapter.addData(it.enterpriseInfos ?: ArrayList())
+                }
+                if (it.enterpriseInfos?.isNotEmpty() == true) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
     }
 
 }

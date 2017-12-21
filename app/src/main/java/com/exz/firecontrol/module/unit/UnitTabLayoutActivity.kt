@@ -43,7 +43,7 @@ class UnitTabLayoutActivity : BaseActivity(), OnRefreshListener {
     private val frament =ArrayList<Fragment>()
     private fun initView() {
         for (mTitle in mTitles) {
-            frament.add(UnitTabLayoutFragment.newInstance(mTitle.indexOf(mTitle)))
+            frament.add(UnitTabLayoutFragment.newInstance(mTitle.indexOf(mTitle),intent.getStringExtra(Intent_getEnterPriseAllList_Type)?:""))
         }
         mainTabBar.setViewPager(mViewPager,mTitles,this,frament)
 
@@ -55,5 +55,6 @@ class UnitTabLayoutActivity : BaseActivity(), OnRefreshListener {
 
     companion object {
         val Intent_Class_Name="ClassName"
+        val Intent_getEnterPriseAllList_Type="Intent_getEnterPriseAllList_Type"
     }
 }

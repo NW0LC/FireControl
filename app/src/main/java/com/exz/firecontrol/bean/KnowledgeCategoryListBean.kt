@@ -24,7 +24,7 @@ class KnowledgeCategoryListBean: AbsNetBean {
          * categoryName : 类别一
          */
 
-        var id: Int = 0
+        var Id: Int = 0
         var categoryName: String? = null
     }
 }
