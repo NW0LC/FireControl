@@ -29,6 +29,10 @@ class FirefightingAdapter<T: OrganizationBean> : BaseQuickAdapter<T, BaseViewHol
                 v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_mid)
                 v.tv_more.visibility=View.GONE
             }
+            4 -> {//中队
+                v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_mid)
+                v.tv_more.visibility=View.GONE
+            }
         }
         helper.addOnClickListener(R.id.tv_see_details)
         helper.addOnClickListener(R.id.tv_more)

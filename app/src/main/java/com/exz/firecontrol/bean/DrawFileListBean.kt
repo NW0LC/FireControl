@@ -28,11 +28,11 @@ class DrawFileListBean :AbsNetBean{
          * comid : 1
          */
 
-        var id: Int = 0
-        var name: String? = null
-        var enterpriseName: String? = null
-        var path: String? = null
-        var enterpriseId: Int = 0
+        var Id: Int = 0
+        var Name: String? = null
+        var EnterpriseName: String? = null
+        var Path: String? = null
+        var EnterpriseId: Int = 0
         var comid: Int = 0
     }
 }

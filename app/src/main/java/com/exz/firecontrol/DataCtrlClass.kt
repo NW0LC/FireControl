@@ -355,8 +355,8 @@ object DataCtrlClass {
 //        fetch_count	页大小	        N	    Int
 //        start_postion	当前页	        N	    Int
         val params = HashMap<String, String>()
-        params.put("RoleId", (MyApplication.user as UserBean).roleId)
-        params.put("Pid", (MyApplication.user as UserBean).pid)
+        params.put("RoleId", (MyApplication.user as UserBean).RoleId)
+        params.put("Pid", (MyApplication.user as UserBean).Pid)
         params.put("comid", (MyApplication.user as UserBean).comid)
         params.put("nameKey", nameKey)
         params.put("Type", Type)
@@ -431,7 +431,7 @@ object DataCtrlClass {
     }
 
     /**
-     * 获取消防单位列表
+     * 根据id获取消防单位基本信息
      * @param Id        主键Id
      * */
     fun getEnterPrise(context: Context?,

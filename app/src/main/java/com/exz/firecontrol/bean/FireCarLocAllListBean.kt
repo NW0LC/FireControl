@@ -131,7 +131,7 @@ class FireCarLocAllListBean:AbsNetBean {
         var hoseHook: String? = null
         var fireAx: String? = null
         var lights: String? = null
-        var scba: String? = null
+        var SCBA: String? = null
         var handPump: String? = null
         var suctionPipe: String? = null
         var waterFilter: String? = null

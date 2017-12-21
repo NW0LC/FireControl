@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_unit_tab.*
 
 class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     private var refreshState = Constants.RefreshState.STATE_REFRESH
-    private var currentPage = 1
+    private var currentPage = 0
     private lateinit var mAdapter: UnitTabLayoutAdapter<EnterPriseAllListBean.EnterpriseInfoBean>
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_unit_tab, container, false)

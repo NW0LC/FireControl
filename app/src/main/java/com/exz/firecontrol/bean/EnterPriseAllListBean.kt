@@ -33,15 +33,15 @@ class EnterPriseAllListBean :AbsNetBean {
          * cityName : 天津市
          */
 
-        var id: Int = 0
-        var name: String? = null
-        var type: String? = null
-        var level: String? = null
-        var longitude: Double = 0.toDouble()
-        var latitude: Double = 0.toDouble()
-        var altitude: Int = 0
-        var roleId: Int = 0
-        var zipFileName: String? = null
+        var Id=""
+        var Name: String? = null
+        var Type: String? = null
+        var Level: String? = null
+        var Longitude: Double = 0.toDouble()
+        var Latitude: Double = 0.toDouble()
+        var Altitude: Int = 0
+        var RoleId: Int = 0
+        var ZipFileName: String? = null
         var cityName: String? = null
     }
 }

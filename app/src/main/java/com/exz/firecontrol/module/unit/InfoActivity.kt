@@ -2,6 +2,7 @@ package com.exz.firecontrol.module.unit
 
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.InfoAdapter
 import com.exz.firecontrol.bean.InfoBean
@@ -44,13 +45,18 @@ class InfoActivity : BaseActivity() {
 
     private var data = ArrayList<InfoBean>()
     private fun initRecycler() {
-        if (intent.getStringExtra(Intent_Class_Name).equals("单位基本信息")) {
-            data.add(InfoBean("单位基本信息", "中国"))
-            data.add(InfoBean("单位地址", "中国"))
-            data.add(InfoBean("法定代表人", "中国"))
-            data.add(InfoBean("消防管理人", "中国"))
-            data.add(InfoBean("消防安全负责人", "中国"))
-        } else if (intent.getStringExtra(Intent_Class_Name).equals("消防基本信息")) {
+        if (intent.getStringExtra(Intent_Class_Name) == "单位基本信息") {
+            DataCtrlClass.getEnterPrise(this,intent.getStringExtra(Intent_getEnterPrise_id)?:""){
+                if (it!=null){
+                data.add(InfoBean("单位基本信息",it.Name?:""))
+                data.add(InfoBean("单位地址", it.Address?:""))
+                data.add(InfoBean("法定代表人", it.LegalAgent?:""))
+                data.add(InfoBean("消防管理人", it.Manager?:""))
+                data.add(InfoBean("消防安全负责人", it.Artificial?:""))
+            }
+            }
+
+        } else if (intent.getStringExtra(Intent_Class_Name) == "消防基本信息") {
             data.add(InfoBean("消防泵", "中国"))
             data.add(InfoBean("消防栓", "中国"))
             data.add(InfoBean("消防水罐", "中国"))
@@ -72,5 +78,6 @@ class InfoActivity : BaseActivity() {
 
     companion object {
         var Intent_Class_Name = "ClassName"
+        var Intent_getEnterPrise_id = "Intent_getEnterPrise_id"
     }
 }
