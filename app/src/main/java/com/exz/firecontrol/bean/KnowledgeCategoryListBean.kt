@@ -18,13 +18,13 @@ class KnowledgeCategoryListBean: AbsNetBean {
     override var messError=""
     var categoryList: List<CategoryListBean>? = null
 
-    class CategoryListBean {
+    open class CategoryListBean {
         /**
-         * Id : 1
+         * id : 1
          * categoryName : 类别一
          */
 
-        var Id: Int = 0
+        var id: Int = 0
         var categoryName: String? = null
     }
 }

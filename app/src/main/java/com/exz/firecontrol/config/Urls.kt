@@ -96,4 +96,8 @@ object Urls{
      * 获取消防知识库类别列表
      */
     val getKnowledgeCategoryList=url+"user/getKnowledgeCategoryList.jn"
+    /**
+     * 获取消防知识列表（分页）
+     */
+    val getKnowledgeInfoList=url+"user/getKnowledgeInfoList.jn"
 }

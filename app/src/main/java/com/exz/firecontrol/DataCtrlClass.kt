@@ -1076,4 +1076,47 @@ object DataCtrlClass {
                     })
         }
     }
+    /**
+     * 获取消防知识库类别列表
+     * @param id	类别id
+     * @param start_postion	当前页
+     * */
+    fun getKnowledgeInfoList(context: Context?,
+                             id: String="",
+                        currentPage: Int = 1,
+                        listener: (l: KnowledgeInfoListBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      id	类别id	Y	Int
+//      start_postion	搜索数据的起始位置，不传设为0	N	Int
+//      fetch_count	当前页，不传设为10	N	Int
+//
+        val params = HashMap<String, String>()
+        params.put("id", id)
+        params.put("fetch_count", pageSize.toString())
+        params.put("start_postion", currentPage.toString())
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<KnowledgeInfoListBean>(Urls.getKnowledgeInfoList)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<KnowledgeInfoListBean>(context) {
+                        val function = { getKnowledgeInfoList(context,id,currentPage, listener) }
+                        override fun onSuccess(response: Response<KnowledgeInfoListBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<KnowledgeInfoListBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
 }
