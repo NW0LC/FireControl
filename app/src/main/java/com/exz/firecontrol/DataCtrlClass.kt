@@ -396,20 +396,19 @@ object DataCtrlClass {
      * */
     fun getDrawFileList(context: Context?,
                         EnterpriseId: String,
-                        comId: String,
                         listener: (l: DrawFileListBean?) -> Unit) {
 //        参数名	    参数含义	必选	类型及范围	说明
 //        EnterpriseId	消防单位id	Y	    int
 //        comid	        顶级单位id	Y	    int
         val params = HashMap<String, String>()
         params.put("EnterpriseId", EnterpriseId)
-        params.put("comid", comId)
+        params.put("comid", (MyApplication.user as UserBean).comid)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
             OkGo.post<DrawFileListBean>(Urls.getDrawFileList)
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<DrawFileListBean>(context) {
-                        val function = { getDrawFileList(context, EnterpriseId, comId, listener) }
+                        val function = { getDrawFileList(context, EnterpriseId,listener) }
                         override fun onSuccess(response: Response<DrawFileListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {

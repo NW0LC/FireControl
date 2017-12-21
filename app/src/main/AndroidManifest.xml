@@ -74,6 +74,11 @@
         <!--消防车辆详情-->
         <activity android:name=".module.vehicle.VehicleDetailActivity" android:screenOrientation="portrait"/>
 
+
+
+
+        <activity android:name=".module.unit.EnterPriseDataActivity" android:screenOrientation="portrait"/>
+
         <!--图片预览-->
         <activity android:name="com.szw.framelibrary.view.preview.PreviewActivity" />
         <!-- 如果您腾讯地图key确认无误，却依然授权没有通过，请检查您的key的白名单配置 -->

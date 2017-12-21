@@ -25,10 +25,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.exz.firecontrol.R;
+import com.github.mmin18.widget.RealtimeBlurView;
 import com.szw.framelibrary.base.BaseActivity;
+import com.szw.framelibrary.utils.StatusBarUtil;
 
 import im.delight.android.webview.AdvancedWebView;
 import im.delight.android.webview.AdvancedWebView.Listener;
@@ -39,6 +42,8 @@ public class MyWebActivity extends BaseActivity implements Listener {
     ImageView mLeftImg;
     Toolbar toolbar;
     ProgressBar mProgressBar;
+    RealtimeBlurView blurView;
+    RelativeLayout lay_content;
     public static String Intent_Url = "info";
     public static String Intent_Title = "name";
     private boolean isAnimStart = false;
@@ -48,19 +53,17 @@ public class MyWebActivity extends BaseActivity implements Listener {
     }
 
     public boolean initToolbar() {
-        this.mTitle.setTextSize(18.0F);
-        this.mTitle.setTextColor(ContextCompat.getColor(this, R.color.White));
-        this.mTitle.setMaxEms(7);
-        this.toolbar.setContentInsetsAbsolute(0, 0);
-        this.mLeftImg.setVisibility(View.GONE);
-        this.toolbar.setNavigationIcon(ContextCompat.getDrawable(mContext,R.mipmap.icon_arrow_white_back));
-        this.mTitle.setText(this.getIntent().getStringExtra(Intent_Title));
-        this.toolbar.setBackgroundColor(ContextCompat.getColor(mContext,R.color.colorPrimary));
-        this.setSupportActionBar(this.toolbar);
+        StatusBarUtil.immersive(this);
+        StatusBarUtil.setPaddingSmart(this, toolbar);
+        StatusBarUtil.setPaddingSmart(this, blurView);
+        StatusBarUtil.setPaddingSmart(this, lay_content);
+        mTitle.setText(getIntent().getStringExtra(Intent_Title));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (mWebView.onBackPressed()) {
+                    finish();
+                }
             }
         });
         return false;
@@ -71,11 +74,13 @@ public class MyWebActivity extends BaseActivity implements Listener {
     }
 
     public void init() {
-        this.mWebView = (AdvancedWebView)this.findViewById(R.id.mWebView);
-        this.mTitle = (TextView)this.findViewById(R.id.mTitle);
-        this.mLeftImg = (ImageView)this.findViewById(R.id.mLeftImg);
-        this.toolbar = (Toolbar)this.findViewById(R.id.toolbar);
-        this.mProgressBar = (ProgressBar)this.findViewById(R.id.progressBar);
+        this.lay_content = this.findViewById(R.id.lay_content);
+        this.mWebView = this.findViewById(R.id.mWebView);
+        this.blurView = this.findViewById(R.id.blurView);
+        this.mTitle = this.findViewById(R.id.mTitle);
+        this.mLeftImg = this.findViewById(R.id.mLeftImg);
+        this.toolbar = this.findViewById(R.id.toolbar);
+        this.mProgressBar = this.findViewById(R.id.progressBar);
         this.mWebView.setListener(this, this);
         this.mWebView.loadUrl(this.getIntent().getStringExtra(Intent_Url));
         this.mWebView.getSettings().setJavaScriptEnabled(true);

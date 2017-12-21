@@ -15,6 +15,6 @@ class FireMainIdBean : AbsNetBean {
      */
     override  var result=""
     override var messError=""
-    var fireManInfo: FireMainLocAllListBean.FireManLocBean? = null
+    var FireManInfo: FireMainLocAllListBean.FireManLocBean? = null
 
 }

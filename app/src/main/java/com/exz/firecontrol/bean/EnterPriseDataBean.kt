@@ -18,7 +18,7 @@ class EnterPriseDataBean : AbsNetBean {
     override var messError=""
     var enterpriseData: List<EnterpriseDataBean>? = null
 
-    class EnterpriseDataBean {
+    open class EnterpriseDataBean {
         /**
          * id : 6
          * name : 1

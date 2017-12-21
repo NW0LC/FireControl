@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="false"
     android:orientation="vertical">
 
-    <include layout="@layout/action_bar_tv" />
-
     <RelativeLayout
-
+        android:id="@+id/lay_content"
+        android:clipToPadding="false"
+        android:paddingTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,4 +26,5 @@
             android:progress="0"
             android:progressDrawable="@drawable/web_progress_green" />
     </RelativeLayout>
-</LinearLayout>
+    <include layout="@layout/action_bar_custom" />
+</FrameLayout>

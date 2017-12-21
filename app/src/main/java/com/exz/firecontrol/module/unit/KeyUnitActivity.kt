@@ -58,16 +58,22 @@ class KeyUnitActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(mContext,SearchUnitActivity::class.java))
             }
             bt_tab_1 -> {
-                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,mContext.getString(R.string.petrochemical)))
+                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,bt_tab_1.text.toString()))
             }
             bt_tab_2 -> {
-                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,mContext.getString(R.string.tall_buildings)))
+                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,bt_tab_2.text.toString()))
             }
             bt_tab_3 -> {
-                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,mContext.getString(R.string.personnel_intensive_class)))
+                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,bt_tab_3.text.toString()))
             }
             bt_tab_4 -> {
-                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,mContext.getString(R.string.other_categories)))
+                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,bt_tab_4.text.toString()))
+            }
+            bt_tab_5 -> {
+                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,bt_tab_5.text.toString()))
+            }
+            bt_tab_6 -> {
+                startActivity(Intent(mContext,UnitTabLayoutActivity::class.java).putExtra(UnitTabLayoutActivity.Intent_Class_Name,bt_tab_6.text.toString()))
             }
         }
     }

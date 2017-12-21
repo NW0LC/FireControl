@@ -21,7 +21,7 @@ import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_search.*
-import kotlinx.android.synthetic.main.activity_search_frie_brigade.*
+import kotlinx.android.synthetic.main.activity_serach_unit.*
 
 /**
  * Created by pc on 2017/12/20.
@@ -76,7 +76,8 @@ class SearchUnitActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.R
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(mContext, InfoActivity::class.java).putExtra(InfoActivity.Intent_Class_Name, "单位基本信息").putExtra(Intent_getEnterPrise_id,mAdapter.data[position].Id))
+
+                startActivity(Intent(mContext, UnitDetailActivity::class.java).putExtra(Intent_getEnterPrise_id,mAdapter.data[position].Id))
 
             }
         })
@@ -102,11 +103,11 @@ class SearchUnitActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.R
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {
-                    mAdapter.setNewData(it.enterpriseInfos)
+                    mAdapter.setNewData(it.EnterpriseInfos)
                 } else {
-                    mAdapter.addData(it.enterpriseInfos ?: ArrayList())
+                    mAdapter.addData(it.EnterpriseInfos ?: ArrayList())
                 }
-                if (it.enterpriseInfos?.isNotEmpty() == true) {
+                if (it.EnterpriseInfos?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
                     currentPage++
                 } else {
