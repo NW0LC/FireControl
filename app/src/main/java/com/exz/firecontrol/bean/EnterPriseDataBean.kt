@@ -32,9 +32,9 @@ class EnterPriseDataBean : AbsNetBean {
 
         var id: Int = 0
         var name: String? = null
-        var longitude: Int = 0
-        var latitude: Int = 0
-        var altitude: Int = 0
+        var longitude: Double = 0.toDouble()
+        var latitude: Double = 0.toDouble()
+        var altitude: Double = 0.toDouble()
         var flag: Int = 0
         var description: String? = null
         var enterpriseId: Int = 0

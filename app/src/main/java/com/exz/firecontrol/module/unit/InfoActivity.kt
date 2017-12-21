@@ -87,6 +87,6 @@ class InfoActivity : BaseActivity(), OnRefreshListener {
     companion object {
         var Intent_Class_Name = "ClassName"
         var Intent_getEnterPrise_id = "Intent_getEnterPrise_id"
-        var Intent_getEnterPrise_comId = "Intent_getEnterPrise_comId"
+
     }
 }

@@ -14,6 +14,8 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.SearchUnitAdapter
 import com.exz.firecontrol.bean.EnterPriseAllListBean
 import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
+import com.exz.firecontrol.module.unit.UnitDetailActivity.Companion.Intent_UnitDetailActivity_lat
+import com.exz.firecontrol.module.unit.UnitDetailActivity.Companion.Intent_UnitDetailActivity_lon
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.BaseActivity
@@ -77,7 +79,7 @@ class SearchUnitActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.R
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
 
-                startActivity(Intent(mContext, UnitDetailActivity::class.java).putExtra(Intent_getEnterPrise_id,mAdapter.data[position].Id))
+                startActivity(Intent(mContext, UnitDetailActivity::class.java).putExtra(Intent_getEnterPrise_id,mAdapter.data[position].Id).putExtra(Intent_UnitDetailActivity_lon,mAdapter.data[position].Longitude).putExtra(Intent_UnitDetailActivity_lat,mAdapter.data[position].Latitude))
 
             }
         })

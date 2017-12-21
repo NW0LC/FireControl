@@ -14,6 +14,8 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.UnitTabLayoutAdapter
 import com.exz.firecontrol.bean.EnterPriseAllListBean
 import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
+import com.exz.firecontrol.module.unit.UnitDetailActivity.Companion.Intent_UnitDetailActivity_lat
+import com.exz.firecontrol.module.unit.UnitDetailActivity.Companion.Intent_UnitDetailActivity_lon
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
@@ -56,7 +58,8 @@ class UnitTabLayoutFragment : MyBaseFragment(), OnRefreshListener, BaseQuickAdap
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(context, UnitDetailActivity::class.java).putExtra(Intent_getEnterPrise_id,mAdapter.data[position].Id))
+                startActivity(Intent(context, UnitDetailActivity::class.java).putExtra(Intent_getEnterPrise_id,mAdapter.data[position].Id).
+                putExtra(Intent_UnitDetailActivity_lon,mAdapter.data[position].Longitude).putExtra(Intent_UnitDetailActivity_lat,mAdapter.data[position].Latitude))
             }
         })
         mAdapter.setOnLoadMoreListener(this, mRecyclerView)

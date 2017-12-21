@@ -86,11 +86,18 @@ class UnitDetailActivity : BaseActivity() {
                             startActivity(Intent(mContext, FirewaterSupplyActivity::class.java))
                         }
                         "地图导航" -> {
+                            intent.getStringExtra(Intent_UnitDetailActivity_lon)
+                            intent.getStringExtra(Intent_UnitDetailActivity_lat)
                             startActivity(Intent(mContext, MapLocationActivity::class.java).putExtra(MapLocationActivity.Intent_Class_Name,"地址"))
                         }
                     }
 
             }
         })
+    }
+    companion object {
+
+        var Intent_UnitDetailActivity_lon = "Intent_UnitDetailActivity_lon"
+        var Intent_UnitDetailActivity_lat = "Intent_UnitDetailActivity_lat"
     }
 }
