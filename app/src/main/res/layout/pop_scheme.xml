@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_a7000000"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/mAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_30"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:orientation="vertical"
+            app:rv_backgroundColor="@color/White"
+            app:rv_cornerRadius="@dimen/dp_10">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_scheme_pop"
+                android:gravity="center"
+                android:padding="@dimen/margin_15"
+                android:text="@string/proposed_rescue_plan"
+                android:textColor="@color/White"
+                android:textSize="@dimen/sp_16" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lineSpacingExtra="2dp"
+                android:padding="@dimen/margin_15"
+                android:text="⒈应急预案确定了应急救援的范围和体系，使应急管理不再无据可依，无章可循，尤其是通过培训和演练，可以使应急人员熟悉自己的任务，具备完成指定任务所需的相应能力，并检验预案和行动程序，评估应急人员的整体协调性；
+⒉应急预案有利于做出及时的应急响应，控制和防止事故进一步恶化，应急行动对时间要求十分敏感，不允许有任何拖延，应急预案预先明确了应急各方职责和响应程序，在应急资源等方面进行先期准备，可以指导应急救援迅速、高效、有序的开展，将事故造成的人员伤亡、财产损失和环境破坏将到最低限度；
+⒊应 急预案是各类突发事故的应急基础，通过编制应急预案，可以对那些事先无法预料到的突发事故起到基本的应急指导作用，成为开展应急救援的“底线”，在此基础上，可以针对特定事故类别编制专项应急预案，并有针对性的制定应急预案、进行专项应急预案准备和演习
+⒋应急预案建立了与上级单位和部门应急救援体系的衔接，通过编制应急预案可以确保当发生超过本级应急能力的重大事故时与有关应急机构的联系和协调
+⒌应急预案有利于提高风险防范意识，应急预案的编制、评审、发布、宣传、演练、教育和培训，有利于各方了解面临的重大事故及其相应的应急措施，有利于促进各方提高风险防范意识和能力"
+                android:textColor="@color/MaterialGrey600" />
+            </ScrollView>
+        </com.flyco.roundview.RoundLinearLayout>
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/icon_close_pop"
+            android:scaleType="centerInside" />
+    </LinearLayout>
+
+</RelativeLayout>

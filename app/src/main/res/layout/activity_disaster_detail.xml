@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableHeaderTranslationContent="true"
+        app:srlEnablePreviewInEditMode="false"
+        app:srlHeaderHeight="150dp"
+        app:srlHeaderMaxDragRate="1">
+
+        <View
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:paddingTop="?attr/actionBarSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:drawableStart="@mipmap/icon_location_gray"
+                            android:textColor="@color/MaterialGrey400"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:drawablePadding="10dp"
+                            android:text="11.30 星期三"
+                            android:textColor="@color/MaterialGrey400"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawablePadding="10dp"
+                        android:text="7°"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="30sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:text="多云"
+                            android:textColor="@color/MaterialGrey400"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:drawablePadding="10dp"
+                            android:text="西南风三级"
+                            android:textColor="@color/MaterialGrey400"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_disaster_name"
+                        android:text="@string/disaster_name"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_disaster_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawablePadding="10dp"
+                        android:text="西南风三级"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_current_state"
+                        android:text="@string/current_state"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_current_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawablePadding="10dp"
+                        android:text="西南风三级"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_trapped_person_num"
+                        android:text="@string/trapped_person_num"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_trapped_person_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawablePadding="10dp"
+                        android:text="西南风三级"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_alarm_people"
+                        android:text="@string/alarm_people"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_alarm_people"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawablePadding="10dp"
+                        android:text="西南风三级"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:drawableStart="@mipmap/icon_alarm_date"
+                            android:text="@string/alarm_date"
+                            android:textColor="@color/MaterialGrey400"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:drawablePadding="10dp"
+                            android:text="@string/police_date"
+                            android:textColor="@color/MaterialGrey400"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:drawablePadding="10dp"
+                            android:text="@string/rejoin_date"
+                            android:textColor="@color/MaterialGrey400"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_alarm_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:text="西南风三级"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:text="西南风三级"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:text="西南风三级"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_related_plans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_related_plans"
+                        android:text="@string/related_plans"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_related_plans"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_plans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_unit_detail_3"
+                        android:text="@string/plans"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_plans"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_xfsy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_unit_detail_5"
+                        android:text="@string/fire_water_supply"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_xfsy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_unit_detail_6"
+                        android:text="@string/traffic"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_traffic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_disaster_live"
+                        android:text="@string/live"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_live"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/White"
+                    android:padding="@dimen/margin_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@mipmap/icon_disaster_discussion"
+                        android:text="@string/disaster_discussion"
+                        android:textColor="@color/MaterialGrey400"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:id="@+id/tv_disaster_discussion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableEnd="@mipmap/icon_main_gray_next"
+                        android:drawablePadding="10dp"
+                        android:textColor="@color/MaterialGrey600"
+                        android:textSize="@dimen/sp_14" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <include layout="@layout/action_bar_custom" />
+</android.support.constraint.ConstraintLayout>

@@ -10,8 +10,10 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DisasterAdapter
 import com.exz.firecontrol.bean.FireInfoListBean
 import com.exz.firecontrol.bean.UserBean
+import com.exz.firecontrol.module.disaster.DisasterActivity
 import com.exz.firecontrol.module.firefighting.FireDepartmentActivity
 import com.exz.firecontrol.module.firefighting.RepositoryActivity
+import com.exz.firecontrol.module.person.PersonActivity
 import com.exz.firecontrol.module.unit.KeyUnitActivity
 import com.exz.firecontrol.module.vehicle.VehicleActivity
 import com.exz.firecontrol.utils.SZWUtils
@@ -81,10 +83,14 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
         headerView.bt_tab_4.setOnClickListener(this)
         headerView.bt_tab_5.setOnClickListener(this)
         headerView.bt_tab_6.setOnClickListener(this)
+        headerView.tv_all.setOnClickListener(this)
     }
 
     override fun onClick(p0: View) {
         when (p0) {
+            headerView.tv_all -> {//灾情列表
+                startActivity(Intent(mContext, DisasterActivity::class.java))
+            }
             headerView.bt_tab_1 -> {//消防机构
                 startActivity(Intent(mContext, FireDepartmentActivity::class.java))
             }
@@ -97,7 +103,8 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
             headerView.bt_tab_4 -> {//消防车辆
                 startActivity(Intent(mContext, VehicleActivity::class.java))
             }
-            headerView.bt_tab_5 -> {
+            headerView.bt_tab_5 -> {//人员信息
+                startActivity(Intent(mContext, PersonActivity::class.java))
             }
             headerView.bt_tab_6 -> {
             }
@@ -119,7 +126,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
     }
 
     private fun iniData() {
-        DataCtrlClass.getFireInfoListByPage(this, (MyApplication.user as UserBean).oid, (MyApplication.user as UserBean).comid,currentPage= currentPage) {
+        DataCtrlClass.getFireInfoListByPage(this, (MyApplication.user as UserBean).oid, (MyApplication.user as UserBean).comid, currentPage = currentPage) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {

@@ -77,8 +77,8 @@ dependencies {
     kapt "io.objectbox:objectbox-processor:$objectboxVersion"
     //这里没有指定版本号，用户也可以指定 4.0.3.2 之后的地图 sdk 版本号
     //    compile 'com.tencent.map:tencent-map-vector-sdk:+'
-    implementation files('libs/TencentMapSDK_Raster_v_1.2.8.1.c02ec64.jar')
-    implementation files('libs/TencentLocationSDK_v5.0.1_r251203_170116_1729.jar')
+    compile 'com.tencent.map:tencent-map-vector-sdk:4.0.5.2'
+    implementation files('libs/TencentLocationSdk_v6.2.5.1_r26d6bdbd_20171019_204334.jar')
 }
 repositories {
     mavenCentral()

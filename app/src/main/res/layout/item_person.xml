@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:padding="@dimen/margin_15"
     android:background="@color/White"
+    android:padding="@dimen/margin_15"
     android:layout_height="wrap_content">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/icon_vehicles"
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_head"
+        android:layout_width="@dimen/margin_65"
+        android:layout_height="@dimen/margin_65"
+        android:layout_gravity="center"
+        android:gravity="center"
+        app:placeholderImage="@mipmap/ic_launcher"
+        android:layout_centerVertical="true"
+        app:roundAsCircle="true"
+        app:roundingBorderColor="@color/White"
+        app:roundingBorderWidth="@dimen/margin_0.5"
         />
     <LinearLayout
+        android:layout_toEndOf="@id/img_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -27,8 +32,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="压缩空气泡沫车"
+                android:text="赵日天"
                 android:textSize="@dimen/sp_14"
+                android:id="@+id/Name"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/dp_10"
                 android:textColor="@color/MaterialGrey600"
@@ -44,6 +50,7 @@
                 app:rv_cornerRadius="@dimen/margin_5"
                 android:textSize="@dimen/sp_12"
                 android:text="@string/on_line"
+                android:id="@+id/IsOnline"
                 android:layout_marginEnd="@dimen/dp_10"
                 app:rv_backgroundColor="@color/MaterialGreenA400"
                 />
@@ -56,7 +63,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/vehicle_number"
+                android:text="@string/Constable"
+                android:minEms="3"
                 android:textSize="@dimen/sp_14"
                 android:textColor="@color/MaterialGrey400"
                 />
@@ -65,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/vehicle_number"
                 android:textSize="@dimen/sp_14"
+                android:id="@+id/PCNumber"
                 android:layout_marginStart="6dp"
                 android:textColor="@color/MaterialGrey600"
                 />
@@ -77,11 +86,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/affiliated_unit"
+                android:text="@string/Contingent"
                 android:textSize="@dimen/sp_14"
+                android:minEms="3"
                 android:textColor="@color/MaterialGrey400"
                 />
             <TextView
+                android:id="@+id/RoleName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vehicle_number"
@@ -93,4 +104,4 @@
 
 
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

@@ -138,8 +138,9 @@
             />
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/main_view_all"
+            android:id="@+id/tv_all"
             android:textSize="@dimen/sp_14"
             android:drawableEnd="@mipmap/icon_main_gray_next"
             android:drawablePadding="8dp"
