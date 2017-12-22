@@ -71,4 +71,5 @@
     <string name="place_post">所在岗位</string>
     <string name="about_us">关于我们</string>
     <string name="system_update">系统更新</string>
+    <string name="police_officer">警务员%s</string>
 </resources>

@@ -119,7 +119,7 @@
         <!-- 如果您key确认无误，却依然授权没有通过，请检查您的key的白名单配置 -->
         <meta-data
             android:name="TencentMapSDK"
-            android:value="$TencentKey"/>
+            android:value="${TencentKey}"/>
 
     </application>
 
