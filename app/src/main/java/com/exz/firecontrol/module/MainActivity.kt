@@ -13,6 +13,7 @@ import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.disaster.DisasterActivity
 import com.exz.firecontrol.module.firefighting.FireDepartmentActivity
 import com.exz.firecontrol.module.firefighting.RepositoryActivity
+import com.exz.firecontrol.module.mycenter.MyCenterActivity
 import com.exz.firecontrol.module.person.PersonActivity
 import com.exz.firecontrol.module.unit.KeyUnitActivity
 import com.exz.firecontrol.module.vehicle.VehicleActivity
@@ -51,7 +52,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
         StatusBarUtil.setPaddingSmart(this, mRecyclerView)
         StatusBarUtil.setMargin(this, header)
         toolbar.setNavigationOnClickListener {
-
+            startActivity(Intent(mContext, MyCenterActivity::class.java))
         }
         return false
     }

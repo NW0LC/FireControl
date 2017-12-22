@@ -60,4 +60,15 @@
     <string name="traffic">实时交通</string>
     <string name="live">灾情直播</string>
     <string name="disaster_discussion">灾情讨论</string>
+    <string name="my_user_info">个人信息</string>
+    <string name="change_password">修改密码</string>
+    <string name="feedback">意见建议</string>
+    <string name="setting">系统设置</string>
+    <string name="edit_head_img">编辑/添加头像</string>
+    <string name="my_user_name">姓名</string>
+    <string name="my_user_unit">所属单位</string>
+    <string name="my_user_phone">联系电话</string>
+    <string name="place_post">所在岗位</string>
+    <string name="about_us">关于我们</string>
+    <string name="system_update">系统更新</string>
 </resources>

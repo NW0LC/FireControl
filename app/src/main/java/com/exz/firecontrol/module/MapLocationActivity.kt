@@ -121,7 +121,7 @@ class MapLocationActivity : BaseActivity(), TencentMap.OnMarkerClickListener {
         init {
             locationManager = TencentLocationManager.getInstance(mContext)
             locationRequest = TencentLocationRequest.create()
-            locationRequest!!.interval = 2000
+            locationRequest!!.interval = 90000
         }// TODO Auto-generated constructor stub
 
         override fun onLocationChanged(arg0: TencentLocation, arg1: Int,

@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 android {
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.exz.firecontrol.firecontrol"
@@ -37,12 +38,12 @@ android {
 //                AMap_Key : "4dbce37156db4b2624e343a9b787b610", //高德key
 
                 UMENG_APPKEY  : "5a3385fcf43e48403b000383", //友盟key
+                TencentKey  : "MJYBZ-T3XWX-6NT4P-ZFZ5C-AURI6-OOB6W", //腾讯地图
 
 //                EASEMOB_APPKEY : "1175170810115218#logistics", //环信应用的AppKey
 
 //                BD_APPKEY : "3ecea51f560650b1ed8a4b99808f52e8", //百度地图的AppKey
 
-                Tencent_APPKEY: "LEBBZ-2LCWS-3DKOF-63GND-KS6OE-R5FGS", //百度地图的AppKey
         ]
     }
 
@@ -57,6 +58,7 @@ android {
             path "CMakeLists.txt"
         }
     }
+
 }
 
 
@@ -77,8 +79,8 @@ dependencies {
     kapt "io.objectbox:objectbox-processor:$objectboxVersion"
     //这里没有指定版本号，用户也可以指定 4.0.3.2 之后的地图 sdk 版本号
     //    compile 'com.tencent.map:tencent-map-vector-sdk:+'
-    compile 'com.tencent.map:tencent-map-vector-sdk:4.0.5.2'
     implementation files('libs/TencentLocationSdk_v6.2.5.1_r26d6bdbd_20171019_204334.jar')
+    compile 'com.tencent.map:tencent-map-vector-sdk:4.0.5.2'
 }
 repositories {
     mavenCentral()

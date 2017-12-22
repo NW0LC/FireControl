@@ -33,10 +33,10 @@ class PersonDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
     private lateinit var mAdapter: VehicleDetailAdapter
     override fun initToolbar(): Boolean {
         //状态栏透明和间距处理
-        StatusBarUtil.immersive(this, ContextCompat.getColor(mContext, R.color.colorPrimary_trans))
+        StatusBarUtil.immersive(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, blurView)
-        StatusBarUtil.setPaddingSmart(this, mRecyclerView)
+
         toolbar.setNavigationOnClickListener {
             finish()
         }

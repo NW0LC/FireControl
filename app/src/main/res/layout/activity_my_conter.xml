@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/app_bg">
+
+
+
+            <RelativeLayout
+                android:id="@+id/bt_userinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@mipmap/icon_mine_bg"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:src="@mipmap/icon_my_conter_back"
+                    android:layout_width="50dp"
+                    android:id="@+id/iv_back"
+                    android:scaleType="centerInside"
+                    android:layout_height="50dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/img_head"
+                        android:layout_width="@dimen/margin_80"
+                        android:layout_height="@dimen/margin_80"
+                        app:placeholderImage="@mipmap/icon_my_conter_default"
+                        app:roundAsCircle="true"
+                        app:roundingBorderColor="@color/White"
+                        app:roundingBorderWidth="@dimen/margin_0.5"
+                        tool:background="@color/MaterialGrey200" />
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/text_6"
+                        android:text="未登录"
+                        android:textColor="@color/White" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/my_user_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:drawableEnd="@mipmap/icon_main_gray_next"
+                android:drawablePadding="@dimen/dp_10"
+                android:drawableStart="@mipmap/icon_my_user_info"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/dp_10"
+                android:padding="15dp"
+                android:text="@string/my_user_info"
+                android:textColor="@color/MaterialGrey800"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/tv_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/White"
+                android:layout_marginTop="@dimen/dp_10"
+                android:drawableEnd="@mipmap/icon_main_gray_next"
+                android:drawablePadding="@dimen/dp_10"
+                android:drawableStart="@mipmap/icon_change_password"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/change_password"
+                android:textColor="@color/MaterialGrey800"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/White"
+                android:drawableEnd="@mipmap/icon_main_gray_next"
+                android:drawablePadding="@dimen/dp_10"
+                android:drawableStart="@mipmap/icon_feedback"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/feedback"
+                android:textColor="@color/MaterialGrey800"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/White"
+                android:drawableEnd="@mipmap/icon_main_gray_next"
+                android:drawablePadding="@dimen/dp_10"
+                android:drawableStart="@mipmap/icon_setting"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/setting"
+                android:textColor="@color/MaterialGrey800"
+                android:textSize="14sp" />
+
+
+
+</LinearLayout>

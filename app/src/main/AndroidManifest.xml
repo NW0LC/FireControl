@@ -98,6 +98,16 @@
         <activity android:name=".module.disaster.DisasterDetailActivity" android:screenOrientation="portrait"/>
         <!--实时路况-->
         <activity android:name=".module.MapTypeActivity" android:screenOrientation="portrait"/>
+        <!--个人中心-->
+        <activity android:name=".module.mycenter.MyCenterActivity" android:screenOrientation="portrait"/>
+        <!--个人资料-->
+        <activity android:name=".module.mycenter.MyUserInfoActivity" android:screenOrientation="portrait"/>
+        <!--修改密码-->
+        <activity android:name=".module.login.ChangePasswordActivity" android:screenOrientation="portrait"/>
+        <!--意见反馈-->
+        <activity android:name=".module.FeedbackActivity" android:screenOrientation="portrait"/>
+        <!--系统设置-->
+        <activity android:name=".module.SettingActivity" android:screenOrientation="portrait"/>
 
 
 
@@ -109,7 +119,8 @@
         <!-- 如果您key确认无误，却依然授权没有通过，请检查您的key的白名单配置 -->
         <meta-data
             android:name="TencentMapSDK"
-            android:value="MJYBZ-T3XWX-6NT4P-ZFZ5C-AURI6-OOB6W"/>
+            android:value="$TencentKey"/>
+
     </application>
 
 </manifest>
