@@ -5,11 +5,13 @@ import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
 import com.lzy.imagepicker.ui.ImageGridActivity
 import com.lzy.imagepicker.view.CropImageView
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.imageloder.GlideImageLoader
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -45,16 +47,27 @@ class MyUserInfoActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun init() {
-        super.init()
         initView()
         initCamera()
+        initData()
     }
 
     private fun initView() {
         iv_header.setOnClickListener(this)
     }
 
-
+    private fun initData(){
+        DataCtrlClass.getFireManById(this,MyApplication.user?.userId?:"") {
+            if (it!=null) {
+                iv_header.setImageURI(it.FireManInfo?.userHead?:"")
+                tv_nicekname.text=it.FireManInfo?.Name?:"——"
+                tv_unit.text=it.FireManInfo?.RoleName?:"——"
+                tv_phone.text=it.FireManInfo?.telephone?:"——"
+                tv_phone.text=it.FireManInfo?.telephone?:"——"
+                tv_place_post.text=it.FireManInfo?.policeRank?:"——"
+            }
+        }
+    }
     private fun initCamera() {
         val w = ScreenUtils.getScreenWidth() * 0.2
         val layoutParams = iv_header.layoutParams
@@ -93,7 +106,7 @@ class MyUserInfoActivity : BaseActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         try {
             if (resultCode == ImagePicker.RESULT_CODE_ITEMS && data != null) { //图片选择
-                val images = data?.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) as ArrayList<*>
+                val images = data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS) as ArrayList<*>
                 iv_header.setImageURI("file:///"+(images[0] as ImageItem).path)
             }
         } catch (e: Exception) {

@@ -38,7 +38,7 @@
                 android:textSize="@dimen/sp_14" />
 
             <com.flyco.roundview.RoundTextView
-                android:id="@+id/tv_is_onlin"
+                android:id="@+id/tv_is_online"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp_10"

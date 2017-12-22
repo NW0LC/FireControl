@@ -39,7 +39,7 @@ class StairPop(context: Context, listener: (entity: StairBean) -> Unit) : BasePo
                 mAdapter.data.forEach { it.check = false }
                 mAdapter.data[position].check = true
                 adapter.notifyDataSetChanged()
-                listener.invoke(mAdapter.data.get(position))
+                listener.invoke(mAdapter.data[position])
                 dismiss()
             }
 

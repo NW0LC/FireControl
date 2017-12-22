@@ -5,12 +5,14 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DisasterAdapter
 import com.exz.firecontrol.bean.FireInfoListBean
-import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.disaster.DisasterActivity
+import com.exz.firecontrol.module.disaster.DisasterDetailActivity
+import com.exz.firecontrol.module.disaster.DisasterDetailActivity.Companion.Intent_DisasterDetail_Id
 import com.exz.firecontrol.module.firefighting.FireDepartmentActivity
 import com.exz.firecontrol.module.firefighting.RepositoryActivity
 import com.exz.firecontrol.module.mycenter.MyCenterActivity
@@ -20,7 +22,6 @@ import com.exz.firecontrol.module.vehicle.VehicleActivity
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
-import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
@@ -73,7 +74,11 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
-
+        mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
+            override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                startActivity(Intent(this@MainActivity, DisasterDetailActivity::class.java).putExtra(Intent_DisasterDetail_Id,mAdapter.data[position].id.toString()))
+            }
+        })
     }
 
     private fun initHeader() {
@@ -127,7 +132,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
     }
 
     private fun iniData() {
-        DataCtrlClass.getFireInfoListByPage(this, (MyApplication.user as UserBean).oid, (MyApplication.user as UserBean).comid, currentPage = currentPage) {
+        DataCtrlClass.getFireInfoListByPage(this, currentPage = currentPage) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {

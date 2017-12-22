@@ -9,10 +9,12 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.PersonAdapter
 import com.exz.firecontrol.bean.FireMainLocAllListBean
 import com.exz.firecontrol.bean.StairBean
+import com.exz.firecontrol.module.person.PersonDetailActivity.Companion.Intent_PersonDetail_Id
 import com.exz.firecontrol.pop.StairPop
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -35,8 +37,10 @@ import razerdp.basepopup.BasePopupWindow
 class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener, View.OnClickListener {
     private lateinit var mPop: StairPop//在线状态
     private var refreshState = Constants.RefreshState.STATE_REFRESH
-    private var currentPage = 1
-    private lateinit var mAdapter: PersonAdapter
+    private var currentPage = 0
+    private lateinit var mAdapter: PersonAdapter<FireMainLocAllListBean.FireManLocBean>
+
+    var isOnline=""
     override fun initToolbar(): Boolean {
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this)
@@ -58,7 +62,6 @@ class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Reque
     }
 
     override fun init() {
-        super.init()
         initView()
         initPop()
         initRecycler()
@@ -67,15 +70,14 @@ class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Reque
 
 
     var dataState = ArrayList<StairBean>()
+    var searchContent=""
     private fun initView() {
         SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
         edTitle.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // do something
-                val searchContent = edTitle.text.toString().trim { it <= ' ' }
-                if (!TextUtils.isEmpty(searchContent)) {
-
-                }
+                 searchContent = edTitle.text.toString().trim { it <= ' ' }
+                onRefresh(refreshLayout)
                 return@OnEditorActionListener true
             }
             false
@@ -83,13 +85,13 @@ class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Reque
         rb1.setOnClickListener(this)
     }
     private fun initPop() {
-        dataState.add(StairBean("1", "全部", false))
-        dataState.add(StairBean("2", "在线", false))
-        dataState.add(StairBean("3", "离线", false))
+        dataState.add(StairBean("", "全部", true))
+        dataState.add(StairBean("1", "在线"))
+        dataState.add(StairBean("0", "离线"))
         mPop = StairPop(mContext, {
-            if (it != null) {
-                setGaryOrblue(rb1, true, it.name)
-            }
+            isOnline= it.id
+            setGaryOrblue(rb1, true, it.name)
+            onRefresh(refreshLayout)
         })
         mPop.onDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
@@ -110,26 +112,15 @@ class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Reque
         }
     }
 
-    private var data = ArrayList<FireMainLocAllListBean.FireManLocBean>()
     private fun initRecycler() {
-        data.add(FireMainLocAllListBean.FireManLocBean())
-        data.add(FireMainLocAllListBean.FireManLocBean())
-        data.add(FireMainLocAllListBean.FireManLocBean())
-        data.add(FireMainLocAllListBean.FireManLocBean())
-        data.add(FireMainLocAllListBean.FireManLocBean())
-        data.add(FireMainLocAllListBean.FireManLocBean())
-        data.add(FireMainLocAllListBean.FireManLocBean())
-        data.add(FireMainLocAllListBean.FireManLocBean())
         mAdapter = PersonAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
-        mAdapter.setNewData(data)
-        mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext!!, LinearLayoutManager.VERTICAL, 15, ContextCompat.getColor(mContext!!, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(mContext, PersonDetailActivity::class.java))
+                startActivity(Intent(mContext, PersonDetailActivity::class.java).putExtra(Intent_PersonDetail_Id,mAdapter.data[position].id.toString()))
             }
         })
         mAdapter.setOnLoadMoreListener(this, mRecyclerView)
@@ -145,13 +136,39 @@ class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Reque
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout?) {
-        refreshLayout?.finishRefresh()
-        currentPage = 1
+        currentPage = 0
         refreshState = Constants.RefreshState.STATE_REFRESH
+        iniData()
 
     }
+
 
     override fun onLoadMoreRequested() {
+        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
     }
+
+    private fun iniData() {
+        DataCtrlClass.getFireManAllByPage(this,searchContent,isOnline){
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it.FireManLocs)
+                    tv_count.text=String.format(getString(R.string.numCount),it.fireManCount.toString())
+                } else {
+                    mAdapter.addData(it.FireManLocs ?: ArrayList())
+                }
+                if (it.FireManLocs?.isNotEmpty() == true) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
+    }
+
 }

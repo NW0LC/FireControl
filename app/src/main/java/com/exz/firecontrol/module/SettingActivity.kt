@@ -2,7 +2,9 @@ package com.exz.firecontrol.module
 
 import android.content.Intent
 import android.view.View
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
+import com.exz.firecontrol.module.login.LoginActivity
 import com.exz.firecontrol.widget.MyWebActivity
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -50,7 +52,10 @@ class SettingActivity : BaseActivity(), View.OnClickListener {
             bt_system_update -> {
             }
             bt_submit -> {
-                finish()
+                DataCtrlClass.updateIsOnline(this,"0"){
+                    if (it!=null)
+                    startActivity(Intent(this,LoginActivity::class.java))
+                }
             }
         }
     }

@@ -28,7 +28,9 @@
     <string name="vehicle_state">车辆状态</string>
     <string name="onlin_state">在线状态</string>
     <string name="vehicles">%s部车辆</string>
+    <string name="numCount">%s位消防员</string>
     <string name="on_line">在线</string>
+    <string name="off_line">离线</string>
     <string name="fire_equipment">消防器材</string>
     <string name="telephone">电话</string>
     <string name="address">地址</string>
@@ -42,7 +44,7 @@
     <string name="fire_hydrant">消防栓</string>
     <string name="fire_pool">消防水池</string>
     <string name="firefighting_jug">消防水罐</string>
-    <string name="vehicle_number">车辆编号</string>
+    <string name="vehicle_number">车牌号</string>
     <string name="Constable">警员号</string>
     <string name="affiliated_unit">所属单位</string>
     <string name="Contingent">队伍</string>
@@ -50,8 +52,8 @@
     <string name="current_state">当前状态</string>
     <string name="trapped_person_num">被困人数</string>
     <string name="alarm_people">报警人</string>
-    <string name="alarm_date">报警时间</string>
-    <string name="police_date">出警时间</string>
+    <string name="alarm_date">发生时间</string>
+    <string name="police_date">接警时间</string>
     <string name="rejoin_date">归队时间</string>
     <string name="proposed_rescue_plan">建议救援方案</string>
     <string name="related_plans">关联预案</string>
@@ -71,5 +73,5 @@
     <string name="place_post">所在岗位</string>
     <string name="about_us">关于我们</string>
     <string name="system_update">系统更新</string>
-    <string name="police_officer">警务员%s</string>
+    <string name="police_officer">警员号%s</string>
 </resources>

@@ -117,35 +117,33 @@
 
 
     <LinearLayout
+        android:id="@+id/tv_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin_15"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@color/White"
-        >
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_15">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/main_new_disaster"
-            android:drawableStart="@mipmap/icon_main_new_disaster"
-            android:textSize="@dimen/sp_14"
+            android:layout_weight="1"
             android:drawablePadding="8dp"
+            android:drawableStart="@mipmap/icon_main_new_disaster"
             android:gravity="center_vertical"
+            android:text="@string/main_new_disaster"
             android:textColor="@color/MaterialGrey600"
-            />
+            android:textSize="@dimen/sp_14" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/main_view_all"
-            android:id="@+id/tv_all"
-            android:textSize="@dimen/sp_14"
             android:drawableEnd="@mipmap/icon_main_gray_next"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
+            android:text="@string/main_view_all"
             android:textColor="@color/MaterialGrey600"
-            />
+            android:textSize="@dimen/sp_14" />
     </LinearLayout>
 </LinearLayout>

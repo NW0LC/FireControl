@@ -13,11 +13,10 @@ import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DisasterAdapter
 import com.exz.firecontrol.bean.FireInfoListBean
-import com.exz.firecontrol.bean.UserBean
+import com.exz.firecontrol.module.disaster.DisasterDetailActivity.Companion.Intent_DisasterDetail_Id
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
-import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.MyBaseFragment
 import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
@@ -37,6 +36,12 @@ class DisasterFragment : MyBaseFragment(), BaseQuickAdapter.RequestLoadMoreListe
         return rootView
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            onRefresh(refreshLayout)
+        }
+    }
     override fun initView() {
         initToolbar()
         initRecycler()
@@ -48,18 +53,12 @@ class DisasterFragment : MyBaseFragment(), BaseQuickAdapter.RequestLoadMoreListe
         StatusBarUtil.setMargin(activity, header)
         SZWUtils.setPaddingSmart(mRecyclerView, 65f)
         SZWUtils.setMargin(header, 65f)
+        SZWUtils.setRefreshAndHeaderCtrl(this,header,refreshLayout)
         return false
     }
-    private var data = ArrayList<FireInfoListBean.FireInfoBean>()
     private fun initRecycler() {
-        data.add(FireInfoListBean.FireInfoBean())
-        data.add(FireInfoListBean.FireInfoBean())
-        data.add(FireInfoListBean.FireInfoBean())
-        data.add(FireInfoListBean.FireInfoBean())
-        data.add(FireInfoListBean.FireInfoBean())
         mAdapter = DisasterAdapter()
         mAdapter.setHeaderAndEmpty(true)
-        mAdapter.setNewData(data)
         mAdapter.bindToRecyclerView(mRecyclerView)
         mAdapter.setOnLoadMoreListener(this, mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -67,7 +66,7 @@ class DisasterFragment : MyBaseFragment(), BaseQuickAdapter.RequestLoadMoreListe
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object :OnItemClickListener(){
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(context, DisasterDetailActivity::class.java))
+                startActivity(Intent(context, DisasterDetailActivity::class.java).putExtra(Intent_DisasterDetail_Id,mAdapter.data[position].id.toString()))
             }
         })
 
@@ -88,7 +87,7 @@ class DisasterFragment : MyBaseFragment(), BaseQuickAdapter.RequestLoadMoreListe
     }
 
     private fun iniData() {
-        DataCtrlClass.getFireInfoListByPage(context!!, (MyApplication.user as UserBean).oid, (MyApplication.user as UserBean).comid, currentPage = currentPage) {
+        DataCtrlClass.getFireInfoListByPage(context,arguments?.getString("status")?:"", currentPage = currentPage) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {
@@ -109,9 +108,10 @@ class DisasterFragment : MyBaseFragment(), BaseQuickAdapter.RequestLoadMoreListe
     }
 
     companion object {
-        fun newInstance(): DisasterFragment {
+        fun newInstance(status:String): DisasterFragment {
             val bundle = Bundle()
             val fragment = DisasterFragment()
+            bundle.putString("status",status)
             fragment.arguments = bundle
             return fragment
         }

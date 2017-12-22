@@ -43,11 +43,11 @@ object Urls{
     /**
      * 获取消防员列表
      */
-    val getFireManLocAllList=url+"user/getFireManLocAllList.jn"
+    val getFireManAllByPage =url+"user/getFireManAllByPage.jn"
     /**
      * 获取消防车列表
      */
-    val getFireCarLocAllList=url+"user/getFireCarLocAllList.jn"
+    val getFireCarListByPage =url+"user/getFireCarListByPage.jn"
     /**
      * 获取消防预案、vr列表
      */

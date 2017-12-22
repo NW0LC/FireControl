@@ -1,6 +1,7 @@
 package com.exz.firecontrol.module.login
 
 import android.text.TextUtils
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -33,25 +34,30 @@ class ChangePasswordActivity : BaseActivity() {
     override fun init() {
         super.init()
         bt_submit.setOnClickListener {
-            var oldPwd = ed_old_password.text.toString().trim()
+            val oldPwd = ed_old_password.text.toString().trim()
             if (TextUtils.isEmpty(oldPwd)) {
                 ed_old_password.setShakeAnimation()
                 return@setOnClickListener
             }
 
-            var newPwd = ed_new_password.text.toString().trim()
+            val newPwd = ed_new_password.text.toString().trim()
             if (TextUtils.isEmpty(newPwd)) {
                 ed_new_password.setShakeAnimation()
                 return@setOnClickListener
             }
-            var password = ed_password.text.toString().trim()
+            val password = ed_password.text.toString().trim()
             if (TextUtils.isEmpty(password)) {
                 ed_password.setShakeAnimation()
                 return@setOnClickListener
             }
-            if (!newPwd.equals(password)) {
+            if (newPwd != password) {
                 toast("两次输入的密码不一致!")
                 return@setOnClickListener
+            }
+            DataCtrlClass.changePwd(this,oldPwd,newPwd){
+                if (it!=null){
+                    finish()
+                }
             }
         }
     }

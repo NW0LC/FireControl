@@ -5,9 +5,13 @@ import android.support.v4.content.ContextCompat
 import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.TextView
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.module.unit.DrawingsActivity
+import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_comId
+import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_id
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity
+import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
 import com.exz.firecontrol.pop.SchemePop
 import com.exz.firecontrol.widget.MyWebActivity
 import com.szw.framelibrary.base.BaseActivity
@@ -52,8 +56,39 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun init() {
-        super.init()
+
         initView()
+        iniData()
+    }
+
+    private var comId = ""
+    private fun iniData() {
+        DataCtrlClass.getFireInfoById(mContext, intent.getStringExtra(Intent_DisasterDetail_Id) ?: "") {
+            if (it != null) {
+                val fireInfoBean = it.fireInfo?.get(0)
+                comId = fireInfoBean?.comid.toString()
+                tv_disaster_name.text = fireInfoBean?.name ?: ""
+                tv_current_state.text = when (fireInfoBean?.status) {
+                    1 -> {
+                        "待处理"
+                    }
+                    2 -> {
+                        "正在处理"
+                    }
+                    else -> {
+                        "已结束"
+                    }
+                }
+                tv_trapped_person_num.text = fireInfoBean?.psnNum.toString()
+                tv_alarm_people.text = fireInfoBean?.alarmName ?: ""
+                tv_alarm_date.text = fireInfoBean?.createDate ?: ""
+                tv_out_date.text = fireInfoBean?.startDate ?: ""
+                tv_back_date.text = fireInfoBean?.endDate ?: ""
+                lay_out.visibility = if ((fireInfoBean?.startDate ?: "").isEmpty()) View.GONE else View.VISIBLE
+                lay_back.visibility = if ((fireInfoBean?.endDate ?: "").isEmpty()) View.GONE else View.VISIBLE
+            }
+
+        }
     }
 
     private fun initView() {
@@ -69,11 +104,15 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(mContext, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title, "关联预案").putExtra(MyWebActivity.Intent_Url, ""))
             }
             rl_plans -> {//图纸资料
-                startActivity(Intent(mContext, DrawingsActivity::class.java))
+                startActivity(Intent(mContext, DrawingsActivity::class.java).putExtra(Intent_getDrawFileList_id, intent.getStringExtra(Intent_getEnterPrise_id) ?: "").putExtra(Intent_getDrawFileList_comId, comId))
             }
-            rl_xfsy->{//消防水源
+            rl_xfsy -> {//消防水源
                 startActivity(Intent(mContext, FirewaterSupplyActivity::class.java))
             }
         }
+    }
+
+    companion object {
+        var Intent_DisasterDetail_Id = "Intent_DisasterDetail_Id"
     }
 }

@@ -18,9 +18,9 @@ class FireMainLocAllListBean :AbsNetBean{
     override  var result=""
     override var messError=""
     var fireManCount: Int = 0
-    var fireManLocs: List<FireManLocBean>? = null
+    var FireManLocs: List<FireManLocBean>? = null
 
-    class FireManLocBean {
+    open class FireManLocBean {
         /**
          * RoleId : 27
          * RoleName : 五台山中队
@@ -47,8 +47,8 @@ class FireMainLocAllListBean :AbsNetBean{
          * comid : 1
          */
 
-        var roleId: Int = 0
-        var roleName: String? = null
+        var RoleId: Int = 0
+        var RoleName: String? = null
         var id: Int = 0
         var deviceCode: String? = null
         var psnCode: String? = null
@@ -61,14 +61,20 @@ class FireMainLocAllListBean :AbsNetBean{
         var staticflag: String? = null
         var flag: String? = null
         var Battery: String? = null
-        var lon: Double = 0.toDouble()
-        var lat: Double = 0.toDouble()
-        var height: Int = 0
+        var lon=""
+        var lat=""
+        var height=""
         var IsOnline: Int = 0
         var Name: String? = null
         var PCNumber: String? = null
         var SSLOCID: Int = 0
         var userHead: String? = null
         var comid: Int = 0
+        var telephone=""
+        var policeRank=""
+        var age=""
+        var enlistingTime=""
+        var manHeight=""
+        var weight=""
     }
 }

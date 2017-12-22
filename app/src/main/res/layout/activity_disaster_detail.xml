@@ -225,7 +225,8 @@
                         android:textSize="@dimen/sp_14" />
                 </RelativeLayout>
 
-                <RelativeLayout
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
@@ -233,12 +234,12 @@
                     android:padding="@dimen/margin_15">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <TextView
+                            android:minEms="5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="10dp"
@@ -248,9 +249,27 @@
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:id="@+id/tv_alarm_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:text="西南风三级"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/lay_out"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:minEms="5"
+                            android:gravity="end"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="25dp"
                             android:layout_marginTop="@dimen/dp_4"
                             android:drawablePadding="10dp"
                             android:text="@string/police_date"
@@ -258,54 +277,46 @@
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:id="@+id/tv_out_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:text="西南风三级"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/lay_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="25dp"
+                            android:minEms="5"
+                            android:gravity="end"
                             android:layout_marginTop="@dimen/dp_4"
                             android:drawablePadding="10dp"
                             android:text="@string/rejoin_date"
                             android:textColor="@color/MaterialGrey400"
                             android:textSize="@dimen/sp_14" />
 
+                        <TextView
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:id="@+id/tv_back_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="10dp"
+                            android:text="西南风三级"
+                            android:textColor="@color/MaterialGrey600"
+                            android:textSize="@dimen/sp_14" />
+
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="right"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_alarm_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="10dp"
-                            android:layout_marginTop="@dimen/dp_4"
-                            android:text="西南风三级"
-                            android:textColor="@color/MaterialGrey600"
-                            android:textSize="@dimen/sp_14" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="10dp"
-                            android:layout_marginTop="@dimen/dp_4"
-                            android:text="西南风三级"
-                            android:textColor="@color/MaterialGrey600"
-                            android:textSize="@dimen/sp_14" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="10dp"
-                            android:layout_marginTop="@dimen/dp_4"
-                            android:text="西南风三级"
-                            android:textColor="@color/MaterialGrey600"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-
-
-                </RelativeLayout>
+                </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/rl_related_plans"

@@ -9,10 +9,12 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
+import com.exz.firecontrol.adapter.FireCarLocBean
 import com.exz.firecontrol.adapter.VehicleAdapter
 import com.exz.firecontrol.bean.StairBean
-import com.exz.firecontrol.bean.VehicleBean
+import com.exz.firecontrol.module.vehicle.VehicleDetailActivity.Companion.Intent_VehicleDetail_Id
 import com.exz.firecontrol.pop.StairPop
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -33,11 +35,17 @@ import razerdp.basepopup.BasePopupWindow
  */
 
 class VehicleActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener, View.OnClickListener {
-    private lateinit var mPopCarState: StairPop//车辆类型
-    private lateinit var mPopCarType: StairPop//车辆状态
+    private lateinit var mPopCarType: StairPop//车辆类型
+    private lateinit var mPopCarState: StairPop//车辆状态
     private var refreshState = Constants.RefreshState.STATE_REFRESH
-    private var currentPage = 1
-    private lateinit var mAdapter: VehicleAdapter
+    private var currentPage = 0
+    private lateinit var mAdapter: VehicleAdapter<FireCarLocBean>
+
+    private var dataState = ArrayList<StairBean>()
+    private var dataType = ArrayList<StairBean>()
+    private var searchContent=""
+    private var carType=""
+    private var carState=""
     override fun initToolbar(): Boolean {
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this)
@@ -59,25 +67,17 @@ class VehicleActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Requ
     }
 
     override fun init() {
-        super.init()
         initView()
         initPop()
         initRecycler()
     }
-
-
-
-    var dataState = ArrayList<StairBean>()
-    var dataType = ArrayList<StairBean>()
     private fun initView() {
         SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
         edTitle.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 // do something
-                val searchContent = edTitle.text.toString().trim { it <= ' ' }
-                if (!TextUtils.isEmpty(searchContent)) {
-
-                }
+                 searchContent = edTitle.text.toString().trim { it <= ' ' }
+                onRefresh(refreshLayout)
                 return@OnEditorActionListener true
             }
             false
@@ -86,31 +86,36 @@ class VehicleActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Requ
         rb2.setOnClickListener(this)
     }
     private fun initPop() {
-        dataState.add(StairBean("0", "测试数据", false))
-        dataState.add(StairBean("1", "接口返回", false))
-        dataType.add(StairBean("1", "全部", false))
-        dataType.add(StairBean("2", "在线", false))
-        dataType.add(StairBean("3", "离线", false))
-        mPopCarState = StairPop(mContext, {
-            if (it != null) {
-                setGaryOrblue(rb1, true, it.name)
-            }
-        })
+//        1.登高车2.指挥车3.泡沫车4.水罐车5.干粉车6.高鹏车 7越野摩托车
+        dataType.add(StairBean("", "全部类型", true))
+        dataType.add(StairBean("1", "登高车"))
+        dataType.add(StairBean("2", "指挥车"))
+        dataType.add(StairBean("3", "泡沫车"))
+        dataType.add(StairBean("4", "水罐车"))
+        dataType.add(StairBean("5", "干粉车"))
+        dataType.add(StairBean("6", "高喷车"))
+        dataType.add(StairBean("7", "越野摩托车"))
+        dataState.add(StairBean("", "全部",true))
+        dataState.add(StairBean("1", "在线"))
+        dataState.add(StairBean("0", "离线"))
         mPopCarType = StairPop(mContext, {
-            if (it != null) {
-                setGaryOrblue(rb2, true, it.name)
-            }
+            carType=it.id
+            setGaryOrblue(rb1, true, it.name)
+            onRefresh(refreshLayout)
         })
-        mPopCarState.onDismissListener = object : BasePopupWindow.OnDismissListener() {
+        mPopCarState = StairPop(mContext, {
+            carState= it.id
+            setGaryOrblue(rb2, true, it.name)
+            onRefresh(refreshLayout)
+        })
+
+        val onDismissListener: BasePopupWindow.OnDismissListener = object : BasePopupWindow.OnDismissListener() {
             override fun onDismiss() {
                 radioGroup.clearCheck()
             }
         }
-        mPopCarState.onDismissListener = object : BasePopupWindow.OnDismissListener() {
-            override fun onDismiss() {
-                radioGroup.clearCheck()
-            }
-        }
+        mPopCarState.onDismissListener = onDismissListener
+        mPopCarType.onDismissListener = onDismissListener
         mPopCarState.data = dataState
         mPopCarType.data = dataType
     }
@@ -126,26 +131,15 @@ class VehicleActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Requ
         }
     }
 
-    private var data = ArrayList<VehicleBean>()
     private fun initRecycler() {
-        data.add(VehicleBean())
-        data.add(VehicleBean())
-        data.add(VehicleBean())
-        data.add(VehicleBean())
-        data.add(VehicleBean())
-        data.add(VehicleBean())
-        data.add(VehicleBean())
-        data.add(VehicleBean())
         mAdapter = VehicleAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
-        mAdapter.setNewData(data)
-        mAdapter.loadMoreEnd()
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext!!, LinearLayoutManager.VERTICAL, 15, ContextCompat.getColor(mContext!!, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(mContext,VehicleDetailActivity::class.java))
+                startActivity(Intent(mContext,VehicleDetailActivity::class.java).putExtra(Intent_VehicleDetail_Id,mAdapter.data[position].id))
             }
         })
         mAdapter.setOnLoadMoreListener(this, mRecyclerView)
@@ -155,22 +149,47 @@ class VehicleActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Requ
     override fun onClick(p0: View) {
         when (p0) {
             rb1 -> {
-                mPopCarState.showPopupWindow(radioGroup)
+                mPopCarType.showPopupWindow(radioGroup)
             }
             rb2 -> {
-                mPopCarType.showPopupWindow(radioGroup)
+                mPopCarState.showPopupWindow(radioGroup)
             }
         }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout?) {
-        refreshLayout?.finishRefresh()
-        currentPage = 1
+        currentPage = 0
         refreshState = Constants.RefreshState.STATE_REFRESH
+        iniData()
 
     }
 
+
     override fun onLoadMoreRequested() {
+        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
+        iniData()
+    }
+
+    private fun iniData() {
+        DataCtrlClass.getFireCarListByPage(this,carType = carType,isOnline = carState ,carNum =searchContent , currentPage = currentPage) {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it.FireCarLocs)
+                    tv_count.text=String.format(getString(R.string.vehicles),it.carCount.toString())
+                } else {
+                    mAdapter.addData(it.FireCarLocs ?: ArrayList())
+                }
+                if (it.FireCarLocs?.isNotEmpty() == true) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
     }
 }

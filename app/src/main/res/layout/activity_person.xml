@@ -50,13 +50,12 @@
                 app:realtimeBlurRadius="10dp"
                 app:realtimeOverlayColor="@color/blur_bg_white" />
 
-            <RadioGroup xmlns:tools="http://schemas.android.com/tools"
+            <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="@dimen/margin_15"
                 >
 
 
@@ -64,7 +63,7 @@
                     android:id="@+id/rb1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:button="@null"
                     android:drawableEnd="@drawable/gray_arrow"
                     android:drawablePadding="4dp"
@@ -75,11 +74,13 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_count"
                     android:layout_width="0dp"
+                    android:layout_marginEnd="@dimen/margin_15"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/vehicles"
-                    android:gravity="right|center_vertical"
+                    android:text="@string/numCount"
+                    android:gravity="end|center_vertical"
                     />
 
 

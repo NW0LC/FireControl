@@ -43,10 +43,10 @@ class DisasterActivity : BaseActivity() {
     private val mFragments = java.util.ArrayList<Fragment>()
     private fun initView() {
         mTitles.indices.mapTo(mTabEntities) { TabEntity(mTitles[it], mIconSelectIds[it], mIconUnSelectIds[it]) }
-        mFragments.add(DisasterFragment.newInstance())
-        mFragments.add(DisasterFragment.newInstance())
-        mFragments.add(DisasterFragment.newInstance())
-        mFragments.add(DisasterFragment.newInstance())
+        mFragments.add(DisasterFragment.newInstance(""))
+        mFragments.add(DisasterFragment.newInstance("1"))
+        mFragments.add(DisasterFragment.newInstance("2"))
+        mFragments.add(DisasterFragment.newInstance("3"))
         mainTabBar.setTabData(mTabEntities, this, R.id.mFrameLayout, mFragments)
     }
 

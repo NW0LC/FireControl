@@ -9,6 +9,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@mipmap/icon_vehicles"
@@ -25,7 +26,8 @@
             android:orientation="horizontal"
             >
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_title"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="压缩空气泡沫车"
                 android:textSize="@dimen/sp_14"
@@ -34,6 +36,7 @@
                 android:textColor="@color/MaterialGrey600"
                 />
             <com.flyco.roundview.RoundTextView
+                android:id="@+id/tv_is_online"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/White"
@@ -58,9 +61,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/vehicle_number"
                 android:textSize="@dimen/sp_14"
+                android:minEms="4"
                 android:textColor="@color/MaterialGrey400"
                 />
             <TextView
+                android:id="@+id/tv_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vehicle_number"
@@ -77,11 +82,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minEms="4"
                 android:text="@string/affiliated_unit"
                 android:textSize="@dimen/sp_14"
                 android:textColor="@color/MaterialGrey400"
                 />
             <TextView
+                android:id="@+id/tv_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vehicle_number"

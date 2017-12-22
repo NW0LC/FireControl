@@ -10,9 +10,11 @@ import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DrawingsAdapter
 import com.exz.firecontrol.bean.DrawFileListBean
+import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.widget.MyWebActivity
 import com.exz.firecontrol.widget.MyWebActivity.Intent_Title
 import com.exz.firecontrol.widget.MyWebActivity.Intent_Url
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -62,13 +64,14 @@ class DrawingsActivity : BaseActivity() {
                 startActivity(intent)
             }
         })
-        DataCtrlClass.getDrawFileList(this,intent.getStringExtra(Intent_getDrawFileList_id)?:""){
+        DataCtrlClass.getDrawFileList(this,intent.getStringExtra(Intent_getDrawFileList_id)?:"",intent.getStringExtra(Intent_getDrawFileList_comId)?:(MyApplication.user as UserBean).comid){
                 if (it!=null)
                     mAdapter.setNewData(it.DrawingFiles)
         }
     }
     companion object {
         val Intent_getDrawFileList_id="Intent_getDrawFileList_id"
+        val Intent_getDrawFileList_comId="Intent_getDrawFileList_id"
     }
 
 }

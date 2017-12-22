@@ -88,11 +88,12 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_count"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/vehicles"
-                    android:gravity="right|center_vertical"
+                    android:gravity="end|center_vertical"
                     />
 
 

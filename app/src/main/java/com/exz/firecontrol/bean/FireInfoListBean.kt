@@ -17,6 +17,7 @@ class FireInfoListBean : AbsNetBean {
     override  var result=""
     override var messError=""
     var fireInfoList: ArrayList<FireInfoBean>? = null
+    var fireInfo: ArrayList<FireInfoBean>? = null
 
 
     open class FireInfoBean {
@@ -51,5 +52,6 @@ class FireInfoListBean : AbsNetBean {
         var psnNum: Int = 0
         var comid: Int = 0
         var cityName: String? = null
+        var alarmName: String? = null
     }
 }
