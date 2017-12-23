@@ -1,9 +1,9 @@
 package com.exz.firecontrol
 
 import android.content.Context
-import com.exz.carprofitmuch.config.Urls
 import com.exz.firecontrol.app.ToolApplication
 import com.exz.firecontrol.bean.*
+import com.exz.firecontrol.config.Urls
 import com.exz.firecontrol.module.login.LoginActivity.Companion.USER_NAME
 import com.exz.firecontrol.module.login.LoginActivity.Companion.USER_PWD
 import com.exz.firecontrol.utils.RC4.encry2String
@@ -739,6 +739,43 @@ object DataCtrlClass {
                     })
         }
     }
+    /**
+     * 获取天气信息
+     * @param cityName	城市名称	Y	String
+     * */
+    fun getWeather(context: Context?,
+                   cityName: String,
+                            listener: (l: WeatherBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      cityName	城市名称	Y	String
+        val params = HashMap<String, String>()
+        params.put("cityName", cityName)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<WeatherBean>(Urls.getWeather)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<WeatherBean>(context) {
+                        val function = { getWeather(context, cityName,  listener) }
+                        override fun onSuccess(response: Response<WeatherBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<WeatherBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+
     /**
      * 获取组织机构列表
      * @param  oid	    组织机构id

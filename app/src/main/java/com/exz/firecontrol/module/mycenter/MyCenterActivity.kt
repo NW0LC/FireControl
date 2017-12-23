@@ -2,12 +2,10 @@ package com.exz.firecontrol.module.mycenter
 
 import android.content.Intent
 import android.view.View
-import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.module.FeedbackActivity
 import com.exz.firecontrol.module.SettingActivity
 import com.exz.firecontrol.module.login.ChangePasswordActivity
-import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.activity_my_conter.*
@@ -33,14 +31,6 @@ class MyCenterActivity : BaseActivity(), View.OnClickListener {
 
     override fun init() {
         initView()
-        initData()
-    }
-    private fun initData(){
-        DataCtrlClass.getFireManById(this, MyApplication.user?.userId?:"") {
-            if (it!=null) {
-                img_head.setImageURI(it.FireManInfo?.userHead?:"")
-            }
-        }
     }
     private fun initView() {
         my_user_info.setOnClickListener(this)
@@ -64,11 +54,6 @@ class MyCenterActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(mContext, SettingActivity::class.java))
             }
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        initData()
     }
 
 }

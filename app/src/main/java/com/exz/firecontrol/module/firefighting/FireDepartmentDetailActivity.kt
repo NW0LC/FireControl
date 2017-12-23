@@ -51,48 +51,50 @@ class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun iniData() {
-        DataCtrlClass.getOrgDetailById(this,intent.getStringExtra(Intent_getOrgDetailById_oId)?:""){
-
+        DataCtrlClass.getOrgDetailById(this, intent.getStringExtra(Intent_getOrgDetailById_Id) ?: "") {
+            if (it != null) {
+                when (intent.getStringExtra(Intent_Type)) {
+                    "1" -> { //1  支队 大队 中队
+                        tv_type.text = mContext.getString(R.string.vehicle_type)
+                        tv_type.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_vehicle_type), null, null, null)
+                        llLay.removeAllViews()
+                        for (i in 0..6) {
+                            val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                            lp.setMargins(0, 0, 0, 10)
+                            val textView = TextView(mContext)
+                            textView.text = "消防洒水车(" + i + ")"
+                            textView.textColor = ContextCompat.getColor(mContext, R.color.MaterialBlueGrey800)
+                            textView.textSize = 14f
+                            textView.gravity = Gravity.RIGHT
+                            textView.maxLines = 1
+                            textView.layoutParams = lp
+                            llLay.addView(textView)
+                        }
+                    }
+                    "2" -> {//微型消防站
+                        tv_type.text = mContext.getString(R.string.fire_equipment)
+                        tv_type.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_fire_equipment), null, null, null)
+                        llLay.removeAllViews()
+                        for (i in 0..6) {
+                            val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                            lp.setMargins(0, 0, 0, 10)
+                            val textView = TextView(mContext)
+                            textView.text = "微型消防站(" + i + ")"
+                            textView.textColor = ContextCompat.getColor(mContext, R.color.MaterialBlueGrey800)
+                            textView.textSize = 14f
+                            textView.gravity = Gravity.RIGHT
+                            textView.maxLines = 1
+                            textView.layoutParams = lp
+                            llLay.addView(textView)
+                        }
+                    }
+                }
+            }
         }
     }
 
     private fun initView() {
-        when (intent.getStringExtra(Intent_Type)) {
-            "1" -> { //1  支队 大队 中队
-                tv_type.text = mContext.getString(R.string.vehicle_type)
-                tv_type.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_vehicle_type), null, null, null)
-                llLay.removeAllViews()
-                for (i in 0..6) {
-                    val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    lp.setMargins(0, 0, 0, 10)
-                    val textView = TextView(mContext)
-                    textView.text = "消防洒水车(" + i + ")"
-                    textView.textColor = ContextCompat.getColor(mContext, R.color.MaterialBlueGrey800)
-                    textView.textSize = 14f
-                    textView.gravity = Gravity.RIGHT
-                    textView.maxLines = 1
-                    textView.layoutParams = lp
-                    llLay.addView(textView)
-                }
-            }
-            "2" -> {//微型消防站
-                tv_type.text = mContext.getString(R.string.fire_equipment)
-                tv_type.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_fire_equipment), null, null, null)
-                llLay.removeAllViews()
-                for (i in 0..6) {
-                    val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    lp.setMargins(0, 0, 0, 10)
-                    val textView = TextView(mContext)
-                    textView.text = "微型消防站(" + i + ")"
-                    textView.textColor = ContextCompat.getColor(mContext, R.color.MaterialBlueGrey800)
-                    textView.textSize = 14f
-                    textView.gravity = Gravity.RIGHT
-                    textView.maxLines = 1
-                    textView.layoutParams = lp
-                    llLay.addView(textView)
-                }
-            }
-        }
+
         tv_telephone.setOnClickListener(this)
         tv_address.setOnClickListener(this)
     }
@@ -103,13 +105,13 @@ class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
                 DialogUtils.Call(this, "110")
             }
             tv_address -> {
-                startActivity(Intent(mContext, MapLocationActivity::class.java).putExtra(Intent_Class_Name,"地址"))
+                startActivity(Intent(mContext, MapLocationActivity::class.java).putExtra(Intent_Class_Name, "地址"))
             }
         }
     }
 
     companion object {
-        var Intent_getOrgDetailById_oId = "Intent_getOrgDetailById_oId"
+        var Intent_getOrgDetailById_Id = "Intent_getOrgDetailById_Id"
         var Intent_Type = "type" // 1  支队 大队 中队 2 微型消防站
     }
 

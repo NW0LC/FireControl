@@ -1,4 +1,4 @@
-package com.exz.carprofitmuch.config
+package com.exz.firecontrol.config
 
 /**
  * Created by 史忠文

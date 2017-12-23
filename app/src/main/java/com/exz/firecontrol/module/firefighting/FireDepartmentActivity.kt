@@ -13,6 +13,7 @@ import com.exz.firecontrol.bean.OrganizationBean
 import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.firefighting.FireBrigadeActivity.Companion.Intent_Class_Name
 import com.exz.firecontrol.module.firefighting.FireBrigadeActivity.Companion.Intent_Lower_oid
+import com.exz.firecontrol.module.firefighting.FireDepartmentDetailActivity.Companion.Intent_getOrgDetailById_Id
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
@@ -72,7 +73,7 @@ class FireDepartmentActivity : BaseActivity(), OnRefreshListener, View.OnClickLi
             override fun onSimpleItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
                 when (view.id) {
                     R.id.tv_see_details -> {
-                        startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(FireDepartmentDetailActivity.Intent_Type, "2"))
+                        startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(FireDepartmentDetailActivity.Intent_Type, "1").putExtra(Intent_getOrgDetailById_Id,mAdapter.data[position].id))
                     }
                     R.id.tv_more -> {
                         startActivity(Intent(mContext, FireBrigadeActivity::class.java).putExtra(Intent_Class_Name, mAdapter.data[position].cname).putExtra(Intent_Lower_oid,mAdapter.data[position].id))
@@ -107,15 +108,15 @@ class FireDepartmentActivity : BaseActivity(), OnRefreshListener, View.OnClickLi
     }
 
     private fun iniData() {
-        DataCtrlClass.getOrgListByPage(this, (MyApplication.user as UserBean).oid, "", currentPage) {
+        DataCtrlClass.findLowerLevel(this, (MyApplication.user as UserBean).oid, currentPage) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {
-                    mAdapter.setNewData(it.OrganizationList)
+                    mAdapter.setNewData(it.lowerOrgList)
                 } else {
-                    mAdapter.addData(it.OrganizationList ?: ArrayList())
+                    mAdapter.addData(it.lowerOrgList ?: ArrayList())
                 }
-                if (it.OrganizationList?.isNotEmpty() == true) {
+                if (it.lowerOrgList?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
                     currentPage++
                 } else {

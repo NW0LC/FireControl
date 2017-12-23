@@ -1,11 +1,11 @@
 package com.exz.firecontrol.utils.net
 
 import android.util.Log
-import com.exz.carprofitmuch.config.Urls
 import com.exz.firecontrol.DataCtrlClass.HttpCode_Error
 import com.exz.firecontrol.DataCtrlClass.HttpCode_Error_Key
 import com.exz.firecontrol.DataCtrlClass.HttpCode_Success
 import com.exz.firecontrol.app.ToolApplication
+import com.exz.firecontrol.config.Urls
 import com.exz.firecontrol.utils.RC4
 import com.google.gson.stream.JsonReader
 import com.lzy.okgo.convert.Converter

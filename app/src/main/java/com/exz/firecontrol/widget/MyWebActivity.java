@@ -88,7 +88,14 @@ public class MyWebActivity extends BaseActivity implements Listener {
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setDatabaseEnabled(true);
         String dir = this.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+        // 设置可以支持缩放
+        webSettings.setSupportZoom(true);
+        // 设置出现缩放工具
+        webSettings.setBuiltInZoomControls(true);
+        // 为图片添加放大缩小功能
+        webSettings.setUseWideViewPort(true);
 
+        mWebView.setInitialScale(10);   //100代表不缩放
 //启用地理定位
         webSettings.setGeolocationEnabled(true);
 //设置定位的数据库路径

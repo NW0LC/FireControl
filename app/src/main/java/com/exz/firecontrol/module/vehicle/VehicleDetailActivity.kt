@@ -128,7 +128,10 @@ class VehicleDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
 
 
                 data1.add(VehicleDetailBean("车牌号", fireCarLocBean?.carNum?:""))
-                data1.add(VehicleDetailBean("所属单位",fireCarLocBean?.manufacturer?:""))
+                data1.add(VehicleDetailBean("生产厂家",fireCarLocBean?.manufacturer?:""))
+                data1.add(VehicleDetailBean("生产日期",fireCarLocBean?.manufactureDate?:""))
+                data1.add(VehicleDetailBean("保养",fireCarLocBean?.maintainState?:""))
+                data1.add(VehicleDetailBean("所属单位",fireCarLocBean?.RoleName?:""))
                 data1.add(VehicleDetailBean("GPS时间",fireCarLocBean?.GPSDate?:""))
                 data1.add(VehicleDetailBean("档位",fireCarLocBean?.carLevel?:""))
                 data1.add(VehicleDetailBean("发动机转速",fireCarLocBean?.speed?:""))

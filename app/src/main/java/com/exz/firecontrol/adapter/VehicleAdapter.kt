@@ -13,7 +13,7 @@ class VehicleAdapter<T: FireCarLocBean>: BaseQuickAdapter<T, BaseViewHolder>(R.l
         val itemView = helper.itemView
         itemView.tv_title.text=item.RoleName
         itemView.tv_num.text=item.carNum
-        itemView.tv_unit.text=item.manufacturer
+        itemView.tv_unit.text=item.RoleName
         itemView.tv_is_online.delegate.backgroundColor=ContextCompat.getColor(mContext,if (item.IsOnline=="1")R.color.MaterialGreenA400 else R.color.MaterialGrey400)
         itemView.tv_is_online.text=if (item.IsOnline=="1") mContext.getString(R.string.on_line) else  mContext.getString(R.string.off_line)
 

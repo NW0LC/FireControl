@@ -1,4 +1,4 @@
-package com.exz.carprofitmuch.config
+package com.exz.firecontrol.config
 
 /**
  * Created by 史忠文
@@ -64,6 +64,10 @@ object Urls{
      * 根据id获取灾情详情
      */
     val getFireInfoById=url+"user/getFireInfoById.jn"
+    /**
+     * 获取天气信息
+     */
+    val getWeather=url+"user/getWeather.jn"
     /**
      * 获取组织机构列表
      */

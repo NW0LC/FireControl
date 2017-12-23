@@ -5,19 +5,23 @@ import android.support.v4.content.ContextCompat
 import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.TextView
+import com.blankj.utilcode.util.TimeUtils
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.module.unit.DrawingsActivity
 import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_comId
 import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_id
+import com.exz.firecontrol.module.unit.EnterPriseDataActivity
+import com.exz.firecontrol.module.unit.EnterPriseDataActivity.Companion.Intent_EnterPriseDataActivity_id
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity
 import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
 import com.exz.firecontrol.pop.SchemePop
-import com.exz.firecontrol.widget.MyWebActivity
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_disaster_detail.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by pc on 2017/12/21.
@@ -62,11 +66,23 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     private var comId = ""
+    private var id = ""
     private fun iniData() {
+
         DataCtrlClass.getFireInfoById(mContext, intent.getStringExtra(Intent_DisasterDetail_Id) ?: "") {
             if (it != null) {
                 val fireInfoBean = it.fireInfo?.get(0)
+                DataCtrlClass.getWeather(mContext, fireInfoBean?.cityName ?: "") {
+                    if (it!=null) {
+                        tv_temp.text = String.format(it.temperature + "%s", "°")
+                        tv_weather.text = it.type?:""
+                        tv_windy.text = String.format((it.windDirection ?: "") + (it.windForce ?: ""))
+                        tv_date.text = String.format("${TimeUtils.date2String(TimeUtils.getNowDate(), SimpleDateFormat("MM-dd", Locale.CHINA))} ${TimeUtils.getChineseWeek(TimeUtils.getNowDate())}")
+                    }
+                }
                 comId = fireInfoBean?.comid.toString()
+                id = fireInfoBean?.id.toString()
+                tv_location.text = fireInfoBean?.cityName ?: ""
                 tv_disaster_name.text = fireInfoBean?.name ?: ""
                 tv_current_state.text = when (fireInfoBean?.status) {
                     1 -> {
@@ -101,7 +117,7 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(p0: View) {
         when (p0) {
             rl_related_plans -> {//关联预案
-                startActivity(Intent(mContext, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title, "关联预案").putExtra(MyWebActivity.Intent_Url, ""))
+                startActivity(Intent(mContext, EnterPriseDataActivity::class.java).putExtra(Intent_EnterPriseDataActivity_id, id))
             }
             rl_plans -> {//图纸资料
                 startActivity(Intent(mContext, DrawingsActivity::class.java).putExtra(Intent_getDrawFileList_id, intent.getStringExtra(Intent_getEnterPrise_id) ?: "").putExtra(Intent_getDrawFileList_comId, comId))
