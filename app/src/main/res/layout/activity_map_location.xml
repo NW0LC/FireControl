@@ -6,13 +6,11 @@
     android:background="@color/app_bg">
 
 
-
-    <fragment
-        android:id="@+id/frag_map"
-        class="com.tencent.tencentmap.mapsdk.maps.SupportMapFragment"
+    <com.amap.api.maps.MapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <include layout="@layout/action_bar_custom" />
+        android:layout_height="match_parent" />
 
 
+<include layout="@layout/action_bar_custom"></include>
 </FrameLayout>

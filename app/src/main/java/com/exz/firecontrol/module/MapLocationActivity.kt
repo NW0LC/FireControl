@@ -1,35 +1,29 @@
 package com.exz.firecontrol.module
 
-import android.content.Context
 import android.location.Location
+import android.os.Bundle
 import android.util.Log
+import com.amap.api.maps.AMap
+import com.amap.api.maps.CameraUpdate
+import com.amap.api.maps.CameraUpdateFactory
+import com.amap.api.maps.model.*
 import com.exz.firecontrol.R
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
-import com.tencent.map.geolocation.TencentLocation
-import com.tencent.map.geolocation.TencentLocationListener
-import com.tencent.map.geolocation.TencentLocationManager
-import com.tencent.map.geolocation.TencentLocationRequest
-import com.tencent.tencentmap.mapsdk.maps.CameraUpdateFactory
-import com.tencent.tencentmap.mapsdk.maps.LocationSource
-import com.tencent.tencentmap.mapsdk.maps.SupportMapFragment
-import com.tencent.tencentmap.mapsdk.maps.TencentMap
-import com.tencent.tencentmap.mapsdk.maps.model.*
 import kotlinx.android.synthetic.main.action_bar_custom.*
-
+import kotlinx.android.synthetic.main.activity_map_location.*
 
 
 /**
  * Created by pc on 2017/12/19.
  */
 
-class MapLocationActivity : BaseActivity(), TencentMap.OnMarkerClickListener {
+class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener {
 
-    private var myLocation: Marker? = null
-    private lateinit var locationManager: TencentLocationManager
-    private lateinit var locationRequest: TencentLocationRequest
-    private lateinit var tencentMap: TencentMap
-    private lateinit var locationSource: DemoLocationSource
+
+    private lateinit var aMap: AMap
+    private lateinit var markerOption: MarkerOptions
+    private lateinit var marker: Marker
     override fun initToolbar(): Boolean {
         mTitle.text =intent.getStringExtra(Intent_Class_Name)
 
@@ -48,29 +42,16 @@ class MapLocationActivity : BaseActivity(), TencentMap.OnMarkerClickListener {
         return R.layout.activity_map_location
     }
 
-    override fun init() {
-        initView()
 
-    }
+     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mapView.onCreate(savedInstanceState) // 此方法必须重写
+         initView()
 
-    override fun onDestroy() {
-        // TODO Auto-generated method stub
-        super.onDestroy()
-        //这里调用了腾讯定位sdk,如果不再需要定位功能，必须关闭定位。
-        if (tencentMap.isMyLocationEnabled) {
-            tencentMap.isMyLocationEnabled = false
-        }
-    }
+     }
 
     private fun initView() {
-        val fm = supportFragmentManager
-        //获取TencentMap实例
-        tencentMap = (fm.findFragmentById(R.id.frag_map) as SupportMapFragment).getMap()
-        tencentMap.uiSettings.isZoomControlsEnabled = false
-
-        locationSource = DemoLocationSource(this)
-        tencentMap.setLocationSource(locationSource)
-        tencentMap.isMyLocationEnabled = true
+            aMap = mapView.map
 
 //设置缩放级别
         var lat: LatLng
@@ -100,103 +81,89 @@ class MapLocationActivity : BaseActivity(), TencentMap.OnMarkerClickListener {
                 icLction="icon_person_locaiton.png"
             }
         }
+        markerOption = MarkerOptions().icon(BitmapDescriptorFactory.fromAsset(icLction))
+                .position(lat)
+                .draggable(true)
+        marker = aMap.addMarker(markerOption)
 
-
-        //标记点击事件
-        tencentMap.setOnMarkerClickListener(this)
-        tencentMap.addMarker(MarkerOptions()
-                .position(lat).icon(BitmapDescriptorFactory.fromAsset(icLction)))
-
+        //设置SDK 自带定位消息监听
+        aMap.setOnMyLocationChangeListener(this)
+      var   myLocationStyle = MyLocationStyle()
+        aMap.uiSettings.isMyLocationButtonEnabled = true// 设置默认定位按钮是否显示
+        aMap.isMyLocationEnabled = true// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
+        aMap.myLocationStyle = myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
+        changeCamera(CameraUpdateFactory.zoomIn(), null);
     }
 
-    override fun onMarkerClick(p0: Marker?): Boolean {
-        return true
+    /**
+     * 根据动画按钮状态，调用函数animateCamera或moveCamera来改变可视区域
+     */
+    private fun changeCamera(update: CameraUpdate, callback: AMap.CancelableCallback?) {
+            aMap.animateCamera(update, 1000, callback)
+            aMap.moveCamera(update)
     }
 
-    internal inner class DemoLocationSource(private var mContext: Context?) : LocationSource, TencentLocationListener {
-        private var mChangedListener: LocationSource.OnLocationChangedListener? = null
-        private var locationManager: TencentLocationManager? = null
-        private var locationRequest: TencentLocationRequest? = null
+    override fun onMyLocationChange(location: Location) {
+        // 定位回调监听
+        if (location != null) {
+            Log.e("amap", "onMyLocationChange 定位成功， lat: " + location.getLatitude() + " lon: " + location.getLongitude())
+            val bundle = location.getExtras()
+            if (bundle != null) {
+                val errorCode = bundle!!.getInt(MyLocationStyle.ERROR_CODE)
+                val errorInfo = bundle!!.getString(MyLocationStyle.ERROR_INFO)
+                // 定位类型，可能为GPS WIFI等，具体可以参考官网的定位SDK介绍
+                val locationType = bundle!!.getInt(MyLocationStyle.LOCATION_TYPE)
 
-        init {
-            locationManager = TencentLocationManager.getInstance(mContext)
-            locationRequest = TencentLocationRequest.create()
-            locationRequest!!.interval = 90000
-        }// TODO Auto-generated constructor stub
+                /*
+                errorCode
+                errorInfo
+                locationType
+                */
+                Log.e("amap", "定位信息， code: $errorCode errorInfo: $errorInfo locationType: $locationType")
+            } else {
+                Log.e("amap", "定位信息， bundle is null ")
 
-        override fun onLocationChanged(arg0: TencentLocation, arg1: Int,
-                                       arg2: String) {
-            // TODO Auto-generated method stub
-            if (arg1 == TencentLocation.ERROR_OK && mChangedListener != null) {
-                Log.e("maplocation", "location: " + arg0.city + " " + arg0.provider)
-                val location = Location(arg0.provider)
-                location.latitude = arg0.latitude
-                location.longitude = arg0.longitude
-                location.accuracy = arg0.accuracy
-
-                tencentMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(LatLng(location.latitude,  location.longitude), 3f, 0f, 0f)))
-
-
-                mChangedListener!!.onLocationChanged(location)
             }
+
+        } else {
+            Log.e("amap", "定位失败")
         }
-
-        override fun onStatusUpdate(arg0: String, arg1: Int, arg2: String) {
-
-        }
-
-        override fun activate(arg0: LocationSource.OnLocationChangedListener) {
-            // TODO Auto-generated method stub
-            mChangedListener = arg0
-            val err = locationManager!!.requestLocationUpdates(locationRequest!!, this)
-            when (err) {
-                1 -> title = "设备缺少使用腾讯定位服务需要的基本条件"
-                2 -> title = "manifest 中配置的 key 不正确"
-                3 -> title = "自动加载libtencentloc.so失败"
-
-                else -> {
-                }
-            }
-        }
-
-        override fun deactivate() {
-            // TODO Auto-generated method stub
-            locationManager!!.removeUpdates(this)
-            mContext = null
-            locationManager = null
-            locationRequest = null
-            mChangedListener = null
-        }
-
-        fun onPause() {
-            locationManager!!.removeUpdates(this)
-        }
-
-        fun onResume() {
-            locationManager!!.requestLocationUpdates(locationRequest!!, this)
-        }
-
     }
 
+    /**
+     * 方法必须重写
+    */
 
-//    override fun onLocationChanged(arg0: TencentLocation, arg1: Int, arg2: String) {
-//        if (arg1 == TencentLocation.ERROR_OK) {
-//            val latLng = LatLng(arg0.latitude, arg0.longitude)
-//            tencentMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(latLng, 3f, 0f, 0f)))
-//            //设置地图中心点
-//            myLocation = if (myLocation != null) {
-//                myLocation?.remove()
-//                tencentMap.addMarker(MarkerOptions().position(latLng).anchor(0.5f, 0.5f))
-//            } else {
-//                tencentMap.addMarker(MarkerOptions().position(latLng).anchor(0.5f, 0.5f))
-//            }
-//            myLocation?.position = latLng
-//            myLocation?.rotation = arg0.bearing //仅当定位来源于gps有效，或者使用方向传感器
-//
-//        } else {
-//            Log.e("location", "location failed:" + arg2)
-//        }
-//    }
+     override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    /**
+     * 方法必须重写
+     */
+
+     override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    /**
+     * 方法必须重写
+     */
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    /**
+     * 方法必须重写
+     */
+
+     override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
 
 
     companion object {

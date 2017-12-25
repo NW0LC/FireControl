@@ -4,36 +4,36 @@
 
     <!--腾讯地图 sdk 要求的权限(开始)-->
     <!--访问网络获取地图服务-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!--检查网络可用性-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 访问WiFi状态 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!--需要外部存储写权限用于保存地图缓存-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--获取 device id 辨别设备-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--获取日志读取权限，帮助我们提高地图 sdk 稳定性-->
-    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <!--腾讯地图 sdk 要求的权限(结束)-->
 
     <!-- 腾讯定位 sdk 要求的权限  (开始) -->
     <!-- 通过GPS得到精确位置 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 通过网络得到粗略位置 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 访问网络. 某些位置信息需要从网络服务器获取 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- 访问WiFi状态. 需要WiFi信息用于网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 修改WiFi状态. 发起WiFi扫描, 需要WiFi信息用于网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 访问网络状态, 检测网络的可用性. 需要网络运营商相关信息用于网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 访问网络的变化, 需要某些信息用于网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!-- 访问手机当前状态, 需要device id用于网络定位 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 腾讯定位 sdk 要求的权限 (结束) -->
     <application
         android:name=".app.ToolApplication"
@@ -52,75 +52,165 @@
         </activity>
 
         <!--首页-->
-        <activity android:name=".module.MainActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.MainActivity"
+            android:screenOrientation="portrait" />
         <!--忘记密码-->
-        <activity android:name=".module.login.ForgetPwdActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.login.ForgetPwdActivity"
+            android:screenOrientation="portrait" />
         <!--消防机构-->
-        <activity android:name=".module.firefighting.FireDepartmentActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.firefighting.FireDepartmentActivity"
+            android:screenOrientation="portrait" />
         <!--机构详情-->
-        <activity android:name=".module.firefighting.FireDepartmentDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.firefighting.FireDepartmentDetailActivity"
+            android:screenOrientation="portrait" />
         <!--机构详情-->
-        <activity android:name=".module.MapLocationActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.MapLocationActivity"
+            android:screenOrientation="portrait" />
         <!--消防队-->
-        <activity android:name=".module.firefighting.FireBrigadeActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.firefighting.FireBrigadeActivity"
+            android:screenOrientation="portrait" />
         <!--搜索队-->
-        <activity android:name=".module.firefighting.SearchFireBrigadeActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.firefighting.SearchFireBrigadeActivity"
+            android:screenOrientation="portrait" />
         <!--搜索队-->
-        <activity android:name=".module.unit.KeyUnitActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".module.unit.UnitTabLayoutActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.unit.KeyUnitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.unit.UnitTabLayoutActivity"
+            android:screenOrientation="portrait" />
         <!--单位详情-->
-        <activity android:name=".module.unit.UnitDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.unit.UnitDetailActivity"
+            android:screenOrientation="portrait" />
         <!--基本信息 消防基本信息-->
-        <activity android:name=".module.unit.InfoActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.unit.InfoActivity"
+            android:screenOrientation="portrait" />
         <!--图纸资料-->
-        <activity android:name=".module.unit.DrawingsActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.unit.DrawingsActivity"
+            android:screenOrientation="portrait" />
         <!--消防水源-->
-        <activity android:name=".module.unit.FirewaterSupplyActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.unit.FirewaterSupplyActivity"
+            android:screenOrientation="portrait" />
         <!--网页-->
-        <activity android:name=".widget.MyWebActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".widget.MyWebActivity"
+            android:screenOrientation="portrait" />
         <!--搜索单位名称-->
-        <activity android:name=".module.unit.SearchUnitActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.unit.SearchUnitActivity"
+            android:screenOrientation="portrait" />
         <!--消防知识库-->
-        <activity android:name=".module.firefighting.RepositoryActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.firefighting.RepositoryActivity"
+            android:screenOrientation="portrait" />
         <!--消防知识库 类别-->
-        <activity android:name=".module.firefighting.RepositoryCategoryActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.firefighting.RepositoryCategoryActivity"
+            android:screenOrientation="portrait" />
         <!--消防车辆-->
-        <activity android:name=".module.vehicle.VehicleActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.vehicle.VehicleActivity"
+            android:screenOrientation="portrait" />
         <!--消防车辆详情-->
-        <activity android:name=".module.vehicle.VehicleDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.vehicle.VehicleDetailActivity"
+            android:screenOrientation="portrait" />
         <!--人员信息选择-->
-        <activity android:name=".module.person.PersonActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.person.PersonActivity"
+            android:screenOrientation="portrait" />
         <!--人员详情-->
-        <activity android:name=".module.person.PersonDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.person.PersonDetailActivity"
+            android:screenOrientation="portrait" />
         <!--灾情列表-->
-        <activity android:name=".module.disaster.DisasterActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.disaster.DisasterActivity"
+            android:screenOrientation="portrait" />
         <!--灾情详情-->
-        <activity android:name=".module.disaster.DisasterDetailActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.disaster.DisasterDetailActivity"
+            android:screenOrientation="portrait" />
         <!--实时路况-->
-        <activity android:name=".module.MapTypeActivity" android:screenOrientation="portrait"/>
         <!--个人中心-->
-        <activity android:name=".module.mycenter.MyCenterActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mycenter.MyCenterActivity"
+            android:screenOrientation="portrait" />
         <!--个人资料-->
-        <activity android:name=".module.mycenter.MyUserInfoActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.mycenter.MyUserInfoActivity"
+            android:screenOrientation="portrait" />
         <!--修改密码-->
-        <activity android:name=".module.login.ChangePasswordActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.login.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
         <!--意见反馈-->
-        <activity android:name=".module.FeedbackActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.FeedbackActivity"
+            android:screenOrientation="portrait" />
         <!--系统设置-->
-        <activity android:name=".module.SettingActivity" android:screenOrientation="portrait"/>
-
-
-
-
-        <activity android:name=".module.unit.EnterPriseDataActivity" android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".module.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.unit.EnterPriseDataActivity"
+            android:screenOrientation="portrait" />
         <!--图片预览-->
         <activity android:name="com.szw.framelibrary.view.preview.PreviewActivity" />
+
+        <!--实时交通-->
+        <activity
+            android:name=".module.MaprTrafficActivity"
+            android:screenOrientation="portrait" />
         <!-- 如果您key确认无误，却依然授权没有通过，请检查您的key的白名单配置 -->
         <meta-data
-            android:name="TencentMapSDK"
-            android:value="${TencentKey}"/>
+            android:name="com.amap.api.v2.apikey"
+            android:value="b9f34fd6a7fc219394ecc9396b777926" />
+        <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
+        <service android:name="com.amap.api.location.APSService"></service>
 
+
+        <meta-data
+            android:name="RONG_CLOUD_APP_KEY"
+            android:value="pvxdm17jpi4dr" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.exz.firecontrol.firecontrol.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/rc_file_path" />
+        </provider>
+        <!--会话页面-->
+        <activity
+            android:name=".module.chat.ConversationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.exz.firecontrol.firecontrol"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,9 @@
 package com.exz.firecontrol.module
 
+import android.app.ActivityManager
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -10,6 +13,7 @@ import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DisasterAdapter
 import com.exz.firecontrol.bean.FireInfoListBean
+import com.exz.firecontrol.bean.RongBean
 import com.exz.firecontrol.module.disaster.DisasterActivity
 import com.exz.firecontrol.module.disaster.DisasterDetailActivity
 import com.exz.firecontrol.module.disaster.DisasterDetailActivity.Companion.Intent_DisasterDetail_Id
@@ -26,9 +30,13 @@ import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
+import io.rong.imkit.RongIM
+import io.rong.imlib.model.UserInfo
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_main.view.*
+
+
 
 class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, BaseQuickAdapter.RequestLoadMoreListener {
 
@@ -62,6 +70,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
         super.init()
         initRecycler()
         initHeader()
+
     }
 
     private fun initRecycler() {
@@ -113,6 +122,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
                 startActivity(Intent(mContext, PersonActivity::class.java))
             }
             headerView.bt_tab_6 -> {
+
             }
         }
     }
@@ -151,5 +161,8 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
             }
         }
     }
+
+
+
 
 }
