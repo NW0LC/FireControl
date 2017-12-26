@@ -47,7 +47,8 @@ class SettingActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(p0: View) {
         when (p0) {
             bt_about_us-> {
-                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title,"关于我们").putExtra(MyWebActivity.Intent_Url,"http://www.baidu.com"))
+                startActivity(Intent(mContext,MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title,"关于我们").
+                        putExtra(MyWebActivity.Intent_Url,"http://www.hhuav.com/mobile/about.html"))
             }
             bt_system_update -> {
             }

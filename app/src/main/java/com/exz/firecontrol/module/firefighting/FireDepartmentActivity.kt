@@ -73,7 +73,7 @@ class FireDepartmentActivity : BaseActivity(), OnRefreshListener, View.OnClickLi
             override fun onSimpleItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
                 when (view.id) {
                     R.id.tv_see_details -> {
-                        startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(FireDepartmentDetailActivity.Intent_Type, "1").putExtra(Intent_getOrgDetailById_Id,mAdapter.data[position].id))
+                        startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(FireDepartmentDetailActivity.Intent_Type, "1").putExtra(Intent_getOrgDetailById_Id,mAdapter.data[position].id.toString()))
                     }
                     R.id.tv_more -> {
                         startActivity(Intent(mContext, FireBrigadeActivity::class.java).putExtra(Intent_Class_Name, mAdapter.data[position].cname).putExtra(Intent_Lower_oid,mAdapter.data[position].id))

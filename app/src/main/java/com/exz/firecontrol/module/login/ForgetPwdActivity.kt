@@ -4,6 +4,7 @@ import android.os.CountDownTimer
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.view.View
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.PreferencesService
@@ -99,12 +100,12 @@ class ForgetPwdActivity : BaseActivity(), View.OnClickListener {
                 PreferencesService.setDownTimer(this, downKey, System.currentTimeMillis())
 
                 downTimer(time - (System.currentTimeMillis() - PreferencesService.getDownTimer(mContext, downKey)))
-//                DataCtrlClass.getSecurityCode(this, ed_phone.text.toString(), "2") {
-//                    if (it != null) {
-//                    } else {
-//                        resetTimer(true, java.lang.Long.MIN_VALUE)
-//                    }
-//                }
+                DataCtrlClass.resetValiCodeSendSms(this, ed_phone.text.toString()) {
+                    if (it != null) {
+                    } else {
+                        resetTimer(true, java.lang.Long.MIN_VALUE)
+                    }
+                }
             }
             bt_commit -> {
 
@@ -130,7 +131,11 @@ class ForgetPwdActivity : BaseActivity(), View.OnClickListener {
                     ed_pwd2.setShakeAnimation()
                     return
                 }
-                finish()
+                DataCtrlClass.resetPasswordSendSms(this,phone,pwd){
+                    if (it!=null){
+                        finish()
+                    }
+                }
             }
         }
     }

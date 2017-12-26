@@ -13,9 +13,11 @@ import com.blankj.utilcode.util.TimeUtils
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.bean.RongBean
+import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.MaprTrafficActivity
 import com.exz.firecontrol.module.chat.ConversationActivity
 import com.exz.firecontrol.module.live.LiveListActivity
+import com.exz.firecontrol.module.live.LiveListActivity.Companion.Intent_live_id
 import com.exz.firecontrol.module.unit.DrawingsActivity
 import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_comId
 import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_id
@@ -24,6 +26,7 @@ import com.exz.firecontrol.module.unit.EnterPriseDataActivity.Companion.Intent_E
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity
 import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
 import com.exz.firecontrol.pop.SchemePop
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import io.rong.imkit.RongIM
@@ -61,6 +64,7 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
         (actionView as TextView).text = "建议方案"
         actionView.movementMethod = ScrollingMovementMethod.getInstance()
         actionView.setOnClickListener {
+            if (mPop.data.isNotEmpty())
             mPop.showPopupWindow()
         }
         return false
@@ -79,10 +83,19 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
     private var comId = ""
     private var id = ""
     private fun iniData() {
-
+        DataCtrlClass.getRongCloudToken(mContext){
+            if (it!=null){
+               token1=it.token
+            }
+        }
         DataCtrlClass.getFireInfoById(mContext, intent.getStringExtra(Intent_DisasterDetail_Id) ?: "") {
             if (it != null) {
                 val fireInfoBean = it.fireInfo?.get(0)
+                DataCtrlClass.getAdvisePlan(mContext,fireInfoBean?.flag.toString()){
+                    if (it!=null){
+                        mPop.data=it.advisePlan?.advise?:""
+                    }
+                }
                 DataCtrlClass.getWeather(mContext, fireInfoBean?.cityName ?: "") {
                     if (it != null) {
                         tv_temp.text = String.format(it.temperature + "%s", "°")
@@ -130,7 +143,7 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
         rongList!!.add(RongBean("1", "测试", "https://www.baidu.com/link?url=f_6xwj-7u_yUnlhFMS9mFRT9lHtboSNz9wK4PEKzFLHS9dMVDae8YVzYIPSAeLESfKCmMTb99PJQo0LjNUzlkuxQtEji8mtoCHnODslOOHbjsDBKsWA0aRtIF0aF869JMCZ8J22wddT3b5FzN5Xy_XvPjBPPnB85WLgXT5lAvI95zLltaDGNHQB5WUntqATzOq8h_-OWkooyFER_Jt-VYjhOlhtaljnmghcydf8AldIo1PLFZwAzLYVmoD4ruGQQZTRK5WSeHmsyqg8KCGnbZA13VDbDW84uyxvqG61CO2JatfppC8h2o8mUVC2DWGBrob4wfJSIaXfWQS26mkgKnsfR2hbS5sJDBbiDIAwIihGZXi2DTjXW_1u5pWMsuG7vlTNRh-BZhoiu23ycwSoaNw5F6OCyxRi9ZUEdnBS41I90fnKGAM2fC0TKY0un_o0mkE35nZSFER7nrp5EO-PIIlO3XjCvOIo0OY1aPxZ03jg26R80p6hOP7wSOG_wm3Dw33BIoJTBLSvFeteNAHIR8dpJltCw8jWMEPGG2t5_vw0utoxEorgziVvf4PtokOgN4v9RIHYFgt3z0t4LNxHdy_&wd=&eqid=893d54d300034ee3000000055a4054df"))
 
     }
-
+    var token1=""
     override fun onClick(p0: View) {
         when (p0) {
             rl_traffic -> {//实时交通
@@ -146,11 +159,10 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
                 startActivity(Intent(mContext, FirewaterSupplyActivity::class.java))
             }
             rl_chat -> {//融云聊天室
-                var token1 = "se+qZyl5CtdQICBZHXQnRtLt06J41kYtZzpPRreHB4QOXD+rl78FXg+E4ZOiTwOrt0ZxQlAp+cbZCsDbp3P+TA=="
                 connect(token1)
             }
             rl_live -> {//直播
-                startActivity(Intent(mContext, LiveListActivity::class.java))
+                startActivity(Intent(mContext, LiveListActivity::class.java).putExtra(Intent_live_id,id))
             }
         }
     }
@@ -191,10 +203,10 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
                 override fun onSuccess(userid: String) {
                     Log.i("connect", "--onSuccess" + userid)
                     RongIM.getInstance()
-                            .setCurrentUserInfo(UserInfo("112", "测试", Uri.parse("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1629089538,987246310&fm=27&gp=0.jpg")))
+                            .setCurrentUserInfo(UserInfo(MyApplication.loginUserId, (MyApplication.user as UserBean).RoleName, Uri.parse("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1629089538,987246310&fm=27&gp=0.jpg")))
 //                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, "1", "聊天室 I");
-                    ConversationActivity.Chat_Class_Name = "14"
-                    RongIM.getInstance().startChatRoomChat(mContext, "14", true)
+                    ConversationActivity.Chat_Class_Name = id
+                        RongIM.getInstance().startChatRoomChat(mContext, id, true)
 
                 }
 

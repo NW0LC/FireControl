@@ -1,6 +1,7 @@
 package com.exz.firecontrol.module
 
 import android.text.TextUtils
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -36,12 +37,21 @@ class FeedbackActivity : BaseActivity() {
 
     private fun initView() {
         bt_submit.setOnClickListener {
-            var content = ed_content.text.trim()
+            val content = ed_content.text.toString().trim()
             if (TextUtils.isEmpty(content)) {
                 ed_content.setShakeAnimation()
                 return@setOnClickListener
-            }
+            }else{
+DataCtrlClass.saveUserAdvise(this,content){
+        if (it!=null)
+        {
             finish()
+
+        }
+
+}
+            }
+
         }
     }
 }

@@ -739,6 +739,43 @@ object DataCtrlClass {
                     })
         }
     }
+
+    /**
+     * 根据火灾类型获取建议方案
+     * @param flag        火灾类型
+     * */
+    fun getAdvisePlan(context: Context?,
+                      flag: String,
+                            listener: (l: AdvisePlanBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      flag	火灾类型	Y	int	1=固定顶立式罐火灾 2=液体流散火 3=受限池火灾 4=流淌火火灾
+        val params = HashMap<String, String>()
+        params.put("flag", flag)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<AdvisePlanBean>(Urls.getAdvisePlan)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<AdvisePlanBean>(context) {
+                        val function = { getAdvisePlan(context, flag,  listener) }
+                        override fun onSuccess(response: Response<AdvisePlanBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<AdvisePlanBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
     /**
      * 获取天气信息
      * @param cityName	城市名称	Y	String
@@ -766,6 +803,233 @@ object DataCtrlClass {
                         }
 
                         override fun onError(response: Response<WeatherBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 获取融云TOKEN接口
+     * */
+    fun getRongCloudToken(context: Context?,
+                            listener: (l: RongTokenBean?) -> Unit) {
+//      参数名	参数含义	必选	类型及范围	说明
+//      uid	用户id	Y	String
+//      name	用户名称	Y	String
+//      portraitUri	用户头像	Y	String
+        val params = HashMap<String, String>()
+        params.put("uid", MyApplication.loginUserId)
+        params.put("name", (MyApplication.user as UserBean).RoleName)
+        params.put("portraitUri", "")
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<RongTokenBean>(Urls.getRongCloudToken)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<RongTokenBean>(context) {
+                        val function = { getRongCloudToken(context,listener) }
+                        override fun onSuccess(response: Response<RongTokenBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<RongTokenBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 获取直播链接
+     * @param fiId	灾情信息id	Y	int
+     * */
+    fun getFireInfoLive(context: Context?,
+                    fiId: String,
+                            listener: (l: FireInfoLiveBean?) -> Unit) {
+//     参数名	参数含义	必选	类型及范围	说明
+//     fiId	灾情信息id	Y	int
+        val params = HashMap<String, String>()
+        params.put("fiId", fiId)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<FireInfoLiveBean>(Urls.getFireInfoLive)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<FireInfoLiveBean>(context) {
+                        val function = { getFireInfoLive(context, fiId,  listener) }
+                        override fun onSuccess(response: Response<FireInfoLiveBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<FireInfoLiveBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 发起直播，获取链接
+     * @param fiId	灾情信息id	Y	int
+     * */
+    fun getLivePath(context: Context?,
+                    fiId: String,
+                            listener: (l: LivePathBean?) -> Unit) {
+//     参数名	参数含义	必选	类型及范围	说明
+//     fiId	灾情信息id	Y	int
+        val params = HashMap<String, String>()
+        params.put("fiId", fiId)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<LivePathBean>(Urls.getLivePath)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<LivePathBean>(context) {
+                        val function = { getLivePath(context, fiId,  listener) }
+                        override fun onSuccess(response: Response<LivePathBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                        }
+
+                        override fun onError(response: Response<LivePathBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 获存取用户意见
+     * @param  advise	建议	Y	String
+     * */
+    fun saveUserAdvise(context: Context?,
+                       advise: String,
+                            listener: (l: AbsNetBean?) -> Unit) {
+//     参数名	参数含义	必选	类型及范围	说明
+//     uid	用户id	Y	int
+//     advise	建议	Y	String
+        val params = HashMap<String, String>()
+        params.put("uid", MyApplication.loginUserId)
+        params.put("advise", advise)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<AbsNetBean>(Urls.saveUserAdvise)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<AbsNetBean>(context) {
+                        val function = { saveUserAdvise(context, advise,  listener) }
+                        override fun onSuccess(response: Response<AbsNetBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                            context?.toast(response.body().messError)
+                        }
+
+                        override fun onError(response: Response<AbsNetBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 获存取用户意见
+     * @param  mobile	用户手机号	Y	String
+     * */
+    fun resetValiCodeSendSms(context: Context?,
+                             mobile: String,
+                            listener: (l: AbsNetBean?) -> Unit) {
+//     参数名	参数含义	必选	类型及范围	说明
+//     mobile	用户手机号	Y	String
+        val params = HashMap<String, String>()
+        params.put("mobile",mobile)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<AbsNetBean>(Urls.resetValiCodeSendSms)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<AbsNetBean>(context) {
+                        val function = { resetValiCodeSendSms(context, mobile,  listener) }
+                        override fun onSuccess(response: Response<AbsNetBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                            context?.toast(response.body().messError)
+                        }
+
+                        override fun onError(response: Response<AbsNetBean>) {
+                            if (response.code() == HttpCode_Error_Key)
+                                isSuccess(context, NetCode_NoKey, "", function)
+                            else
+                                listener.invoke(null)
+                        }
+
+                    })
+        }
+    }
+    /**
+     * 验证码重置密码接口
+     * @param  mobile	用户手机号	Y	String
+     * @param  password	新密码	Y	String
+     * */
+    fun resetPasswordSendSms(context: Context?,
+                             mobile: String,
+                             password: String,
+                            listener: (l: AbsNetBean?) -> Unit) {
+//     参数名	参数含义	必选	类型及范围	说明
+//     mobile	用户手机号	Y	String
+//     password	新密码	Y	String
+        val params = HashMap<String, String>()
+        params.put("mobile",mobile)
+        params.put("password",password)
+        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
+            OkGo.post<AbsNetBean>(Urls.resetPasswordSendSms)
+                    .params(changeFun(params))
+                    .tag(this)
+                    .execute(object : DialogCallback<AbsNetBean>(context) {
+                        val function = { resetValiCodeSendSms(context, mobile,  listener) }
+                        override fun onSuccess(response: Response<AbsNetBean>) {
+
+                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
+                                listener.invoke(response.body())
+                            } else {
+                                listener.invoke(null)
+                            }
+                            context?.toast(response.body().messError)
+                        }
+
+                        override fun onError(response: Response<AbsNetBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else

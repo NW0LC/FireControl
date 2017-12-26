@@ -3,7 +3,9 @@ package com.exz.firecontrol.module.live
 import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.view.View
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
+import com.exz.firecontrol.module.live.LiveListActivity.Companion.Intent_live_id
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import com.tencent.rtmp.TXLiveConstants
@@ -41,8 +43,11 @@ class LivePushActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun init() {
-        super.init()
         initView()
+        DataCtrlClass.getLivePath(this,intent.getStringExtra(Intent_live_id)?:""){
+            if (it!=null)
+                rtmpUrl=it.livePath?.get(0)?.livePath?:""
+        }
     }
 
     private fun initView() {
@@ -92,11 +97,10 @@ class LivePushActivity : BaseActivity(), View.OnClickListener {
             mCaptureView.onDestroy()
         }
     }
-
+    var rtmpUrl = ""
     private fun startPush() {
         btnPlay.setImageResource(R.mipmap.play_pause)
         mVideoPublish = false
-        val rtmpUrl = "rtmp://14124.mpush.live.lecloud.com/live/test1"
         mLivePusher.startPusher(rtmpUrl)
         mLivePusher.startCameraPreview(mCaptureView)
         mCaptureView.visibility = View.VISIBLE

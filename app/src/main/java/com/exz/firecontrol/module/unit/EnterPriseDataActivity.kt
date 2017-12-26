@@ -78,12 +78,12 @@ class EnterPriseDataActivity : BaseActivity() {
         DataCtrlClass.getEnterPriseData(this, "1", intent.getStringExtra(Intent_EnterPriseDataActivity_id) ?: "") {
             if (it != null)
                 mEAdapter.setNewData(it.enterpriseData)
-            tv_EPlan.visibility = if (mVRAdapter.data.size == 0) View.GONE else View.VISIBLE
+            tv_EPlan.visibility = if (mEAdapter.data.size == 0) View.GONE else View.VISIBLE
         }
         DataCtrlClass.getEnterPriseData(this, "2", intent.getStringExtra(Intent_EnterPriseDataActivity_id) ?: "") {
             if (it != null)
                 mPAdapter.setNewData(it.enterpriseData)
-            tv_Paper.visibility = if (mVRAdapter.data.size == 0) View.GONE else View.VISIBLE
+            tv_Paper.visibility = if (mPAdapter.data.size == 0) View.GONE else View.VISIBLE
         }
         DataCtrlClass.getEnterPriseData(this, "3", intent.getStringExtra(Intent_EnterPriseDataActivity_id) ?: "") {
             if (it != null)

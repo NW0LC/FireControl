@@ -65,9 +65,37 @@ object Urls{
      */
     val getFireInfoById=url+"user/getFireInfoById.jn"
     /**
+     * 根据火灾类型获取建议方案
+     */
+    val getAdvisePlan=url+"user/getAdvisePlan.jn"
+    /**
      * 获取天气信息
      */
     val getWeather=url+"user/getWeather.jn"
+    /**
+     * 获取融云TOKEN接口
+     */
+    val getRongCloudToken=url+"user/getRongCloudToken.jn"
+    /**
+     * 获取直播链接
+     */
+    val getFireInfoLive=url+"user/getFireInfoLive.jn"
+    /**
+     * 发起直播，获取链接
+     */
+    val getLivePath=url+"user/getLivePath.jn"
+    /**
+     * 获存取用户意见
+     */
+    val saveUserAdvise=url+"user/saveUserAdvise.jn"
+    /**
+     * 获取验证码接口
+     */
+    val resetValiCodeSendSms=url+"user/resetValiCodeSendSms.jn"
+    /**
+     * 验证码重置密码接口
+     */
+    val resetPasswordSendSms=url+"user/resetPasswordSendSms.jn"
     /**
      * 获取组织机构列表
      */

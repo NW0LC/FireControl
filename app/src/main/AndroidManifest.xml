@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.exz.firecontrol">
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <!--腾讯地图 sdk 要求的权限(开始)-->
     <!--访问网络获取地图服务-->

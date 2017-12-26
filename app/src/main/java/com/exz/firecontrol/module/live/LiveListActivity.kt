@@ -8,9 +8,11 @@ import android.view.View
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.LiveListAdapter
-import com.exz.firecontrol.bean.LiveList
+import com.exz.firecontrol.bean.FireInfoLiveBean
+import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.BaseActivity
@@ -27,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_live.*
 class LiveListActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     private var refreshState = Constants.RefreshState.STATE_REFRESH
     private var currentPage = 0
-    private lateinit var mAdapter:LiveListAdapter
+    private lateinit var mAdapter:LiveListAdapter<FireInfoLiveBean.LiveListBean>
     override fun initToolbar(): Boolean {
         mTitle.text="灾情直播"
         //状态栏透明和间距处理
@@ -43,8 +45,8 @@ class LiveListActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Req
         val actionView = toolbar.menu.getItem(0).actionView
         (actionView as TextView).text = "发起直播"
         actionView.movementMethod = ScrollingMovementMethod.getInstance()
-        actionView.setOnClickListener {
-            startActivity(Intent(mContext, LivePushActivity::class.java))
+            actionView.setOnClickListener {
+            startActivity(intent.setClass(mContext, LivePushActivity::class.java))
         }
         return false
     }
@@ -54,24 +56,21 @@ class LiveListActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Req
     }
 
     override fun init() {
-        super.init()
+        SZWUtils.setRefreshAndHeaderCtrl(this,header,refreshLayout)
         initRecycler()
+        onRefresh(refreshLayout)
     }
 
     private fun initRecycler() {
-        var data=ArrayList<LiveList>()
-        data.add(LiveList())
-        data.add(LiveList())
         mAdapter = LiveListAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
-        mAdapter.setNewData(data)
-        mAdapter.setOnLoadMoreListener(this, mRecyclerView)
+//        mAdapter.setOnLoadMoreListener(this, mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 15, ContextCompat.getColor(mContext, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener(){
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(mContext,LivePullActivity::class.java))
+                startActivity(Intent(mContext,LivePullActivity::class.java).putExtra(Intent_live_url,mAdapter.data[position].livePath))
             }
         })
 
@@ -92,23 +91,27 @@ class LiveListActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Req
     }
 
     private fun iniData() {
-//        DataCtrlClass.getFireInfoListByPage(mContext,arguments?.getString("status")?:"", currentPage = currentPage) {
-//            refreshLayout?.finishRefresh()
-//            if (it != null) {
-//                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
-//                    mAdapter.setNewData(it.fireInfoList)
-//                } else {
-//                    mAdapter.addData(it.fireInfoList ?: ArrayList())
-//                }
-//                if (it.fireInfoList?.isNotEmpty() == true) {
-//                    mAdapter.loadMoreComplete()
-//                    currentPage++
-//                } else {
-//                    mAdapter.loadMoreEnd()
-//                }
-//            } else {
-//                mAdapter.loadMoreFail()
-//            }
-//        }
+        DataCtrlClass.getFireInfoLive(mContext,intent.getStringExtra(Intent_live_id)?:"") {
+            refreshLayout?.finishRefresh()
+            if (it != null) {
+                if (refreshState == Constants.RefreshState.STATE_REFRESH) {
+                    mAdapter.setNewData(it.liveList)
+                } else {
+                    mAdapter.addData(it.liveList ?: ArrayList())
+                }
+                if (it.liveList?.isNotEmpty() == true) {
+                    mAdapter.loadMoreComplete()
+                    currentPage++
+                } else {
+                    mAdapter.loadMoreEnd()
+                }
+            } else {
+                mAdapter.loadMoreFail()
+            }
+        }
+    }
+    companion object {
+        val Intent_live_id="Intent_live_id"
+        val Intent_live_url="Intent_live_url"
     }
 }
