@@ -15,6 +15,7 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.bean.RongBean
 import com.exz.firecontrol.module.MaprTrafficActivity
 import com.exz.firecontrol.module.chat.ConversationActivity
+import com.exz.firecontrol.module.live.LiveListActivity
 import com.exz.firecontrol.module.unit.DrawingsActivity
 import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_comId
 import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_id
@@ -83,9 +84,9 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
             if (it != null) {
                 val fireInfoBean = it.fireInfo?.get(0)
                 DataCtrlClass.getWeather(mContext, fireInfoBean?.cityName ?: "") {
-                    if (it!=null) {
+                    if (it != null) {
                         tv_temp.text = String.format(it.temperature + "%s", "°")
-                        tv_weather.text = it.type?:""
+                        tv_weather.text = it.type ?: ""
                         tv_windy.text = String.format((it.windDirection ?: "") + (it.windForce ?: ""))
                         tv_date.text = String.format("${TimeUtils.date2String(TimeUtils.getNowDate(), SimpleDateFormat("MM-dd", Locale.CHINA))} ${TimeUtils.getChineseWeek(TimeUtils.getNowDate())}")
                     }
@@ -124,14 +125,15 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
         rl_xfsy.setOnClickListener(this)
         rl_traffic.setOnClickListener(this)
         rl_chat.setOnClickListener(this)
-        rongList= ArrayList<RongBean>()
-        rongList!!.add(RongBean("1","测试","https://www.baidu.com/link?url=f_6xwj-7u_yUnlhFMS9mFRT9lHtboSNz9wK4PEKzFLHS9dMVDae8YVzYIPSAeLESfKCmMTb99PJQo0LjNUzlkuxQtEji8mtoCHnODslOOHbjsDBKsWA0aRtIF0aF869JMCZ8J22wddT3b5FzN5Xy_XvPjBPPnB85WLgXT5lAvI95zLltaDGNHQB5WUntqATzOq8h_-OWkooyFER_Jt-VYjhOlhtaljnmghcydf8AldIo1PLFZwAzLYVmoD4ruGQQZTRK5WSeHmsyqg8KCGnbZA13VDbDW84uyxvqG61CO2JatfppC8h2o8mUVC2DWGBrob4wfJSIaXfWQS26mkgKnsfR2hbS5sJDBbiDIAwIihGZXi2DTjXW_1u5pWMsuG7vlTNRh-BZhoiu23ycwSoaNw5F6OCyxRi9ZUEdnBS41I90fnKGAM2fC0TKY0un_o0mkE35nZSFER7nrp5EO-PIIlO3XjCvOIo0OY1aPxZ03jg26R80p6hOP7wSOG_wm3Dw33BIoJTBLSvFeteNAHIR8dpJltCw8jWMEPGG2t5_vw0utoxEorgziVvf4PtokOgN4v9RIHYFgt3z0t4LNxHdy_&wd=&eqid=893d54d300034ee3000000055a4054df"))
+        rl_live.setOnClickListener(this)
+        rongList = ArrayList<RongBean>()
+        rongList!!.add(RongBean("1", "测试", "https://www.baidu.com/link?url=f_6xwj-7u_yUnlhFMS9mFRT9lHtboSNz9wK4PEKzFLHS9dMVDae8YVzYIPSAeLESfKCmMTb99PJQo0LjNUzlkuxQtEji8mtoCHnODslOOHbjsDBKsWA0aRtIF0aF869JMCZ8J22wddT3b5FzN5Xy_XvPjBPPnB85WLgXT5lAvI95zLltaDGNHQB5WUntqATzOq8h_-OWkooyFER_Jt-VYjhOlhtaljnmghcydf8AldIo1PLFZwAzLYVmoD4ruGQQZTRK5WSeHmsyqg8KCGnbZA13VDbDW84uyxvqG61CO2JatfppC8h2o8mUVC2DWGBrob4wfJSIaXfWQS26mkgKnsfR2hbS5sJDBbiDIAwIihGZXi2DTjXW_1u5pWMsuG7vlTNRh-BZhoiu23ycwSoaNw5F6OCyxRi9ZUEdnBS41I90fnKGAM2fC0TKY0un_o0mkE35nZSFER7nrp5EO-PIIlO3XjCvOIo0OY1aPxZ03jg26R80p6hOP7wSOG_wm3Dw33BIoJTBLSvFeteNAHIR8dpJltCw8jWMEPGG2t5_vw0utoxEorgziVvf4PtokOgN4v9RIHYFgt3z0t4LNxHdy_&wd=&eqid=893d54d300034ee3000000055a4054df"))
 
     }
 
     override fun onClick(p0: View) {
         when (p0) {
-            rl_traffic->{//实时交通
+            rl_traffic -> {//实时交通
                 startActivity(Intent(mContext, MaprTrafficActivity::class.java))
             }
             rl_related_plans -> {//关联预案
@@ -143,9 +145,12 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
             rl_xfsy -> {//消防水源
                 startActivity(Intent(mContext, FirewaterSupplyActivity::class.java))
             }
-            rl_chat->{
-                var token1="se+qZyl5CtdQICBZHXQnRtLt06J41kYtZzpPRreHB4QOXD+rl78FXg+E4ZOiTwOrt0ZxQlAp+cbZCsDbp3P+TA=="
+            rl_chat -> {//融云聊天室
+                var token1 = "se+qZyl5CtdQICBZHXQnRtLt06J41kYtZzpPRreHB4QOXD+rl78FXg+E4ZOiTwOrt0ZxQlAp+cbZCsDbp3P+TA=="
                 connect(token1)
+            }
+            rl_live -> {//直播
+                startActivity(Intent(mContext, LiveListActivity::class.java))
             }
         }
     }
@@ -186,10 +191,10 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
                 override fun onSuccess(userid: String) {
                     Log.i("connect", "--onSuccess" + userid)
                     RongIM.getInstance()
-                            .setCurrentUserInfo(UserInfo("112","测试", Uri.parse("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1629089538,987246310&fm=27&gp=0.jpg")))
+                            .setCurrentUserInfo(UserInfo("112", "测试", Uri.parse("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1629089538,987246310&fm=27&gp=0.jpg")))
 //                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, "1", "聊天室 I");
-                    ConversationActivity.Chat_Class_Name ="14"
-                    RongIM.getInstance().startChatRoomChat(mContext,"14",true)
+                    ConversationActivity.Chat_Class_Name = "14"
+                    RongIM.getInstance().startChatRoomChat(mContext, "14", true)
 
                 }
 
@@ -198,7 +203,7 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
                  * @param errorCode 错误码，可到官网 查看错误码对应的注释
                  */
                 override fun onError(errorCode: RongIMClient.ErrorCode) {
-                    Log.i("connect", "--onError"+errorCode)
+                    Log.i("connect", "--onError" + errorCode)
                 }
             })
         }

@@ -7,4 +7,6 @@
     <color name="app_bg">#F7F7F7</color>
     <color name="blur_bg_white">#ccffffff</color>
     <color name="black_a7000000">#a7000000</color>
+    <color name="half_transparen">#e0000000</color>
+    <color name="transparen">#00000000</color>
 </resources>

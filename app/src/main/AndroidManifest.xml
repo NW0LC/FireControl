@@ -35,6 +35,17 @@
     <!-- 访问手机当前状态, 需要device id用于网络定位 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 腾讯定位 sdk 要求的权限 (结束) -->
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.Camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <application
         android:name=".app.ToolApplication"
         android:allowBackup="true"
@@ -193,6 +204,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/rc_file_path" />
         </provider>
+        <!--直播列表-->
+        <activity android:name=".module.live.LiveListActivity"      android:screenOrientation="portrait"></activity>
+        <!--直播推流-->
+        <activity android:name=".module.live.LivePushActivity" android:screenOrientation="portrait"></activity>
+        <!--直播拉流-->
+        <activity android:name=".module.live.LivePullActivity"      android:screenOrientation="portrait"></activity>
         <!--会话页面-->
         <activity
             android:name=".module.chat.ConversationActivity"

@@ -82,6 +82,7 @@ dependencies {
     //定位
     compile 'com.amap.api:location:3.3.0'
     implementation project(':IMKit')
+    implementation files('src/libs/liteavsdk.jar')
 }
 repositories {
     mavenCentral()

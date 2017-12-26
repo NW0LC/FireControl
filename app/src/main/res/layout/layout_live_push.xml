@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/main_bkg">
+
+
+    <com.tencent.rtmp.ui.TXCloudVideoView
+        android:id="@+id/mCaptureView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|right"
+        android:layout_marginBottom="0dp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/bt_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_15">
+
+            <ImageView
+                android:id="@+id/btnPlay"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/play_start" />
+            <ImageView
+                android:id="@+id/btnCameraChange"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/margin_15"
+                android:scaleType="centerInside"
+                android:src="@mipmap/camera_change" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/action_bar_custom"></include>
+</RelativeLayout>
