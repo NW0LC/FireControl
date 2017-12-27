@@ -188,7 +188,7 @@
         <!-- 如果您key确认无误，却依然授权没有通过，请检查您的key的白名单配置 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="b9f34fd6a7fc219394ecc9396b777926" />
+            android:value="a608d9f0ab3f2f6cf8315e16d458de93" />
         <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
         <service android:name="com.amap.api.location.APSService"></service>
 
@@ -221,9 +221,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data
-                    android:host="com.exz.firecontrol.firecontrol"
+                    android:host="com.exz.firecontrol"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>

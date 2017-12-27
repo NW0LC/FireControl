@@ -73,7 +73,7 @@ object Urls{
      */
     val getWeather=url+"user/getWeather.jn"
     /**
-     * 获取融云TOKEN接口
+     * getFireDataListByPage
      */
     val getRongCloudToken=url+"user/getRongCloudToken.jn"
     /**
@@ -103,7 +103,7 @@ object Urls{
     /**
      * 获取消防大数据信息
      */
-    val getFireDataList=url+"user/getFireDataList.jn"
+    val getFireDataListByPage =url+"user/getFireDataListByPage.jn"
     /**
      * 根据id获取消防员信息
      */

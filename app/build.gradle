@@ -7,7 +7,7 @@ android {
 
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.exz.firecontrol.firecontrol"
+        applicationId "com.exz.firecontrol"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1

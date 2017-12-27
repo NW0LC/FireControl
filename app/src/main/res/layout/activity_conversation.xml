@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/rc_normal_bg"
     android:orientation="vertical">
-    <include layout="@layout/action_bar_custom"></include>
+    <include layout="@layout/action_bar_custom"/>
     <fragment
         android:id="@+id/conversation"
         android:name="io.rong.imkit.fragment.ConversationFragment"

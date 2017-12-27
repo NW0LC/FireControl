@@ -48,6 +48,8 @@ class FireInfoListBean : AbsNetBean {
         var endDate: String? = null
         var enterpriseId: Int = 0
         var telePhone: String? = null
+        var lon: String? = null
+        var lat: String? = null
         var flag: Int = 0
         var psnNum: Int = 0
         var comid: Int = 0

@@ -1088,31 +1088,34 @@ object DataCtrlClass {
     }
     /**
      * 获取消防大数据信息
-     * @param flag		                Y	    int	        1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
-     * @param comId	    顶级单位列表	Y	    int
-     * @param currentPage	当前页	        N	    Int
      * */
-    fun getFireDataList(context: Context?,
-                        flag: String,
+    fun getFireDataListByPage(context: Context?,
                         comId: String,
-                        currentPage: Int = 1,
+                              Longitude: String,
+                              Latitude: String,
+                        currentPage: Int = 0,
                         listener: (l: FireDataListBean?) -> Unit) {
-//       参数名	    参数含义	    必选	类型及范围	说明
-//       flag		                Y	    int	        1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
-//       comid	    顶级单位列表	Y	    int
-//       fetch_count	页大小	        N	    Int
-//       start_postion	当前页	        N	    Int
+//       参数名	参数含义	必选	类型及范围	说明
+//       flag		Y	int	1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
+//       comid	顶级单位id	Y	int
+//       start_postion	搜索数据的起始位置，不传设为0	N	Int
+//       fetch_count	当前页，不传设为10	N	Int
+//       Longitude	重点单位的经度	N	Double	查询消防水源必传
+//       Latitude	重点单位的纬度	N	Double	查询消防水源必传
+//
         val params = HashMap<String, String>()
-        params.put("flag", flag)
+        params.put("flag", "1")
         params.put("comid", comId)
+        params.put("Longitude", Longitude)
+        params.put("Latitude", Latitude)
         params.put("fetch_count", pageSize.toString())
         params.put("start_postion", currentPage.toString())
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<FireDataListBean>(Urls.getFireDataList)
+            OkGo.post<FireDataListBean>(Urls.getFireDataListByPage)
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<FireDataListBean>(context) {
-                        val function = { getFireDataList(context, flag, comId,  currentPage, listener) }
+                        val function = { getFireDataListByPage(context, comId,Longitude,Latitude, currentPage, listener) }
                         override fun onSuccess(response: Response<FireDataListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {

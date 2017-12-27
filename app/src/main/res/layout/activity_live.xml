@@ -30,5 +30,5 @@
         </android.support.v7.widget.RecyclerView>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-    <include layout="@layout/action_bar_custom"></include>
+    <include layout="@layout/action_bar_custom"/>
 </FrameLayout>

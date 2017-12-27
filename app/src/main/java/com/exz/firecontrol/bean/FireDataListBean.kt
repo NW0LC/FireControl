@@ -7,7 +7,7 @@ import com.szw.framelibrary.utils.net.AbsNetBean
  * on 2017/12/19.
  */
 
-class FireDataListBean: AbsNetBean {
+open class FireDataListBean: AbsNetBean {
     /**
      * result : 0
      * FireDatas : [{"Id":59,"Name":"路况1","Longitude":113.58493042,"Latitude":38.99285507,"Altitude":0,"Description":"rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov","flag":4},{"Id":60,"Name":"路况2","Longitude":113.58105469,"Latitude":38.99053955,"Altitude":0,"Description":"rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov","flag":4},{"Id":109,"Name":"zlltest","Longitude":117,"Latitude":38,"Altitude":100,"Description":"rtmp://139.129.23.185:1935/live/livestream","flag":4},{"Id":110,"Name":"zlltest_1","Longitude":117,"Latitude":38.1,"Altitude":100,"Description":"rtmp://139.129.23.185:1935/live/livestream","flag":4},{"Id":111,"Name":"zlltest_2","Longitude":117,"Latitude":38.2,"Altitude":100,"Description":"rtmp://139.129.23.185:1935/live/livestream","flag":4},{"Id":112,"Name":"zlltest_3","Longitude":117,"Latitude":38.21,"Altitude":100,"Description":"rtmp://139.129.23.185:1935/live/livestream","flag":4},{"Id":113,"Name":"zlltest_4","Longitude":117,"Latitude":38.211,"Altitude":100,"Description":"rtmp://139.129.23.185:1935/live/livestream","flag":4}]
@@ -16,9 +16,9 @@ class FireDataListBean: AbsNetBean {
 
     override  var result=""
     override var messError=""
-    var fireDatas: List<FireDataBean>? = null
+    var FireDatas: List<FireDataBean>? = null
 
-    class FireDataBean : AbsNetBean {
+    open class FireDataBean : AbsNetBean {
         /**
          * Id		            Y	int
          * Name	            名称	Y	String

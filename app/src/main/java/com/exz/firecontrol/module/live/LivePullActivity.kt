@@ -2,6 +2,7 @@ package com.exz.firecontrol.module.live
 
 import android.support.v4.content.ContextCompat
 import com.exz.firecontrol.R
+import com.exz.firecontrol.module.live.LiveListActivity.Companion.Intent_live_url
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import com.tencent.rtmp.TXLivePlayer
@@ -39,8 +40,8 @@ class LivePullActivity : BaseActivity() {
 
     private fun initView() {
         mLivePlayer = TXLivePlayer(mContext)
-        mLivePlayer.setPlayerView(mPlayerView);
-        val rtmpUrl = "rtmp://14124.mpull.live.lecloud.com/live/test1"
+        mLivePlayer.setPlayerView(mPlayerView)
+        val rtmpUrl = intent.getStringExtra(Intent_live_url)?:""
         mLivePlayer.startPlay(rtmpUrl, TXLivePlayer.PLAY_TYPE_LIVE_RTMP)
     }
 

@@ -1,82 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tool="http://schemas.android.com/tools"
     android:background="@color/app_bg">
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlEnableHeaderTranslationContent="true"
-        app:srlEnablePreviewInEditMode="false"
-        app:srlHeaderHeight="150dp"
-        app:srlHeaderMaxDragRate="1">
-
-        <View
+        app:srlEnablePreviewInEditMode="false">
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:id="@+id/header"
+            android:visibility="gone"
+            android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srlAccentColor="@android:color/black" />
-
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/scrollView"
+            app:srlAccentColor="@android:color/black"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:paddingTop="?attr/actionBarSize">
+            android:clipToPadding="false"
+            android:paddingTop="?attr/actionBarSize"
+            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        </android.support.v7.widget.RecyclerView>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@color/White"
-                    android:padding="@dimen/margin_15"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:id="@+id/tv_fire_hydrant"
-                    android:drawableStart="@mipmap/icon_fire_hydrant"
-                    android:drawableEnd="@mipmap/icon_main_gray_next"
-                    android:text="@string/fire_hydrant" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:padding="@dimen/margin_15"
-                    android:drawablePadding="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:id="@+id/tv_fire_pool"
-                    android:drawableStart="@mipmap/icon_fire_pool"
-                    android:drawableEnd="@mipmap/icon_main_gray_next"
-                    android:text="@string/fire_pool" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@color/White"
-                    android:padding="@dimen/margin_15"
-                    android:drawablePadding="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-                    android:id="@+id/tv_firefighting_jug"
-                    android:drawableStart="@mipmap/icon_firefighting_jug"
-                    android:drawableEnd="@mipmap/icon_main_gray_next"
-                    android:text="@string/firefighting_jug" />
-
-            </LinearLayout>
-
-        </android.support.v4.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-    <include layout="@layout/action_bar_custom" />
-</android.support.constraint.ConstraintLayout>
+    <include layout="@layout/action_bar_custom"/>
+</FrameLayout>

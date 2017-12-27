@@ -12,10 +12,8 @@ import android.widget.TextView
 import com.blankj.utilcode.util.TimeUtils
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
-import com.exz.firecontrol.bean.RongBean
 import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.MaprTrafficActivity
-import com.exz.firecontrol.module.chat.ConversationActivity
 import com.exz.firecontrol.module.live.LiveListActivity
 import com.exz.firecontrol.module.live.LiveListActivity.Companion.Intent_live_id
 import com.exz.firecontrol.module.unit.DrawingsActivity
@@ -24,6 +22,9 @@ import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDraw
 import com.exz.firecontrol.module.unit.EnterPriseDataActivity
 import com.exz.firecontrol.module.unit.EnterPriseDataActivity.Companion.Intent_EnterPriseDataActivity_id
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity
+import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_comId
+import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_lat
+import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_lon
 import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
 import com.exz.firecontrol.pop.SchemePop
 import com.szw.framelibrary.app.MyApplication
@@ -36,16 +37,18 @@ import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_disaster_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by pc on 2017/12/21.
  * 灾情详情
  */
 
-class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.UserInfoProvider {
+class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
 
 
     private lateinit var mPop: SchemePop
+    private var userInfos:ArrayList<UserInfo>?=null
     override fun initToolbar(): Boolean {
         mTitle.text = "灾情详情"
         mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.White))
@@ -75,13 +78,16 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
     }
 
     override fun init() {
-
+        userInfos= ArrayList()
+        userInfos?.add(UserInfo("1111","1111",Uri.parse("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1629089538,987246310&fm=27&gp=0.jpg")))
         initView()
         iniData()
     }
 
     private var comId = ""
     private var id = ""
+    private var lon = ""
+    private var lat = ""
     private fun iniData() {
         DataCtrlClass.getRongCloudToken(mContext){
             if (it!=null){
@@ -139,8 +145,6 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
         rl_traffic.setOnClickListener(this)
         rl_chat.setOnClickListener(this)
         rl_live.setOnClickListener(this)
-        rongList = ArrayList<RongBean>()
-        rongList!!.add(RongBean("1", "测试", "https://www.baidu.com/link?url=f_6xwj-7u_yUnlhFMS9mFRT9lHtboSNz9wK4PEKzFLHS9dMVDae8YVzYIPSAeLESfKCmMTb99PJQo0LjNUzlkuxQtEji8mtoCHnODslOOHbjsDBKsWA0aRtIF0aF869JMCZ8J22wddT3b5FzN5Xy_XvPjBPPnB85WLgXT5lAvI95zLltaDGNHQB5WUntqATzOq8h_-OWkooyFER_Jt-VYjhOlhtaljnmghcydf8AldIo1PLFZwAzLYVmoD4ruGQQZTRK5WSeHmsyqg8KCGnbZA13VDbDW84uyxvqG61CO2JatfppC8h2o8mUVC2DWGBrob4wfJSIaXfWQS26mkgKnsfR2hbS5sJDBbiDIAwIihGZXi2DTjXW_1u5pWMsuG7vlTNRh-BZhoiu23ycwSoaNw5F6OCyxRi9ZUEdnBS41I90fnKGAM2fC0TKY0un_o0mkE35nZSFER7nrp5EO-PIIlO3XjCvOIo0OY1aPxZ03jg26R80p6hOP7wSOG_wm3Dw33BIoJTBLSvFeteNAHIR8dpJltCw8jWMEPGG2t5_vw0utoxEorgziVvf4PtokOgN4v9RIHYFgt3z0t4LNxHdy_&wd=&eqid=893d54d300034ee3000000055a4054df"))
 
     }
     var token1=""
@@ -156,7 +160,8 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
                 startActivity(Intent(mContext, DrawingsActivity::class.java).putExtra(Intent_getDrawFileList_id, intent.getStringExtra(Intent_getEnterPrise_id) ?: "").putExtra(Intent_getDrawFileList_comId, comId))
             }
             rl_xfsy -> {//消防水源
-                startActivity(Intent(mContext, FirewaterSupplyActivity::class.java))
+                startActivity(Intent(mContext, FirewaterSupplyActivity::class.java).
+                        putExtra(Intent_FireWater_comId,comId).putExtra(Intent_FireWater_lon,lon).putExtra(Intent_FireWater_lat,lat))
             }
             rl_chat -> {//融云聊天室
                 connect(token1)
@@ -186,7 +191,8 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
 
         if (applicationInfo.packageName == getCurProcessName(applicationContext)) {
 
-            RongIM.connect(token, object : RongIMClient.ConnectCallback() {
+            RongIM.connect(token, object : RongIMClient.ConnectCallback(), RongIM.UserInfoProvider {
+
 
                 /**
                  * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
@@ -205,11 +211,13 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
                     RongIM.getInstance()
                             .setCurrentUserInfo(UserInfo(MyApplication.loginUserId, (MyApplication.user as UserBean).RoleName, Uri.parse("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1629089538,987246310&fm=27&gp=0.jpg")))
 //                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, "1", "聊天室 I");
-                    ConversationActivity.Chat_Class_Name = id
-                        RongIM.getInstance().startChatRoomChat(mContext, id, true)
-
+//                    ConversationActivity.Chat_Class_Name = id
+                                    RongIM.getInstance().startChatRoomChat(mContext, id, true)
+//                    RongIM.setUserInfoProvider(this, true)
                 }
 
+                override fun getUserInfo(p0: String?): UserInfo {
+                    return userInfos?.get(0)?: UserInfo("","", Uri.EMPTY)}
                 /**
                  * 连接融云失败
                  * @param errorCode 错误码，可到官网 查看错误码对应的注释
@@ -217,23 +225,10 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener, RongIM.User
                 override fun onError(errorCode: RongIMClient.ErrorCode) {
                     Log.i("connect", "--onError" + errorCode)
                 }
-            })
+                })
         }
-        RongIM.setUserInfoProvider(this, true)
     }
 
-    private var rongList: ArrayList<RongBean>? = null
-    override fun getUserInfo(p0: String?): UserInfo? {
-        if (rongList != null) {
-            for (i in rongList!!) {
-                if (i.accountId.equals("110")) {
-                    return UserInfo(i.accountId, i.friendName,
-                            Uri.parse(i.friendPhoto))
-                }
-            }
-        }
-        return null
-    }
 
 
     fun getCurProcessName(context: Context): String? {
