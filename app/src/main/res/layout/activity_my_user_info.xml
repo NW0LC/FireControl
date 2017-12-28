@@ -45,13 +45,13 @@
                     app:roundingBorderWidth="1dp"
                     tool:background="@mipmap/icon_my_conter_default" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:gravity="center"
-                    android:text="@string/edit_head_img" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_marginTop="@dimen/dp_10"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/edit_head_img" />-->
                 <RelativeLayout
                     android:id="@+id/bt_name"
                     android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.amap.api.maps.model.LatLng
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.firecontrol.DataCtrlClass
@@ -11,8 +12,7 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.FirewaterAdapter
 import com.exz.firecontrol.bean.FireDataListBean
 import com.exz.firecontrol.module.MapLocationActivity
-import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Latitude
-import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Longitude
+import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Lat
 import com.exz.firecontrol.utils.RecycleViewDivider
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -43,6 +43,19 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
         StatusBarUtil.setMargin(this, header)
         toolbar.setNavigationOnClickListener {
             finish()
+        }
+        toolbar.inflateMenu(R.menu.menu_vehicle_detail)
+        toolbar.setOnMenuItemClickListener {
+            when (it?.itemId) {
+                R.id.map -> {
+                    val intent = Intent(mContext, MapLocationActivity::class.java)
+                    val latLngList = ArrayList<LatLng>()
+                    mAdapter.data.mapTo(latLngList) { LatLng(it.Latitude, it.Longitude) }
+                    intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"消防栓")
+                    startActivity(intent)
+                }
+            }
+            return@setOnMenuItemClickListener false
         }
         return false
     }
@@ -79,7 +92,11 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener(){
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(mContext, MapLocationActivity::class.java).putExtra(Intent_Longitude, mAdapter.data[position].Longitude).putExtra(Intent_Latitude,  mAdapter.data[position].Latitude).putExtra(MapLocationActivity.Intent_Class_Name,"消防栓"))
+                val intent = Intent(mContext, MapLocationActivity::class.java)
+                val latLngList = ArrayList<LatLng>()
+                latLngList.add(LatLng(mAdapter.data[position].Latitude, mAdapter.data[position].Longitude))
+                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"消防栓")
+                startActivity(intent)
             }
         })
 

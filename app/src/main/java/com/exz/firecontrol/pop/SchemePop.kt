@@ -23,6 +23,11 @@ class SchemePop(context: Context) : BasePopupWindow(context) {
             inflate.tv_content.text = data
         }
 
+    var title=""
+    set(value) {
+        field=value
+        inflate.title.text=title
+    }
     init {
         popupWindow.isClippingEnabled = false
         inflate.close.setOnClickListener { dismiss() }
@@ -33,6 +38,7 @@ class SchemePop(context: Context) : BasePopupWindow(context) {
 
     override fun onCreatePopupView(): View? {
         inflate = View.inflate(context, R.layout.pop_scheme, null)
+
         return inflate
     }
 

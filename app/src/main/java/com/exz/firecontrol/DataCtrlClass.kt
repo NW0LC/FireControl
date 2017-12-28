@@ -12,7 +12,6 @@ import com.exz.firecontrol.utils.net.DialogCallback
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.model.Response
 import com.szw.framelibrary.app.MyApplication
-import com.szw.framelibrary.utils.net.AbsNetBean
 import org.jetbrains.anko.toast
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
@@ -219,7 +218,7 @@ object DataCtrlClass {
      * */
     fun updateIsOnline(context: Context?,
                        IsOnline: String,
-                       listener: (l: AbsNetBean?) -> Unit) {
+                       listener: (l: UserBean?) -> Unit) {
 //        参数名	参数含义	必选	类型及范围	说明
 //        uid	    用户ID	    Y	    Int
 //        IsOnline	在线标志	N	    Int	        1.在线0不在线    默认为1
@@ -227,12 +226,12 @@ object DataCtrlClass {
         params.put("uid", MyApplication.loginUserId)
         params.put("IsOnline", IsOnline)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<AbsNetBean>(Urls.updateIsOnline)
+            OkGo.post<UserBean>(Urls.updateIsOnline)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<AbsNetBean>(context) {
+                    .execute(object : DialogCallback<UserBean>(context) {
                         val function = { updateIsOnline(context, IsOnline, listener) }
-                        override fun onSuccess(response: Response<AbsNetBean>) {
+                        override fun onSuccess(response: Response<UserBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
@@ -241,7 +240,7 @@ object DataCtrlClass {
                             }
                         }
 
-                        override fun onError(response: Response<AbsNetBean>) {
+                        override fun onError(response: Response<UserBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else
@@ -259,7 +258,7 @@ object DataCtrlClass {
     fun changePwd(context: Context?,
                   current_pwd: String,
                   changed_pwd: String,
-                  listener: (l: AbsNetBean?) -> Unit) {
+                  listener: (l: UserBean?) -> Unit) {
 //        参数名	    参数含义	必选	类型及范围	说明
 //        uid	        用户ID	    Y	    Int
 //        current_pwd	原密码	    Y	    String
@@ -269,12 +268,12 @@ object DataCtrlClass {
         params.put("current_pwd", current_pwd)
         params.put("changed_pwd", changed_pwd)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<AbsNetBean>(Urls.changePwd)
+            OkGo.post<UserBean>(Urls.changePwd)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<AbsNetBean>(context) {
+                    .execute(object : DialogCallback<UserBean>(context) {
                         val function = { changePwd(context, current_pwd, changed_pwd, listener) }
-                        override fun onSuccess(response: Response<AbsNetBean>) {
+                        override fun onSuccess(response: Response<UserBean>) {
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
@@ -283,45 +282,7 @@ object DataCtrlClass {
                             context?.toast(response.body().messError)
                         }
 
-                        override fun onError(response: Response<AbsNetBean>) {
-                            if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey, "", function)
-                            else
-                                listener.invoke(null)
-                        }
-
-                    })
-        }
-    }
-
-    /**
-     * 忘记密码接口
-     * @param phone        用户手机号
-     * @param password    新密码
-     * */
-    fun updatePwd(context: Context?, phone: String, password: String, listener: (l: AbsNetBean?) -> Unit) {
-//        参数名	参数含义	必选	类型及范围	说明
-//        phone	    用户手机号	Y	String
-//        password	新密码	    Y	String
-        val params = HashMap<String, String>()
-        params.put("phone", phone)
-        params.put("password", password)
-        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<AbsNetBean>(Urls.updatePwd)
-                    .params(changeFun(params))
-                    .tag(this)
-                    .execute(object : DialogCallback<AbsNetBean>(context) {
-                        val function = { updatePwd(context, phone, password, listener) }
-                        override fun onSuccess(response: Response<AbsNetBean>) {
-
-                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
-                                listener.invoke(response.body())
-                            } else {
-                                listener.invoke(null)
-                            }
-                        }
-
-                        override fun onError(response: Response<AbsNetBean>) {
+                        override fun onError(response: Response<UserBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else
@@ -619,42 +580,6 @@ object DataCtrlClass {
         }
     }
 
-    /**
-     * 获取数据路线
-     * @param RoleId        角色编号
-     * */
-    fun getPathPlanByRoleId(context: Context?,
-                            RoleId: String,
-                            listener: (l: PathPlanByRoleIdBean?) -> Unit) {
-//       参数名	参数含义	必选	类型及范围	说明
-//       RoleId	角色id	    Y	    int
-        val params = HashMap<String, String>()
-        params.put("RoleId", RoleId)
-        isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<PathPlanByRoleIdBean>(Urls.getPathPlanByRoleId)
-                    .params(changeFun(params))
-                    .tag(this)
-                    .execute(object : DialogCallback<PathPlanByRoleIdBean>(context) {
-                        val function = { getPathPlanByRoleId(context, RoleId,  listener) }
-                        override fun onSuccess(response: Response<PathPlanByRoleIdBean>) {
-
-                            if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
-                                listener.invoke(response.body())
-                            } else {
-                                listener.invoke(null)
-                            }
-                        }
-
-                        override fun onError(response: Response<PathPlanByRoleIdBean>) {
-                            if (response.code() == HttpCode_Error_Key)
-                                isSuccess(context, NetCode_NoKey, "", function)
-                            else
-                                listener.invoke(null)
-                        }
-
-                    })
-        }
-    }
 
     /**
      * 获取灾情列表
@@ -928,7 +853,7 @@ object DataCtrlClass {
      * */
     fun saveUserAdvise(context: Context?,
                        advise: String,
-                            listener: (l: AbsNetBean?) -> Unit) {
+                            listener: (l: UserBean?) -> Unit) {
 //     参数名	参数含义	必选	类型及范围	说明
 //     uid	用户id	Y	int
 //     advise	建议	Y	String
@@ -936,12 +861,12 @@ object DataCtrlClass {
         params.put("uid", MyApplication.loginUserId)
         params.put("advise", advise)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<AbsNetBean>(Urls.saveUserAdvise)
+            OkGo.post<UserBean>(Urls.saveUserAdvise)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<AbsNetBean>(context) {
+                    .execute(object : DialogCallback<UserBean>(context) {
                         val function = { saveUserAdvise(context, advise,  listener) }
-                        override fun onSuccess(response: Response<AbsNetBean>) {
+                        override fun onSuccess(response: Response<UserBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
@@ -951,7 +876,7 @@ object DataCtrlClass {
                             context?.toast(response.body().messError)
                         }
 
-                        override fun onError(response: Response<AbsNetBean>) {
+                        override fun onError(response: Response<UserBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else
@@ -967,18 +892,18 @@ object DataCtrlClass {
      * */
     fun resetValiCodeSendSms(context: Context?,
                              mobile: String,
-                            listener: (l: AbsNetBean?) -> Unit) {
+                            listener: (l: UserBean?) -> Unit) {
 //     参数名	参数含义	必选	类型及范围	说明
 //     mobile	用户手机号	Y	String
         val params = HashMap<String, String>()
         params.put("mobile",mobile)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<AbsNetBean>(Urls.resetValiCodeSendSms)
+            OkGo.post<UserBean>(Urls.resetValiCodeSendSms)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<AbsNetBean>(context) {
+                    .execute(object : DialogCallback<UserBean>(context) {
                         val function = { resetValiCodeSendSms(context, mobile,  listener) }
-                        override fun onSuccess(response: Response<AbsNetBean>) {
+                        override fun onSuccess(response: Response<UserBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
@@ -988,7 +913,7 @@ object DataCtrlClass {
                             context?.toast(response.body().messError)
                         }
 
-                        override fun onError(response: Response<AbsNetBean>) {
+                        override fun onError(response: Response<UserBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else
@@ -1002,24 +927,28 @@ object DataCtrlClass {
      * 验证码重置密码接口
      * @param  mobile	用户手机号	Y	String
      * @param  password	新密码	Y	String
+     * @param  valiCode	新密码	Y	String
      * */
     fun resetPasswordSendSms(context: Context?,
                              mobile: String,
                              password: String,
-                            listener: (l: AbsNetBean?) -> Unit) {
+                             valiCode: String,
+                            listener: (l: UserBean?) -> Unit) {
 //     参数名	参数含义	必选	类型及范围	说明
 //     mobile	用户手机号	Y	String
 //     password	新密码	Y	String
+//     valiCode	验证码	Y	String
         val params = HashMap<String, String>()
         params.put("mobile",mobile)
         params.put("password",password)
+        params.put("valiCode",valiCode)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<AbsNetBean>(Urls.resetPasswordSendSms)
+            OkGo.post<UserBean>(Urls.resetPasswordSendSms)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<AbsNetBean>(context) {
+                    .execute(object : DialogCallback<UserBean>(context) {
                         val function = { resetValiCodeSendSms(context, mobile,  listener) }
-                        override fun onSuccess(response: Response<AbsNetBean>) {
+                        override fun onSuccess(response: Response<UserBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
@@ -1029,7 +958,7 @@ object DataCtrlClass {
                             context?.toast(response.body().messError)
                         }
 
-                        override fun onError(response: Response<AbsNetBean>) {
+                        override fun onError(response: Response<UserBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else

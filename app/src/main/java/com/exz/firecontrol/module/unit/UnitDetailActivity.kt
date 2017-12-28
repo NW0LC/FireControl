@@ -12,7 +12,6 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.UnitDetailAdapter
 import com.exz.firecontrol.bean.UnitDetailBean
-import com.exz.firecontrol.module.MapLocationActivity
 import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_id
 import com.exz.firecontrol.module.unit.EnterPriseDataActivity.Companion.Intent_EnterPriseDataActivity_id
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_comId
@@ -55,11 +54,11 @@ class UnitDetailActivity : BaseActivity() {
         return R.layout.activity_unit_detail
     }
 
-    var lon=""
-    var lat=""
+    var lon=0.toDouble()
+    var lat=0.toDouble()
     override fun init() {
-        lon=intent.getStringExtra(Intent_UnitDetailActivity_lon)
-        lat=intent.getStringExtra(Intent_UnitDetailActivity_lat)
+        lon=intent.getDoubleExtra(Intent_UnitDetailActivity_lon,0.toDouble())
+        lat=intent.getDoubleExtra(Intent_UnitDetailActivity_lat,0.toDouble())
         initView()
         initRecycler()
     }
@@ -157,9 +156,7 @@ class UnitDetailActivity : BaseActivity() {
                                     putExtra(Intent_FireWater_comId,intent.getStringExtra(Intent_getEnterPrise_id)?:"").putExtra(Intent_FireWater_lon,lon).putExtra(Intent_FireWater_lat,lat))
                         }
                         "地图导航" -> {
-                            intent.getStringExtra(Intent_UnitDetailActivity_lon)
-                            intent.getStringExtra(Intent_UnitDetailActivity_lat)
-                            startActivity(Intent(mContext, MapLocationActivity::class.java).putExtra(MapLocationActivity.Intent_Class_Name,"地址"))
+                            popupMap.showPopupWindow()
                         }
                     }
 

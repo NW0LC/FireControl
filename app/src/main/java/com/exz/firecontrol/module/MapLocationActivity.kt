@@ -4,7 +4,6 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import com.amap.api.maps.AMap
-import com.amap.api.maps.CameraUpdate
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import com.exz.firecontrol.R
@@ -14,18 +13,13 @@ import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_map_location.*
 
 
-/**
- * Created by pc on 2017/12/19.
- */
 
-class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener {
+class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener{
 
 
     private lateinit var aMap: AMap
-    private lateinit var markerOption: MarkerOptions
-    private lateinit var marker: Marker
     override fun initToolbar(): Boolean {
-        mTitle.text =intent.getStringExtra(Intent_Class_Name)
+        mTitle.text = intent.getStringExtra(Intent_Class_Name)
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this)
@@ -43,98 +37,94 @@ class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener {
     }
 
 
-     override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mapView.onCreate(savedInstanceState) // 此方法必须重写
-         initView()
+        initView()
 
-     }
-
-    private fun initView() {
-            aMap = mapView.map
-
-//设置缩放级别
-        var lat: LatLng
-        if(intent.hasExtra(Intent_Latitude)&&intent.hasExtra(Intent_Longitude)){
-            lat= LatLng(intent.getDoubleExtra(Intent_Latitude,0.0),intent.getDoubleExtra(Intent_Longitude,0.0))
-        }else{
-            lat= LatLng(34.253505, 117.155179)
-        }
-        var  icLction = "" //宝藏地图页数据
-        when (intent.getStringExtra(Intent_Class_Name)) {
-            "地址" -> {
-                icLction="icon_pin.png"
-            }
-            "消防栓" -> {
-                icLction="icon_firefighting1.png"
-            }
-            "消防水池" -> {
-                icLction="icon_firefighting2.png"
-            }
-            "消防水罐" -> {
-                icLction="icon_firefighting3.png"
-            }
-            "车辆位置" -> {
-                icLction="icon_firefighting4.png"
-            }
-            "人员位置" -> {
-                icLction="icon_person_locaiton.png"
-            }
-        }
-        markerOption = MarkerOptions().icon(BitmapDescriptorFactory.fromAsset(icLction))
-                .position(lat)
-                .draggable(true)
-        marker = aMap.addMarker(markerOption)
-
-        //设置SDK 自带定位消息监听
-        aMap.setOnMyLocationChangeListener(this)
-      var   myLocationStyle = MyLocationStyle()
-        aMap.uiSettings.isMyLocationButtonEnabled = true// 设置默认定位按钮是否显示
-        aMap.isMyLocationEnabled = true// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        aMap.myLocationStyle = myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
-        changeCamera(CameraUpdateFactory.zoomIn(), null);
     }
 
-    /**
-     * 根据动画按钮状态，调用函数animateCamera或moveCamera来改变可视区域
-     */
-    private fun changeCamera(update: CameraUpdate, callback: AMap.CancelableCallback?) {
-            aMap.animateCamera(update, 1000, callback)
-            aMap.moveCamera(update)
+    private fun initView() {
+        aMap = mapView.map
+
+//设置缩放级别
+        var latLngList = ArrayList<LatLng>()
+        if (intent.hasExtra(Intent_Lat)) {
+            latLngList = intent.getParcelableArrayListExtra(Intent_Lat)
+        } else {
+            latLngList.add(LatLng(34.253505, 117.155179))
+        }
+        var icLction = "" //宝藏地图页数据
+        when (intent.getStringExtra(Intent_Class_Name)) {
+            "地址" -> {
+                icLction = "icon_pin.png"
+            }
+            "消防栓" -> {
+                icLction = "icon_firefighting1.png"
+            }
+            "消防水池" -> {
+                icLction = "icon_firefighting2.png"
+            }
+            "消防水罐" -> {
+                icLction = "icon_firefighting3.png"
+            }
+            "车辆位置" -> {
+                icLction = "icon_firefighting4.png"
+            }
+            "人员位置" -> {
+                icLction = "icon_person_locaiton.png"
+            }
+        }
+        val latLngBound = LatLngBounds.builder()
+        val markerOptions=ArrayList<MarkerOptions>()
+        for (latLng in latLngList) {
+            latLngBound.include(latLng)
+            val markerOption = MarkerOptions().icon(BitmapDescriptorFactory.fromAsset(icLction))
+                    .position(latLng)
+                    .draggable(true)
+            markerOptions.add(markerOption)
+        }
+        aMap.setOnMyLocationChangeListener(this)
+        aMap.uiSettings.isMyLocationButtonEnabled = true //显示默认的定位按钮
+        aMap.isMyLocationEnabled = true// 可触发定位并显示当前位置
+        val myLocationStyle = MyLocationStyle()
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW)
+        aMap.myLocationStyle = myLocationStyle//设置定位蓝点的Style
+
+        aMap.addMarkers(markerOptions,false)
+
+        val newLatLngBounds = CameraUpdateFactory.newLatLngBounds(latLngBound.build(),250)
+        aMap.animateCamera(newLatLngBounds)
     }
 
     override fun onMyLocationChange(location: Location) {
         // 定位回调监听
-        if (location != null) {
-            Log.e("amap", "onMyLocationChange 定位成功， lat: " + location.getLatitude() + " lon: " + location.getLongitude())
-            val bundle = location.getExtras()
-            if (bundle != null) {
-                val errorCode = bundle!!.getInt(MyLocationStyle.ERROR_CODE)
-                val errorInfo = bundle!!.getString(MyLocationStyle.ERROR_INFO)
-                // 定位类型，可能为GPS WIFI等，具体可以参考官网的定位SDK介绍
-                val locationType = bundle!!.getInt(MyLocationStyle.LOCATION_TYPE)
+        Log.e("amap", "onMyLocationChange 定位成功， lat: " + location.latitude + " lon: " + location.longitude)
+        val bundle = location.extras
+        if (bundle != null) {
+            val errorCode = bundle.getInt(MyLocationStyle.ERROR_CODE)
+            val errorInfo = bundle.getString(MyLocationStyle.ERROR_INFO)
+            // 定位类型，可能为GPS WIFI等，具体可以参考官网的定位SDK介绍
+            val locationType = bundle.getInt(MyLocationStyle.LOCATION_TYPE)
 
-                /*
-                errorCode
-                errorInfo
-                locationType
-                */
-                Log.e("amap", "定位信息， code: $errorCode errorInfo: $errorInfo locationType: $locationType")
-            } else {
-                Log.e("amap", "定位信息， bundle is null ")
-
-            }
-
+            /*
+            errorCode
+            errorInfo
+            locationType
+            */
+            Log.e("amap", "定位信息， code: $errorCode errorInfo: $errorInfo locationType: $locationType")
         } else {
-            Log.e("amap", "定位失败")
+            Log.e("amap", "定位信息， bundle is null ")
+
         }
+
     }
 
     /**
      * 方法必须重写
-    */
+     */
 
-     override fun onResume() {
+    override fun onResume() {
         super.onResume()
         mapView.onResume()
     }
@@ -143,7 +133,7 @@ class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener {
      * 方法必须重写
      */
 
-     override fun onPause() {
+    override fun onPause() {
         super.onPause()
         mapView.onPause()
     }
@@ -160,15 +150,14 @@ class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener {
      * 方法必须重写
      */
 
-     override fun onDestroy() {
+    override fun onDestroy() {
         super.onDestroy()
         mapView.onDestroy()
     }
 
 
     companion object {
-        var Intent_Class_Name="className"
-        var Intent_Latitude="latitude"
-        var Intent_Longitude="longitude"
+        var Intent_Class_Name = "className"
+        var Intent_Lat = "Intent_Lat"
     }
 }

@@ -6,13 +6,12 @@ import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.amap.api.maps.model.LatLng
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.VehicleAdapter
 import com.exz.firecontrol.module.MapLocationActivity
-import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Class_Name
-import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Latitude
-import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Longitude
+import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Lat
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.DialogUtils
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -118,7 +117,12 @@ class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
                 DialogUtils.Call(this, phone)
             }
             tv_address -> {
-                startActivity(Intent(mContext, MapLocationActivity::class.java).putExtra(Intent_Longitude,lon).putExtra(Intent_Latitude,lat).putExtra(Intent_Class_Name, "地址"))
+
+                val intent = Intent(mContext, MapLocationActivity::class.java)
+                val latLngList = ArrayList<LatLng>()
+                latLngList.add(LatLng(lat, lon))
+                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name, "地址")
+                startActivity(intent)
             }
         }
     }

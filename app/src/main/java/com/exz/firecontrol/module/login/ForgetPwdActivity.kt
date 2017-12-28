@@ -131,7 +131,7 @@ class ForgetPwdActivity : BaseActivity(), View.OnClickListener {
                     ed_pwd2.setShakeAnimation()
                     return
                 }
-                DataCtrlClass.resetPasswordSendSms(this,phone,pwd){
+                DataCtrlClass.resetPasswordSendSms(this,phone,pwd,code){
                     if (it!=null){
                         finish()
                     }

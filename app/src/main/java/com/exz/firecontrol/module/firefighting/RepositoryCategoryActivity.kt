@@ -1,6 +1,5 @@
 package com.exz.firecontrol.module.firefighting
 
-import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -10,8 +9,8 @@ import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.CategoryAdapter
 import com.exz.firecontrol.bean.KnowledgeInfoListBean
+import com.exz.firecontrol.pop.SchemePop
 import com.exz.firecontrol.utils.SZWUtils
-import com.exz.firecontrol.widget.MyWebActivity
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.BaseActivity
@@ -31,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_repository.*
 class RepositoryCategoryActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     private var refreshState = Constants.RefreshState.STATE_REFRESH
     private var currentPage = 0
-
+    private lateinit var mPop: SchemePop
     private lateinit var mAdapter: CategoryAdapter<KnowledgeInfoListBean.KnowledgeListBean>
     override fun initToolbar(): Boolean {
         mTitle.text = intent.getStringExtra(Intent_Class_Name)
@@ -55,6 +54,8 @@ class RepositoryCategoryActivity : BaseActivity(), OnRefreshListener, BaseQuickA
     override fun init() {
         initView()
         initRecycler()
+        mPop = SchemePop(mContext)
+
     }
 
     private fun initView() {
@@ -71,7 +72,9 @@ class RepositoryCategoryActivity : BaseActivity(), OnRefreshListener, BaseQuickA
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                startActivity(Intent(mContext, MyWebActivity::class.java).putExtra(MyWebActivity.Intent_Title, mAdapter.data[position].title).putExtra(MyWebActivity.Intent_Url, mAdapter.data[position].content))
+                mPop.data=mAdapter.data[position].content?:""
+                mPop.title=mAdapter.data[position].title?:""
+                mPop.showPopupWindow()
             }
         })
         mAdapter.setOnLoadMoreListener(this, mRecyclerView)

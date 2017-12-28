@@ -24,12 +24,13 @@
             app:rv_cornerRadius="@dimen/dp_10">
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_scheme_pop"
                 android:gravity="center"
                 android:padding="@dimen/margin_15"
-                android:text="@string/proposed_rescue_plan"
+                android:text=""
                 android:textColor="@color/White"
                 android:textSize="@dimen/sp_16" />
             <ScrollView

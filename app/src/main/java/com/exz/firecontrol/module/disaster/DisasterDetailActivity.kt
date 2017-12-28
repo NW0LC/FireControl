@@ -139,6 +139,7 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun initView() {
         mPop = SchemePop(mContext)
+        mPop.title=getString(R.string.proposed_rescue_plan)
         rl_related_plans.setOnClickListener(this)
         rl_plans.setOnClickListener(this)
         rl_xfsy.setOnClickListener(this)

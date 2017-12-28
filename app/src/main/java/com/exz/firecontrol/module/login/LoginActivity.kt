@@ -3,6 +3,7 @@ package com.exz.firecontrol.module.login
 import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.View
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
@@ -76,6 +77,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
             }
         }
+    }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            System.exit(0)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
     companion object {
         var USER_NAME = "user_name"

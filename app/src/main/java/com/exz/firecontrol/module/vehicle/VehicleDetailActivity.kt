@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
+import com.amap.api.maps.model.LatLng
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.firecontrol.DataCtrlClass
@@ -15,8 +16,7 @@ import com.exz.firecontrol.adapter.VehicleDetailAdapter
 import com.exz.firecontrol.bean.TabEntity
 import com.exz.firecontrol.bean.VehicleDetailBean
 import com.exz.firecontrol.module.MapLocationActivity
-import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Latitude
-import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Longitude
+import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Lat
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.scwang.smartrefresh.layout.util.DensityUtil
@@ -106,7 +106,11 @@ class VehicleDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.map -> {
-                startActivity(Intent(mContext, MapLocationActivity::class.java).putExtra(Intent_Longitude,lon).putExtra(Intent_Latitude,lat).putExtra(MapLocationActivity.Intent_Class_Name,"车辆位置"))
+                val intent = Intent(mContext, MapLocationActivity::class.java)
+                val latLngList = ArrayList<LatLng>()
+                latLngList.add(LatLng(lat.toDouble(), lon.toDouble()))
+                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"车辆位置")
+                startActivity(intent)
             }
         }
         return false

@@ -3,6 +3,7 @@ package com.exz.firecontrol.module
 import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.view.KeyEvent
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
@@ -15,7 +16,6 @@ import com.exz.firecontrol.module.disaster.DisasterDetailActivity
 import com.exz.firecontrol.module.disaster.DisasterDetailActivity.Companion.Intent_DisasterDetail_Id
 import com.exz.firecontrol.module.firefighting.FireDepartmentActivity
 import com.exz.firecontrol.module.firefighting.RepositoryActivity
-import com.exz.firecontrol.module.live.LivePushActivity
 import com.exz.firecontrol.module.mycenter.MyCenterActivity
 import com.exz.firecontrol.module.person.PersonActivity
 import com.exz.firecontrol.module.unit.KeyUnitActivity
@@ -36,7 +36,16 @@ import kotlinx.android.synthetic.main.header_main.view.*
 
 
 class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, BaseQuickAdapter.RequestLoadMoreListener {
-
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.addCategory(Intent.CATEGORY_HOME)
+            startActivity(intent)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
     private lateinit var mAdapter: DisasterAdapter<FireInfoListBean.FireInfoBean>
     private lateinit var headerView: View
@@ -67,7 +76,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
         super.init()
         initRecycler()
         initHeader()
-
+        onRefresh(refreshLayout)
     }
 
     private fun initRecycler() {
