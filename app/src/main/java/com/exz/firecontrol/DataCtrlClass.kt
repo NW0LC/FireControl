@@ -817,18 +817,18 @@ object DataCtrlClass {
      * */
     fun getLivePath(context: Context?,
                     fiId: String,
-                            listener: (l: LivePathBean?) -> Unit) {
+                            listener: (l: FireInfoLiveBean.LiveListBean?) -> Unit) {
 //     参数名	参数含义	必选	类型及范围	说明
 //     fiId	灾情信息id	Y	int
         val params = HashMap<String, String>()
         params.put("fiId", fiId)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<LivePathBean>(Urls.getLivePath)
+            OkGo.post<FireInfoLiveBean.LiveListBean>(Urls.getLivePath)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<LivePathBean>(context) {
+                    .execute(object : DialogCallback<FireInfoLiveBean.LiveListBean>(context) {
                         val function = { getLivePath(context, fiId,  listener) }
-                        override fun onSuccess(response: Response<LivePathBean>) {
+                        override fun onSuccess(response: Response<FireInfoLiveBean.LiveListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
@@ -837,7 +837,7 @@ object DataCtrlClass {
                             }
                         }
 
-                        override fun onError(response: Response<LivePathBean>) {
+                        override fun onError(response: Response<FireInfoLiveBean.LiveListBean>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else

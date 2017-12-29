@@ -1,6 +1,7 @@
 package com.exz.firecontrol.module
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.KeyEvent
@@ -11,6 +12,7 @@ import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.DisasterAdapter
 import com.exz.firecontrol.bean.FireInfoListBean
+import com.exz.firecontrol.imageloader.BannerImageLoader
 import com.exz.firecontrol.module.disaster.DisasterActivity
 import com.exz.firecontrol.module.disaster.DisasterDetailActivity
 import com.exz.firecontrol.module.disaster.DisasterDetailActivity.Companion.Intent_DisasterDetail_Id
@@ -27,6 +29,7 @@ import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
+import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_main.view.*
@@ -77,8 +80,22 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
         initRecycler()
         initHeader()
         onRefresh(refreshLayout)
+        initBanner()
     }
-
+    private fun initBanner() {
+        headerView.banner.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+        //设置图片加载器
+        headerView.banner.banner.setImageLoader(BannerImageLoader())
+        //设置自动轮播，默认为true
+        headerView.banner.banner.isAutoPlay(true)
+        //设置轮播时间
+        headerView.banner.banner.setDelayTime(3000)
+        //设置指示器位置（当banner模式中有指示器时）
+        headerView.banner.banner.setIndicatorGravity(BannerConfig.CENTER)
+        headerView.banner.setImages(arrayListOf(Uri.parse("android.resource://" + applicationContext.packageName + "/" +R.mipmap.icon_banner).toString()))
+        //banner设置方法全部调用完毕时最后调用
+        headerView.banner.start()
+    }
     private fun initRecycler() {
         mAdapter = DisasterAdapter()
         headerView = View.inflate(mContext, R.layout.header_main, null)

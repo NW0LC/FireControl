@@ -17,17 +17,19 @@ class FireInfoLiveBean : AbsNetBean {
     override var messError=""
     var liveList: List<LiveListBean>? = null
 
-    open class LiveListBean {
+    open class LiveListBean: AbsNetBean  {
         /**
          * id : 7
          * fiId : 1
          * livePath : rtmp://139.129.23.185:1935/live/fire_20171225163813
          * addTime : 2017-12-25 16:38:13
          */
-
+        override  var result=""
+        override var messError=""
         var id: Int = 0
         var fiId: Int = 0
         var livePath: String? = null
+        var PlayPath: String? = null
         var addTime: String? = null
     }
 }

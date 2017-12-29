@@ -46,7 +46,7 @@ class LivePushActivity : BaseActivity(), View.OnClickListener {
         initView()
         DataCtrlClass.getLivePath(this,intent.getStringExtra(Intent_live_id)?:""){
             if (it!=null)
-                rtmpUrl=it.livePath?.get(0)?.livePath?:""
+                rtmpUrl=it.livePath?:""
         }
     }
 
