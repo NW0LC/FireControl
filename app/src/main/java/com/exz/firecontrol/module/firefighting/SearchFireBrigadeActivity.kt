@@ -13,11 +13,9 @@ import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.FirefightingAdapter
 import com.exz.firecontrol.bean.OrganizationBean
-import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.firefighting.FireDepartmentDetailActivity.Companion.Intent_getOrgDetailById_Id
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
-import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.RecycleViewDivider
@@ -105,7 +103,7 @@ class SearchFireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAd
     }
 
     private fun iniData() {
-        DataCtrlClass.getOrgListByPage(this, (MyApplication.user as UserBean).oid, searchContent, currentPage) {
+        DataCtrlClass.getOrgListByPage(this,  searchContent, currentPage) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {

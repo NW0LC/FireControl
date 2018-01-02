@@ -971,12 +971,10 @@ object DataCtrlClass {
 
     /**
      * 获取组织机构列表
-     * @param  oid	    组织机构id
      * @param  nameKey	组织机构名称关键字
      * @param  currentPage	当前页
      * */
     fun getOrgListByPage(context: Context?,
-                        oid: String,
                         nameKey: String="",
                         currentPage: Int = 1,
                         listener: (l: OrgListByPageBean?) -> Unit) {
@@ -986,7 +984,7 @@ object DataCtrlClass {
 //       fetch_count	页大小	            N	    Int
 //       start_postion	当前页	            N	    Int
         val params = HashMap<String, String>()
-        params.put("oid", oid)
+        params.put("oid", (MyApplication.user as UserBean).oid)
         params.put("namekey", nameKey)
         params.put("fetch_count", pageSize.toString())
         params.put("start_postion", currentPage.toString())
@@ -995,7 +993,7 @@ object DataCtrlClass {
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<OrgListByPageBean>(context) {
-                        val function = { getOrgListByPage(context, oid, nameKey,  currentPage, listener) }
+                        val function = { getOrgListByPage(context,nameKey,  currentPage, listener) }
                         override fun onSuccess(response: Response<OrgListByPageBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
@@ -1035,6 +1033,7 @@ object DataCtrlClass {
         val params = HashMap<String, String>()
         params.put("flag", "1")
         params.put("comid", comId)
+        params.put("oid", (MyApplication.user as UserBean).oid)
         params.put("Longitude", Longitude)
         params.put("Latitude", Latitude)
         params.put("fetch_count", pageSize.toString())
