@@ -1,9 +1,12 @@
 package com.exz.firecontrol.app
 
+import android.util.Log
 import com.exz.firecontrol.bean.ChangeKeyBean
 import com.szw.framelibrary.app.MyApplication
 import com.tencent.rtmp.TXLiveBase
 import io.rong.imkit.RongIM
+
+
 
 class ToolApplication: MyApplication() {
     override fun getSaltStr(): String? = "9E127DFDDA4F0BAB43B3"
@@ -13,7 +16,9 @@ class ToolApplication: MyApplication() {
         init()
         RongIM.init(this)
 
-        TXLiveBase.setConsoleEnabled(true)
+//        TXLiveBase.setConsoleEnabled(true)
+        val sdkver = TXLiveBase.getSDKVersionStr()
+        Log.d("liteavsdk", "liteav sdk version is : " + sdkver)
     }
     companion object {
         //秘钥

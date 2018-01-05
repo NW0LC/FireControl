@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
+import com.exz.firecontrol.adapter.VehicleAdapter
 import com.exz.firecontrol.adapter.VehicleDetailAdapter
 import com.exz.firecontrol.bean.TabEntity
 import com.exz.firecontrol.bean.VehicleDetailBean
@@ -129,7 +130,7 @@ class VehicleDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
                 lat=fireCarLocBean?.lat?:""
                 mHeaderView.tv_is_online.delegate.backgroundColor=ContextCompat.getColor(mContext,if (fireCarLocBean?.IsOnline=="1")R.color.MaterialGreenA400 else R.color.MaterialGrey400)
                 mHeaderView.tv_is_online.text=if (fireCarLocBean?.IsOnline=="1")getString(R.string.on_line) else getString(R.string.off_line)
-
+                mHeaderView.tv_car_name.text= VehicleAdapter.getCarTyeStr(fireCarLocBean?.carType)
 
                 data1.add(VehicleDetailBean("车牌号", fireCarLocBean?.carNum?:""))
                 data1.add(VehicleDetailBean("生产厂家",fireCarLocBean?.manufacturer?:""))

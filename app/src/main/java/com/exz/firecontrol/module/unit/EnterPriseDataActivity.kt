@@ -13,6 +13,7 @@ import com.exz.firecontrol.bean.EnterPriseDataBean
 import com.exz.firecontrol.widget.MyWebActivity
 import com.exz.firecontrol.widget.MyWebActivity.Intent_Title
 import com.exz.firecontrol.widget.MyWebActivity.Intent_Url
+import com.exz.firecontrol.widget.PDFActivity
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -58,9 +59,14 @@ class EnterPriseDataActivity : BaseActivity() {
         mERecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
         val onItemClick: OnItemClickListener = object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View?, position: Int) {
-                val intent = Intent(this@EnterPriseDataActivity, MyWebActivity::class.java)
-                intent.putExtra(Intent_Url, (adapter.data[position] as EnterPriseDataBean.EnterpriseDataBean).description)
-                intent.putExtra(Intent_Title, (adapter.data[position] as EnterPriseDataBean.EnterpriseDataBean).name)
+
+                val enterpriseDataBean = adapter.data[position] as EnterPriseDataBean.EnterpriseDataBean
+                val intent = if (enterpriseDataBean.flag==2) {
+                    Intent(this@EnterPriseDataActivity, PDFActivity::class.java)
+                }else
+                    Intent(this@EnterPriseDataActivity, MyWebActivity::class.java)
+                intent.putExtra(Intent_Url, enterpriseDataBean.description)
+                intent.putExtra(Intent_Title, enterpriseDataBean.name)
                 startActivity(intent)
             }
         }

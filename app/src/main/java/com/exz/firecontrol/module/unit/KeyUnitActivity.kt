@@ -49,6 +49,8 @@ class KeyUnitActivity : BaseActivity(), View.OnClickListener {
         bt_tab_2.setOnClickListener(this)
         bt_tab_3.setOnClickListener(this)
         bt_tab_4.setOnClickListener(this)
+        bt_tab_5.setOnClickListener(this)
+        bt_tab_6.setOnClickListener(this)
 
     }
 

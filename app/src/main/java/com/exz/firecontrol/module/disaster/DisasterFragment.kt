@@ -81,7 +81,6 @@ class DisasterFragment : MyBaseFragment(), BaseQuickAdapter.RequestLoadMoreListe
 
 
     override fun onLoadMoreRequested() {
-        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
         iniData()
     }
@@ -97,7 +96,7 @@ class DisasterFragment : MyBaseFragment(), BaseQuickAdapter.RequestLoadMoreListe
                 }
                 if (it.fireInfoList?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
-                    currentPage++
+                    currentPage=mAdapter.data.size
                 } else {
                     mAdapter.loadMoreEnd()
                 }

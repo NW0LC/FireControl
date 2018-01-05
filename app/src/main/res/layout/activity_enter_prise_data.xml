@@ -36,7 +36,7 @@
                     android:text="电子预案"
                     android:layout_margin="@dimen/margin_10"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/MaterialGrey600"
+                    android:textColor="@color/MaterialGrey700"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <android.support.v7.widget.RecyclerView
@@ -50,7 +50,7 @@
                     android:text="纸质预案"
                     android:layout_margin="@dimen/margin_10"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/MaterialGrey600"
+                    android:textColor="@color/MaterialGrey700"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <android.support.v7.widget.RecyclerView
@@ -64,7 +64,7 @@
                     android:text="VR预案"
                     android:layout_margin="@dimen/margin_10"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/MaterialGrey600"
+                    android:textColor="@color/MaterialGrey700"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <android.support.v7.widget.RecyclerView

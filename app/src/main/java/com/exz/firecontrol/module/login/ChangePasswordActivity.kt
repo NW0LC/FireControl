@@ -50,6 +50,10 @@ class ChangePasswordActivity : BaseActivity() {
                 ed_password.setShakeAnimation()
                 return@setOnClickListener
             }
+            if (newPwd != oldPwd){
+                toast("旧密码与新密码相同!")
+                return@setOnClickListener
+            }
             if (newPwd != password) {
                 toast("两次输入的密码不一致!")
                 return@setOnClickListener

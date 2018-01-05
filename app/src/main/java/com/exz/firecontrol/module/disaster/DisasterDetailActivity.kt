@@ -25,7 +25,6 @@ import com.exz.firecontrol.module.unit.FirewaterSupplyActivity
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_comId
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_lat
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_lon
-import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
 import com.exz.firecontrol.pop.SchemePop
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
@@ -86,6 +85,7 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
 
     private var comId = ""
     private var id = ""
+    private var enterpriseId = ""
     private var lon = ""
     private var lat = ""
     private fun iniData() {
@@ -112,6 +112,9 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
                 }
                 comId = fireInfoBean?.comid.toString()
                 id = fireInfoBean?.id.toString()
+                lon= fireInfoBean?.lon.toString()
+                lat= fireInfoBean?.lat.toString()
+                enterpriseId = fireInfoBean?.enterpriseId.toString()
                 tv_location.text = fireInfoBean?.cityName ?: ""
                 tv_disaster_name.text = fireInfoBean?.name ?: ""
                 tv_current_state.text = when (fireInfoBean?.status) {
@@ -125,8 +128,8 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
                         "已结束"
                     }
                 }
-                tv_trapped_person_num.text = fireInfoBean?.psnNum.toString()
-                tv_alarm_people.text = fireInfoBean?.alarmName ?: ""
+                tv_trapped_person_num.text = String.format(getString(R.string.people),fireInfoBean?.psnNum.toString())
+                tv_alarm_people.text = String.format("${fireInfoBean?.alarmName ?: ""}(${fireInfoBean?.telePhone ?: ""})")
                 tv_alarm_date.text = fireInfoBean?.createDate ?: ""
                 tv_out_date.text = fireInfoBean?.startDate ?: ""
                 tv_back_date.text = fireInfoBean?.endDate ?: ""
@@ -155,10 +158,10 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(mContext, MaprTrafficActivity::class.java))
             }
             rl_related_plans -> {//关联预案
-                startActivity(Intent(mContext, EnterPriseDataActivity::class.java).putExtra(Intent_EnterPriseDataActivity_id, id))
+                startActivity(Intent(mContext, EnterPriseDataActivity::class.java).putExtra(Intent_EnterPriseDataActivity_id, enterpriseId))
             }
             rl_plans -> {//图纸资料
-                startActivity(Intent(mContext, DrawingsActivity::class.java).putExtra(Intent_getDrawFileList_id, intent.getStringExtra(Intent_getEnterPrise_id) ?: "").putExtra(Intent_getDrawFileList_comId, comId))
+                startActivity(Intent(mContext, DrawingsActivity::class.java).putExtra(Intent_getDrawFileList_id, enterpriseId).putExtra(Intent_getDrawFileList_comId, comId))
             }
             rl_xfsy -> {//消防水源
                 startActivity(Intent(mContext, FirewaterSupplyActivity::class.java).

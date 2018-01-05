@@ -161,7 +161,6 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
 
 
     override fun onLoadMoreRequested() {
-        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
         iniData()
     }
@@ -177,7 +176,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
                 }
                 if (it.fireInfoList?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
-                    currentPage++
+                    currentPage=mAdapter.data.size
                 } else {
                     mAdapter.loadMoreEnd()
                 }

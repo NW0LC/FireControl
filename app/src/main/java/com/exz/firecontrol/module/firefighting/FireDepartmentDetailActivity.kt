@@ -12,6 +12,7 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.VehicleAdapter
 import com.exz.firecontrol.module.MapLocationActivity
 import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Lat
+import com.exz.firecontrol.module.firefighting.FireBrigadeActivity.Companion.Intent_Class_Name
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.DialogUtils
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -31,7 +32,7 @@ class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
     private var lon=0.toDouble()
     private var lat=0.toDouble()
     override fun initToolbar(): Boolean {
-        mTitle.text = "机构详情"
+        mTitle.text = intent.getStringExtra(Intent_Class_Name)?:""
         mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.White))
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this)
@@ -57,49 +58,45 @@ class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
     private fun iniData() {
         DataCtrlClass.getOrgDetailById(this, intent.getStringExtra(Intent_getOrgDetailById_Id) ?: "") {
             if (it != null) {
-                when (intent.getStringExtra(Intent_Type)) {
-                    "1" -> { //1  支队 大队 中队
-                        tv_type.text = mContext.getString(R.string.vehicle_type)
-                        tv_type.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_vehicle_type), null, null, null)
-                        tv_organization_name.text=it.cname?:""
-                        tv_leader.text=""
-                        tv_person_num.text=it.fireManCount.toString()
-                        tv_telephone.text=it.telePhone?:""
-                        phone=it.telePhone?:""
-                        tv_address.text=it.addr?:""
-                        lon=it.lon
-                        lat=it.lat
-                        llLay.removeAllViews()
-                        it.carInfo?.forEach {
-                            val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                            lp.setMargins(0, 0, 0, 10)
-                            val textView = TextView(mContext)
-                            textView.text = String.format("${VehicleAdapter.getCarTyeStr(it.carType.toString())}(${it.carCount})")
-                            textView.textColor = ContextCompat.getColor(mContext, R.color.MaterialBlueGrey800)
-                            textView.textSize = 14f
-                            textView.gravity = Gravity.END
-                            textView.maxLines = 1
-                            textView.layoutParams = lp
-                            llLay.addView(textView)
-                        }
+                tv_type.text = mContext.getString(R.string.vehicle_type)
+                tv_type.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_vehicle_type), null, null, null)
+                tv_organization_name.text=it.cname?:""
+                tv_leader.text=when (it.levels) {
+                    0 -> {
+                        "总局"
                     }
-                    "2" -> {//微型消防站
-                        tv_type.text = mContext.getString(R.string.fire_equipment)
-                        tv_type.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_fire_equipment), null, null, null)
-                        llLay.removeAllViews()
-                        for (i in 0..6) {
-                            val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                            lp.setMargins(0, 0, 0, 10)
-                            val textView = TextView(mContext)
-                            textView.text = "微型消防站(" + i + ")"
-                            textView.textColor = ContextCompat.getColor(mContext, R.color.MaterialBlueGrey800)
-                            textView.textSize = 14f
-                            textView.gravity = Gravity.RIGHT
-                            textView.maxLines = 1
-                            textView.layoutParams = lp
-                            llLay.addView(textView)
-                        }
+                    1 -> {
+                        "省总队"
                     }
+                    2 -> {
+                        "市支队"
+                    }
+                    3 -> {
+                        "市辖区大队"
+                    }
+                    4 -> {//中队
+                        "中队"
+                    }
+                    else  -> {""}
+                }
+                tv_person_num.text=String.format(getString(R.string.people),it.fireManCount.toString())
+                tv_telephone.text=it.telePhone?:""
+                phone=it.telePhone?:""
+                tv_address.text=it.addr?:""
+                lon=it.lon
+                lat=it.lat
+                llLay.removeAllViews()
+                it.carInfo?.forEach {
+                    val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    lp.setMargins(0, 0, 0, 10)
+                    val textView = TextView(mContext)
+                    textView.text = String.format("${VehicleAdapter.getCarTyeStr(it.carType.toString())}(${it.carCount})")
+                    textView.textColor = ContextCompat.getColor(mContext, R.color.MaterialBlueGrey800)
+                    textView.textSize = 14f
+                    textView.gravity = Gravity.END
+                    textView.maxLines = 1
+                    textView.layoutParams = lp
+                    llLay.addView(textView)
                 }
             }
         }

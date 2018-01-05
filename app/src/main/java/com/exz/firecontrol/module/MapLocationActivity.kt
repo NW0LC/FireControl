@@ -74,6 +74,9 @@ class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener{
             "人员位置" -> {
                 icLction = "icon_person_locaiton.png"
             }
+            else->{
+            icLction = "icon_pin.png"
+        }
         }
         val latLngBound = LatLngBounds.builder()
         val markerOptions=ArrayList<MarkerOptions>()
@@ -95,6 +98,9 @@ class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener{
 
         val newLatLngBounds = CameraUpdateFactory.newLatLngBounds(latLngBound.build(),250)
         aMap.animateCamera(newLatLngBounds)
+        //设置希望展示的地图缩放级别
+        val  mCameraUpdate = CameraUpdateFactory.zoomTo(14f)
+        aMap.animateCamera(mCameraUpdate)
     }
 
     override fun onMyLocationChange(location: Location) {

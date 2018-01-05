@@ -46,7 +46,7 @@ class LiveListActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Req
         (actionView as TextView).text = "发起直播"
         actionView.movementMethod = ScrollingMovementMethod.getInstance()
             actionView.setOnClickListener {
-            startActivity(intent.setClass(mContext, LivePushActivity::class.java))
+                PermissionCameraWithCheck(intent.setClass(mContext, LivePushActivity::class.java),false)
         }
         return false
     }
@@ -85,7 +85,6 @@ class LiveListActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Req
 
 
     override fun onLoadMoreRequested() {
-        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
         iniData()
     }
@@ -101,7 +100,7 @@ class LiveListActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Req
                 }
                 if (it.liveList?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
-                    currentPage++
+                    currentPage=mAdapter.data.size
                 } else {
                     mAdapter.loadMoreEnd()
                 }

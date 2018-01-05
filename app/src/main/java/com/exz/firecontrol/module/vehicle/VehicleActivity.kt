@@ -166,7 +166,6 @@ class VehicleActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Requ
 
 
     override fun onLoadMoreRequested() {
-        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
         iniData()
     }
@@ -183,7 +182,7 @@ class VehicleActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Requ
                 }
                 if (it.FireCarLocs?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
-                    currentPage++
+                    currentPage=mAdapter.data.size
                 } else {
                     mAdapter.loadMoreEnd()
                 }

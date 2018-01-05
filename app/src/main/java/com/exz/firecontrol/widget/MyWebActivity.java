@@ -83,6 +83,7 @@ public class MyWebActivity extends BaseActivity implements Listener {
         this.mProgressBar = this.findViewById(R.id.progressBar);
         this.mWebView.setListener(this, this);
         this.mWebView.loadUrl(this.getIntent().getStringExtra(Intent_Url));
+
         this.mWebView.getSettings().setJavaScriptEnabled(true);
 //启用数据库
         WebSettings webSettings = mWebView.getSettings();

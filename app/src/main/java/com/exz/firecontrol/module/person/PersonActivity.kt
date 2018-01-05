@@ -40,7 +40,7 @@ class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Reque
     private var currentPage = 0
     private lateinit var mAdapter: PersonAdapter<FireMainLocAllListBean.FireManLocBean>
 
-    var isOnline=""
+    private var isOnline=""
     override fun initToolbar(): Boolean {
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this)
@@ -144,13 +144,12 @@ class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Reque
 
 
     override fun onLoadMoreRequested() {
-        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
         iniData()
     }
 
     private fun iniData() {
-        DataCtrlClass.getFireManAllByPage(this,searchContent,isOnline){
+        DataCtrlClass.getFireManAllByPage(this,searchContent,isOnline,currentPage){
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {
@@ -161,7 +160,7 @@ class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Reque
                 }
                 if (it.FireManLocs?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
-                    currentPage++
+                    currentPage=mAdapter.data.size
                 } else {
                     mAdapter.loadMoreEnd()
                 }

@@ -11,12 +11,14 @@ import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.FirewaterAdapter
 import com.exz.firecontrol.bean.FireDataListBean
+import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.MapLocationActivity
 import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Lat
 import com.exz.firecontrol.utils.RecycleViewDivider
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.config.Constants
 import com.szw.framelibrary.utils.StatusBarUtil
@@ -79,7 +81,6 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
 
 
     override fun onLoadMoreRequested() {
-        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
         iniData()
     }
@@ -102,7 +103,7 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
 
     }
     private fun iniData() {
-        DataCtrlClass.getFireDataListByPage(mContext,intent.getStringExtra(Intent_FireWater_comId)?:"",intent.getStringExtra(Intent_FireWater_lon)?:"",intent.getStringExtra(Intent_FireWater_lat)?:"") {
+        DataCtrlClass.getFireDataListByPage(mContext,"1",intent.getStringExtra(Intent_FireWater_comId)?:(MyApplication.user as UserBean).comid,intent.getStringExtra(Intent_FireWater_lon)?:"",intent.getStringExtra(Intent_FireWater_lat)?:"") {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {
@@ -112,7 +113,7 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
                 }
                 if (it.FireDatas?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
-                    currentPage++
+                    currentPage=mAdapter.data.size
                 } else {
                     mAdapter.loadMoreEnd()
                 }

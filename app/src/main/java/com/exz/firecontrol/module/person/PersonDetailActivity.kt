@@ -83,7 +83,7 @@ class PersonDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
 
                 val intent = Intent(mContext, MapLocationActivity::class.java)
                 val latLngList = ArrayList<LatLng>()
-                latLngList.add(LatLng(lat.toDouble(), lon.toDouble()))
+                latLngList.add(LatLng(lat.toDoubleOrNull()?:0.toDouble(), lon.toDoubleOrNull()?:0.toDouble()))
                 intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"人员位置")
                 startActivity(intent)
             }
@@ -117,6 +117,8 @@ class PersonDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
                 data1.add(VehicleDetailBean("纬度", it.FireManInfo?.lat ?: ""))
                 data1.add(VehicleDetailBean("高度", it.FireManInfo?.height ?: ""))
                 mAdapter.setNewData(data1)
+                lon=it.FireManInfo?.lon?:""
+                lat=it.FireManInfo?.lat?:""
             }
 
         }

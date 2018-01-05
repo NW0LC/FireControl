@@ -17,21 +17,25 @@ class FirefightingAdapter<T: OrganizationBean> : BaseQuickAdapter<T, BaseViewHol
         v.tv_location.text=item.addr
         v.tv_people.text=String.format(mContext.getString(R.string.people),item.fireManCount)
         when (item.levels) {
-            1 -> {//微型消防站
-                v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_stand)
-                v.tv_more.visibility=View.GONE
+            0 -> {//总局
+                v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_zong)
+                v.tv_more.text="查看省总队"
             }
-            2 -> {//大队
+            1 -> {//1省总队
+                v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_zong    )
+                v.tv_more.text="查看各市支队"
+            }
+            2 -> {//各市支队
+                v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_zhi)
+                v.tv_more.text="查看市辖区大队"
+            }
+            3 -> {//市辖区大队
                 v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_big)
-                v.tv_more.visibility=View.VISIBLE
-            }
-            3 -> {//中队
-                v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_mid)
-                v.tv_more.visibility=View.GONE
+                v.tv_more.text="查看各中队"
             }
             4 -> {//中队
                 v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_mid)
-                v.tv_more.visibility=View.GONE
+                v.tv_more.visibility= View.GONE
             }
         }
         helper.addOnClickListener(R.id.tv_see_details)

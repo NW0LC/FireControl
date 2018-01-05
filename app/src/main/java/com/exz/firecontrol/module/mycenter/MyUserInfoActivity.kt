@@ -5,11 +5,10 @@ import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import com.blankj.utilcode.util.ScreenUtils
-import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
+import com.exz.firecontrol.bean.UserBean
 import com.lzy.imagepicker.ImagePicker
 import com.lzy.imagepicker.bean.ImageItem
-import com.lzy.imagepicker.ui.ImageGridActivity
 import com.lzy.imagepicker.view.CropImageView
 import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
@@ -57,16 +56,9 @@ class MyUserInfoActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initData(){
-        DataCtrlClass.getFireManById(this,MyApplication.user?.userId?:"") {
-            if (it!=null) {
-                iv_header.setImageURI(it.FireManInfo?.userHead?:"")
-                tv_nicekname.text=it.FireManInfo?.Name?:"——"
-                tv_unit.text=it.FireManInfo?.RoleName?:"——"
-                tv_phone.text=it.FireManInfo?.telephone?:"——"
-                tv_phone.text=it.FireManInfo?.telephone?:"——"
-                tv_place_post.text=it.FireManInfo?.policeRank?:"——"
-            }
-        }
+        tv_nicekname.text=(MyApplication.user as UserBean).LoginId
+        tv_unit.text=(MyApplication.user as UserBean).RoleName
+        tv_phone.text=(MyApplication.user as UserBean).phone
     }
     private fun initCamera() {
         val w = ScreenUtils.getScreenWidth() * 0.2
@@ -97,7 +89,7 @@ class MyUserInfoActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(p0: View) {
         when (p0) {
             iv_header -> {
-                PermissionCameraWithCheck(Intent(this, ImageGridActivity::class.java), false)
+//                PermissionCameraWithCheck(Intent(this, ImageGridActivity::class.java), false)
             }
         }
     }

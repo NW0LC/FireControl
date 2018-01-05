@@ -98,7 +98,6 @@ class RepositoryActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.R
 
 
     override fun onLoadMoreRequested() {
-        currentPage = mAdapter.data.size
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
         iniData()
     }
@@ -114,7 +113,7 @@ class RepositoryActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.R
                 }
                 if (it.categoryList?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
-                    currentPage++
+                    currentPage=mAdapter.data.size
                 } else {
                     mAdapter.loadMoreEnd()
                 }

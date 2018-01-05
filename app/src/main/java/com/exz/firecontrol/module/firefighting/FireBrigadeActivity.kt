@@ -11,6 +11,7 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.FirefightingAdapter
 import com.exz.firecontrol.bean.OrganizationBean
 import com.exz.firecontrol.module.firefighting.FireDepartmentDetailActivity.Companion.Intent_getOrgDetailById_Id
+import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.BaseActivity
@@ -39,6 +40,7 @@ class FireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.
         StatusBarUtil.setPaddingSmart(this, blurView)
         StatusBarUtil.setPaddingSmart(this, mRecyclerView)
         StatusBarUtil.setMargin(this, header)
+        SZWUtils.setRefreshAndHeaderCtrl(this, header, refreshLayout)
         toolbar.setNavigationOnClickListener {
             finish()
         }
@@ -68,7 +70,7 @@ class FireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.
             override fun onSimpleItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
                 when (view.id) {
                     R.id.tv_see_details -> {
-                        startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(FireDepartmentDetailActivity.Intent_Type, "1").putExtra(Intent_getOrgDetailById_Id,mAdapter.data[position].id))
+                        startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(Intent_Class_Name, mAdapter.data[position].cname).putExtra(Intent_getOrgDetailById_Id,mAdapter.data[position].id.toString()))
                     }
                     R.id.tv_more->{
                         startActivity(Intent(mContext, FireBrigadeActivity::class.java).putExtra(Intent_Class_Name, mAdapter.data[position].cname).putExtra(Intent_Lower_oid,mAdapter.data[position].id))
@@ -86,7 +88,6 @@ class FireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.
 
 
     override fun onLoadMoreRequested() {
-        currentPage = mAdapter.data.size-1
         refreshState = Constants.RefreshState.STATE_LOAD_MORE
         iniData()
     }
@@ -102,7 +103,7 @@ class FireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.
                 }
                 if (it.lowerOrgList?.isNotEmpty() == true) {
                     mAdapter.loadMoreComplete()
-                    currentPage++
+                    currentPage=mAdapter.data.size
                 } else {
                     mAdapter.loadMoreEnd()
                 }

@@ -76,9 +76,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:drawablePadding="@dimen/dp_10"
-                        android:drawableStart="@mipmap/icon_leader"
+                        android:drawableStart="@mipmap/icon_department"
                         android:gravity="center"
-                        android:text="@string/leader"
+                        android:text="机构级别"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14" />
 

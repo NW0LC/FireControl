@@ -24,6 +24,7 @@
             android:layout_height="@dimen/margin_80"
             android:layout_marginTop="30dp"
             android:scaleType="centerInside"
+            app:roundAsCircle="true"
             app:placeholderImage="@mipmap/icon_person"
             tool:background="@mipmap/icon_person" />
 

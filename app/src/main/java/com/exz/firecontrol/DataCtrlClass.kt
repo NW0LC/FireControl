@@ -352,7 +352,7 @@ object DataCtrlClass {
 
     /**
      * 获取消防单位列表
-     * @param EnterpriseId    角色编号
+     * @param EnterpriseId    消防单位id
      * @param comId        顶级单位id
      * */
     fun getDrawFileList(context: Context?,
@@ -438,7 +438,7 @@ object DataCtrlClass {
     fun getFireManAllByPage(context: Context?,
                              nameKey: String = "",
                              isOnline: String = "1",
-                             currentPage: Int = 1,
+                             currentPage: Int = 0,
                              listener: (l: FireMainLocAllListBean?) -> Unit) {
 //       参数名	    参数含义	        必选	类型及范围	说明
 //       RoleId	    角色编号	        Y	    int
@@ -1017,21 +1017,22 @@ object DataCtrlClass {
      * 获取消防大数据信息
      * */
     fun getFireDataListByPage(context: Context?,
+                              flag: String,
                         comId: String,
                               Longitude: String,
                               Latitude: String,
                         currentPage: Int = 0,
                         listener: (l: FireDataListBean?) -> Unit) {
-//       参数名	参数含义	必选	类型及范围	说明
-//       flag		Y	int	1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
-//       comid	顶级单位id	Y	int
+//       参数名	        参数含义	                     必选	类型及范围	说明
+//       flag		                                    Y	int	1.消防水源2.医院3.水务公司4.摄像机6.微型消防站
+//       comid	        顶级单位id	                    Y	int
 //       start_postion	搜索数据的起始位置，不传设为0	N	Int
-//       fetch_count	当前页，不传设为10	N	Int
-//       Longitude	重点单位的经度	N	Double	查询消防水源必传
-//       Latitude	重点单位的纬度	N	Double	查询消防水源必传
+//       fetch_count	当前页，不传设为10	            N	Int
+//       Longitude	    重点单位的经度	                N	Double	查询消防水源必传
+//       Latitude	    重点单位的纬度	                N	Double	查询消防水源必传
 //
         val params = HashMap<String, String>()
-        params.put("flag", "1")
+        params.put("flag",flag )
         params.put("comid", comId)
         params.put("oid", (MyApplication.user as UserBean).oid)
         params.put("Longitude", Longitude)
@@ -1043,7 +1044,7 @@ object DataCtrlClass {
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<FireDataListBean>(context) {
-                        val function = { getFireDataListByPage(context, comId,Longitude,Latitude, currentPage, listener) }
+                        val function = { getFireDataListByPage(context, flag,comId,Longitude,Latitude, currentPage, listener) }
                         override fun onSuccess(response: Response<FireDataListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
@@ -1214,7 +1215,7 @@ object DataCtrlClass {
      * */
     fun findLowerLevel(context: Context?,
                        oid: String,
-                        currentPage: Int = 1,
+                        currentPage: Int = 0,
                         listener: (l: FindLowerLevelBean?) -> Unit) {
 //      参数名	参数含义	必选	类型及范围	说明
 //      oid	    组织机构id	Y	    Int

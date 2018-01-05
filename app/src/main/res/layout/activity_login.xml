@@ -8,9 +8,10 @@
 
     <LinearLayout
         android:id="@+id/ll_lay"
+        android:layout_marginTop="@dimen/margin_15"
+        android:layout_below="@+id/tv_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:orientation="vertical">
 
         <com.szw.framelibrary.view.ClearWriteEditText
@@ -73,14 +74,16 @@
 
 
     <TextView
+        android:id="@+id/tv_top"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/ll_lay"
-        android:layout_marginBottom="30dp"
-        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:drawableTop="@mipmap/icon_login_top"
+        android:gravity="center"
         android:text="@string/app_name"
-        android:textSize="16sp"
         android:textColor="@color/MaterialGrey800"
-        />
+        android:textSize="16sp" />
 
 </RelativeLayout>

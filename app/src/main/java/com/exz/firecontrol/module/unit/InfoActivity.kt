@@ -57,7 +57,7 @@ class InfoActivity : BaseActivity(), OnRefreshListener {
             refreshLayout?.finishRefresh()
             if (it!=null){
                 if (intent.getStringExtra(Intent_Class_Name) == "单位基本信息") {
-                    data.add(InfoBean("单位基本信息",it.Name?:""))
+                    data.add(InfoBean("单位名称",it.Name?:""))
                     data.add(InfoBean("单位地址", it.Address?:""))
                     data.add(InfoBean("法定代表人", it.LegalAgent?:""))
                     data.add(InfoBean("消防管理人", it.Manager?:""))

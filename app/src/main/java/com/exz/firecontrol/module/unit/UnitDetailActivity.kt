@@ -14,7 +14,6 @@ import com.exz.firecontrol.adapter.UnitDetailAdapter
 import com.exz.firecontrol.bean.UnitDetailBean
 import com.exz.firecontrol.module.unit.DrawingsActivity.Companion.Intent_getDrawFileList_id
 import com.exz.firecontrol.module.unit.EnterPriseDataActivity.Companion.Intent_EnterPriseDataActivity_id
-import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_comId
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_lat
 import com.exz.firecontrol.module.unit.FirewaterSupplyActivity.Companion.Intent_FireWater_lon
 import com.exz.firecontrol.module.unit.InfoActivity.Companion.Intent_getEnterPrise_id
@@ -153,7 +152,7 @@ class UnitDetailActivity : BaseActivity() {
                         }
                         "消防水源" -> {
                             startActivity(Intent(mContext, FirewaterSupplyActivity::class.java).
-                                    putExtra(Intent_FireWater_comId,intent.getStringExtra(Intent_getEnterPrise_id)?:"").putExtra(Intent_FireWater_lon,lon).putExtra(Intent_FireWater_lat,lat))
+                                    putExtra(Intent_FireWater_lon,lon.toString()).putExtra(Intent_FireWater_lat,lat.toString()))
                         }
                         "地图导航" -> {
                             popupMap.showPopupWindow()

@@ -71,7 +71,7 @@ class DrawingsActivity : BaseActivity() {
     }
     companion object {
         val Intent_getDrawFileList_id="Intent_getDrawFileList_id"
-        val Intent_getDrawFileList_comId="Intent_getDrawFileList_id"
+        val Intent_getDrawFileList_comId="Intent_getDrawFileList_comId"
     }
 
 }
