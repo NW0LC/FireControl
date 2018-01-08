@@ -41,7 +41,7 @@
     <string name="large_storage">大型仓储类</string>
     <string name="underground_building">地下建筑类</string>
     <string name="other_categories">其他类</string>
-    <string name="fire_hydrant">消防栓</string>
+    <string name="fire_hydrant">消火栓</string>
     <string name="fire_pool">消防水池</string>
     <string name="firefighting_jug">消防水罐</string>
     <string name="vehicle_number">车牌号</string>
@@ -73,5 +73,5 @@
     <string name="place_post">所在岗位</string>
     <string name="about_us">关于我们</string>
     <string name="system_update">系统更新</string>
-    <string name="police_officer">警员号%s</string>
+    <string name="police_officer">警员号&#160;%s&#160;</string>
 </resources>

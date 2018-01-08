@@ -57,51 +57,51 @@ object DataCtrlClass {
                 true
             }
             1 -> {
-                context?.toast("参数错误")
+//                context?.toast("参数错误")
                 false
             }
             2 -> {
-                context?.toast("无效请求")
+//                context?.toast("无效请求")
                 false
             }
             3 -> {
-                context?.toast("服务器错误")
+//                context?.toast("服务器错误")
                 false
             }
             4 -> {
-                context?.toast("未找到")
+//                context?.toast("未找到")
                 false
             }
             5 -> {
-                context?.toast("已经存在")
+//                context?.toast("已经存在")
                 false
             }
             7 -> {
-                context?.toast("已经存在")
+//                context?.toast("已经存在")
                 false
             }
             -2 -> {
-                context?.toast("用户名或密码错误")
+//                context?.toast("用户名或密码错误")
                 false
             }
             -6 -> {
-                context?.toast("用户已存在")
+//                context?.toast("用户已存在")
                 false
             }
             -7 -> {
-                context?.toast("没有登录")
+//                context?.toast("没有登录")
                 false
             }
             -8 -> {
-                context?.toast("注册失败")
+//                context?.toast("注册失败")
                 false
             }
             -9 -> {
-                context?.toast("登录失败")
+//                context?.toast("登录失败")
                 false
             }
             -10 -> {
-                context?.toast("帐户冻结")
+//                context?.toast("帐户冻结")
                 false
             }
 
@@ -197,6 +197,7 @@ object DataCtrlClass {
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
                             } else {
+                                context?.toast(response.body()?.messError?:"")
                                 listener.invoke(null)
                             }
                         }
@@ -747,9 +748,9 @@ object DataCtrlClass {
 //      name	用户名称	Y	String
 //      portraitUri	用户头像	Y	String
         val params = HashMap<String, String>()
-        params.put("uid", MyApplication.loginUserId)
-        params.put("name", (MyApplication.user as UserBean).RoleName)
-        params.put("portraitUri", "")
+        params.put("uid",MyApplication.loginUserId)
+        params.put("name",(MyApplication.user as UserBean).LoginId )
+//        params.put("portraitUri", "")
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
             OkGo.post<RongTokenBean>(Urls.getRongCloudToken)
                     .params(changeFun(params))
@@ -984,7 +985,7 @@ object DataCtrlClass {
 //       fetch_count	页大小	            N	    Int
 //       start_postion	当前页	            N	    Int
         val params = HashMap<String, String>()
-        params.put("oid", (MyApplication.user as UserBean).oid)
+        params.put("oid", "1")
         params.put("namekey", nameKey)
         params.put("fetch_count", pageSize.toString())
         params.put("start_postion", currentPage.toString())
@@ -1019,6 +1020,7 @@ object DataCtrlClass {
     fun getFireDataListByPage(context: Context?,
                               flag: String,
                         comId: String,
+                        oid: String="",
                               Longitude: String,
                               Latitude: String,
                         currentPage: Int = 0,
@@ -1034,7 +1036,8 @@ object DataCtrlClass {
         val params = HashMap<String, String>()
         params.put("flag",flag )
         params.put("comid", comId)
-        params.put("oid", (MyApplication.user as UserBean).oid)
+        if (oid.isNotEmpty())
+        params.put("oid", oid)
         params.put("Longitude", Longitude)
         params.put("Latitude", Latitude)
         params.put("fetch_count", pageSize.toString())
@@ -1044,7 +1047,7 @@ object DataCtrlClass {
                     .params(changeFun(params))
                     .tag(this)
                     .execute(object : DialogCallback<FireDataListBean>(context) {
-                        val function = { getFireDataListByPage(context, flag,comId,Longitude,Latitude, currentPage, listener) }
+                        val function = { getFireDataListByPage(context, flag,comId,oid,Longitude,Latitude, currentPage, listener) }
                         override fun onSuccess(response: Response<FireDataListBean>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {

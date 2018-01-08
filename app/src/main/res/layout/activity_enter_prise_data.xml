@@ -32,21 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/tv_EPlan"
-                    android:text="电子预案"
-                    android:layout_margin="@dimen/margin_10"
-                    android:textSize="@dimen/sp_14"
-                    android:textColor="@color/MaterialGrey700"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/mERecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:overScrollMode="never"/>
-                <TextView
                     android:id="@+id/tv_Paper"
+                    android:visibility="gone"
                     android:text="纸质预案"
                     android:layout_margin="@dimen/margin_10"
                     android:textSize="@dimen/sp_14"
@@ -61,7 +48,8 @@
                     android:overScrollMode="never"/>
                 <TextView
                     android:id="@+id/tv_VR"
-                    android:text="VR预案"
+                    android:text="VR"
+                    android:visibility="gone"
                     android:layout_margin="@dimen/margin_10"
                     android:textSize="@dimen/sp_14"
                     android:textColor="@color/MaterialGrey700"

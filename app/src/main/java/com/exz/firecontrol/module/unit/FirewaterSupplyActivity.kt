@@ -53,7 +53,7 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
                     val intent = Intent(mContext, MapLocationActivity::class.java)
                     val latLngList = ArrayList<LatLng>()
                     mAdapter.data.mapTo(latLngList) { LatLng(it.Latitude, it.Longitude) }
-                    intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"消防栓")
+                    intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"消火栓")
                     startActivity(intent)
                 }
             }
@@ -87,7 +87,7 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
     private fun initRecycler() {
         mAdapter = FirewaterAdapter()
         mAdapter.bindToRecyclerView(mRecyclerView)
-//        mAdapter.setOnLoadMoreListener(this, mRecyclerView)
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView)
         mRecyclerView.layoutManager = LinearLayoutManager(mContext)
         mRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 15, ContextCompat.getColor(mContext, R.color.app_bg)))
         refreshLayout.setOnRefreshListener(this)
@@ -96,14 +96,14 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
                 val intent = Intent(mContext, MapLocationActivity::class.java)
                 val latLngList = ArrayList<LatLng>()
                 latLngList.add(LatLng(mAdapter.data[position].Latitude, mAdapter.data[position].Longitude))
-                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"消防栓")
+                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"消火栓")
                 startActivity(intent)
             }
         })
 
     }
     private fun iniData() {
-        DataCtrlClass.getFireDataListByPage(mContext,"1",intent.getStringExtra(Intent_FireWater_comId)?:(MyApplication.user as UserBean).comid,intent.getStringExtra(Intent_FireWater_lon)?:"",intent.getStringExtra(Intent_FireWater_lat)?:"") {
+        DataCtrlClass.getFireDataListByPage(mContext,"1",intent.getStringExtra(Intent_FireWater_comId)?:(MyApplication.user as UserBean).comid,"",intent.getStringExtra(Intent_FireWater_lon)?:"",intent.getStringExtra(Intent_FireWater_lat)?:"",currentPage) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {

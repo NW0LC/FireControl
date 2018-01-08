@@ -124,7 +124,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginTop="@dimen/dp_10"
                         android:drawablePadding="10dp"
-                        android:text="西南风三级"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14" />
                 </RelativeLayout>
@@ -154,7 +153,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginTop="@dimen/dp_10"
                         android:drawablePadding="10dp"
-                        android:text="西南风三级"
+                        android:text=""
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14" />
                 </RelativeLayout>
@@ -184,7 +183,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginTop="@dimen/dp_10"
                         android:drawablePadding="10dp"
-                        android:text="西南风三级"
+                        android:text=""
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14" />
                 </RelativeLayout>
@@ -214,7 +213,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginTop="@dimen/dp_10"
                         android:drawablePadding="10dp"
-                        android:text="西南风三级"
                         android:textColor="@color/MaterialGrey600"
                         android:textSize="@dimen/sp_14" />
                 </RelativeLayout>
@@ -243,13 +241,12 @@
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
-                            android:layout_weight="1"
-                            android:gravity="end"
                             android:id="@+id/tv_alarm_date"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:drawablePadding="10dp"
-                            android:text="西南风三级"
+                            android:gravity="end"
                             android:textColor="@color/MaterialGrey600"
                             android:textSize="@dimen/sp_14" />
 
@@ -271,13 +268,12 @@
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
-                            android:layout_weight="1"
-                            android:gravity="end"
                             android:id="@+id/tv_out_date"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:drawablePadding="10dp"
-                            android:text="西南风三级"
+                            android:gravity="end"
                             android:textColor="@color/MaterialGrey600"
                             android:textSize="@dimen/sp_14" />
 
@@ -299,13 +295,12 @@
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
-                            android:layout_weight="1"
-                            android:gravity="end"
                             android:id="@+id/tv_back_date"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:drawablePadding="10dp"
-                            android:text="西南风三级"
+                            android:gravity="end"
                             android:textColor="@color/MaterialGrey600"
                             android:textSize="@dimen/sp_14" />
 

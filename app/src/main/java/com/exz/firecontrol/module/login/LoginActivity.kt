@@ -63,11 +63,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 DataCtrlClass.changeKey(this){
                     if (it!=null)
                     DataCtrlClass.userLogin(this,ed_account.text.toString(),ed_pwd.text.toString()){
-                        if (it!=null){
-                            MyApplication.user=it
-                            MyApplication.getSPUtils(this)?.put(USER_NAME,ed_account.text.toString())
-                            MyApplication.getSPUtils(this)?.put(USER_PWD,ed_pwd.text.toString())
-                            startActivity(Intent(mContext,MainActivity::class.java))
+                        if (it!=null) {
+                            MyApplication.user = it
+                            MyApplication.getSPUtils(this)?.put(USER_NAME, ed_account.text.toString())
+                            MyApplication.getSPUtils(this)?.put(USER_PWD, ed_pwd.text.toString())
+                            startActivity(Intent(mContext, MainActivity::class.java))
                             finish()
                         }
                     }

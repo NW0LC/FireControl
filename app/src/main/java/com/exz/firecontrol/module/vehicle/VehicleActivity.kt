@@ -58,7 +58,7 @@ class VehicleActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Requ
         }
         SZWUtils.setPaddingSmart(mRecyclerView, 55f)
         SZWUtils.setMargin(header, 55f)
-        edTitle.hint = "搜索车辆编号"
+        edTitle.hint = "搜索车牌号"
         return false
     }
 

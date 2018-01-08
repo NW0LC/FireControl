@@ -54,10 +54,10 @@ class ForgetPwdActivity : BaseActivity(), View.OnClickListener {
         ed_pwd2.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_forget_pwd), null, null, null)
         smsContentObserver = SZWUtils.registerSMS(mContext, SZWUtils.patternCode(mContext, ed_code,4))
 
-        val currentTime = System.currentTimeMillis()
-        if (PreferencesService.getDownTimer(mContext, downKey) in 1..(currentTime - 1)) {
-            downTimer(time - (currentTime - PreferencesService.getDownTimer(mContext, downKey)))
-        }
+//        val currentTime = System.currentTimeMillis()
+//        if (PreferencesService.getDownTimer(mContext, downKey) in 1..(currentTime - 1)) {
+//            downTimer(time - (currentTime - PreferencesService.getDownTimer(mContext, downKey)))
+//        }
         bt_code.setOnClickListener(this)
         bt_commit.setOnClickListener(this)
     }

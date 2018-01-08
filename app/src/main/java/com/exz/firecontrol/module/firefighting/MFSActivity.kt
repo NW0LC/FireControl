@@ -94,7 +94,7 @@ class MFSActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestL
     }
 
     private fun iniData() {
-        DataCtrlClass.getFireDataListByPage(mContext,"6",(MyApplication.user as UserBean).comid,"0","0") {
+        DataCtrlClass.getFireDataListByPage(mContext,"6",(MyApplication.user as UserBean).comid,(MyApplication.user as UserBean).oid,"0","0",currentPage) {
             refreshLayout?.finishRefresh()
             if (it != null) {
                 if (refreshState == Constants.RefreshState.STATE_REFRESH) {

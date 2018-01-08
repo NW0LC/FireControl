@@ -99,10 +99,12 @@ class PersonDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
             if (it != null) {
                 mHeaderView.img_head.setImageURI(it.FireManInfo?.userHead ?: "")
                 mHeaderView.tv_name.text = it.FireManInfo?.Name ?: ""
-                mHeaderView.tv_info.text = String.format(getString(R.string.police_officer), (it.FireManInfo?.PCNumber ?: "")+(it.FireManInfo?.RoleName ?: ""))
+                mHeaderView.tv_info.text = String.format(getString(R.string.police_officer), (it.FireManInfo?.PCNumber ?: "")+"  "+(it.FireManInfo?.RoleName ?: ""))
                 mHeaderView.tv_is_online.delegate.backgroundColor = ContextCompat.getColor(mContext, if (it.FireManInfo?.IsOnline == 1) R.color.MaterialGreenA400 else R.color.MaterialGrey400)
                 mHeaderView.tv_is_online.text = if (it.FireManInfo?.IsOnline == 1) getString(R.string.on_line) else getString(R.string.off_line)
 //                data1.add(VehicleDetailBean("队伍", it.FireManInfo?.RoleName?:""))
+                data1.add(VehicleDetailBean("警员号", it.FireManInfo?.PCNumber ?: ""))
+                data1.add(VehicleDetailBean("队伍", it.FireManInfo?.RoleName ?: ""))
                 data1.add(VehicleDetailBean("设备编号", it.FireManInfo?.deviceCode ?: ""))
                 data1.add(VehicleDetailBean("电话", it.FireManInfo?.telephone ?: ""))
                 data1.add(VehicleDetailBean("GPS时间", it.FireManInfo?.GPSDate ?: ""))

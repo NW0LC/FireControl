@@ -61,10 +61,10 @@ class InfoActivity : BaseActivity(), OnRefreshListener {
                     data.add(InfoBean("单位地址", it.Address?:""))
                     data.add(InfoBean("法定代表人", it.LegalAgent?:""))
                     data.add(InfoBean("消防管理人", it.Manager?:""))
-                    data.add(InfoBean("消防安全负责人", it.Artificial?:""))
+                    data.add(InfoBean("专职消防管理员（兼）", it.Artificial?:""))
                 } else if (intent.getStringExtra(Intent_Class_Name) == "消防基本信息") {
                     data.add(InfoBean("消防泵", it.FirePump?:""))
-                    data.add(InfoBean("消防栓", it.Hydrant?:""))
+                    data.add(InfoBean("消火栓", it.Hydrant?:""))
                     data.add(InfoBean("消防水罐", it.WaterTank?:""))
                     data.add(InfoBean("消防水带",it.FireHose?:""))
                     data.add(InfoBean("泡沫储存量", it.FoamReserve?:""))

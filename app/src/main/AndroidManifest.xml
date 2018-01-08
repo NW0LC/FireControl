@@ -212,7 +212,9 @@
         <!--直播列表-->
         <activity android:name=".module.live.LiveListActivity"      android:screenOrientation="portrait"></activity>
         <!--直播推流-->
-        <activity android:name=".module.live.LivePushActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".module.live.LivePushActivity"
+            android:configChanges="orientation|screenSize"
+            />
         <!--直播拉流-->
         <activity android:name=".module.live.LivePullActivity"      android:screenOrientation="portrait"></activity>
         <!--会话页面-->

@@ -15,6 +15,7 @@ import com.exz.firecontrol.adapter.FirefightingAdapter
 import com.exz.firecontrol.bean.OrganizationBean
 import com.exz.firecontrol.module.firefighting.FireBrigadeActivity.Companion.Intent_Class_Name
 import com.exz.firecontrol.module.firefighting.FireDepartmentDetailActivity.Companion.Intent_getOrgDetailById_Id
+import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.szw.framelibrary.base.BaseActivity
@@ -45,6 +46,7 @@ class SearchFireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAd
         toolbar.setNavigationOnClickListener {
             finish()
         }
+        SZWUtils.setRefreshAndHeaderCtrl(this,header,refreshLayout)
         return false
     }
 
@@ -82,7 +84,7 @@ class SearchFireBrigadeActivity : BaseActivity(), OnRefreshListener, BaseQuickAd
             override fun onSimpleItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View, position: Int) {
                 when (view.id) {
                     R.id.tv_see_details -> {
-                        startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(Intent_Class_Name, mAdapter.data[position].cname).putExtra(Intent_getOrgDetailById_Id,mAdapter.data[position].id))
+                        startActivity(Intent(mContext, FireDepartmentDetailActivity::class.java).putExtra(Intent_Class_Name, mAdapter.data[position].cname).putExtra(Intent_getOrgDetailById_Id,mAdapter.data[position].id.toString()))
                     }
                 }
             }

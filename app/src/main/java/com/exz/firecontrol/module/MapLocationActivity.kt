@@ -59,7 +59,7 @@ class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener{
             "地址" -> {
                 icLction = "icon_pin.png"
             }
-            "消防栓" -> {
+            "消火栓" -> {
                 icLction = "icon_firefighting1.png"
             }
             "消防水池" -> {

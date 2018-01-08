@@ -47,7 +47,7 @@
                 android:drawableStart="@mipmap/icon_search"
                 android:gravity="center_vertical"
                 android:drawablePadding="6dp"
-                android:hint="大队中队消防站"
+                android:hint="搜索各支队、大队、中队"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:lines="1"

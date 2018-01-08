@@ -35,9 +35,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_main.view.*
 
 
-
-
-
 class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, BaseQuickAdapter.RequestLoadMoreListener {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -147,7 +144,7 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
             headerView.bt_tab_6 -> {
 //                val sdkver = TXLiveBase.getSDKVersionStr()
 //                Log.i("liteavsdk", "liteav sdk version is : " + sdkver)
-
+//                throw NullPointerException()
             }
         }
     }
@@ -156,7 +153,6 @@ class MainActivity : BaseActivity(), OnRefreshListener, View.OnClickListener, Ba
         currentPage = 0
         refreshState = Constants.RefreshState.STATE_REFRESH
         iniData()
-
     }
 
 

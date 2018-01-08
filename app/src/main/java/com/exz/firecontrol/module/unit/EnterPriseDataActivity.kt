@@ -26,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_enter_prise_data.*
  */
 
 class EnterPriseDataActivity : BaseActivity() {
-    private lateinit var mEAdapter: EnterPriseDataAdapter<EnterPriseDataBean.EnterpriseDataBean>
     private lateinit var mPAdapter: EnterPriseDataAdapter<EnterPriseDataBean.EnterpriseDataBean>
     private lateinit var mVRAdapter: EnterPriseDataAdapter<EnterPriseDataBean.EnterpriseDataBean>
     override fun initToolbar(): Boolean {
@@ -53,10 +52,6 @@ class EnterPriseDataActivity : BaseActivity() {
     }
 
     private fun initRecycler() {
-        mEAdapter = EnterPriseDataAdapter()
-        mEAdapter.bindToRecyclerView(mERecyclerView)
-        mERecyclerView.layoutManager = LinearLayoutManager(mContext)
-        mERecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
         val onItemClick: OnItemClickListener = object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View?, position: Int) {
 
@@ -70,7 +65,6 @@ class EnterPriseDataActivity : BaseActivity() {
                 startActivity(intent)
             }
         }
-        mERecyclerView.addOnItemTouchListener(onItemClick)
         mPAdapter = EnterPriseDataAdapter()
         mPAdapter.bindToRecyclerView(mPRecyclerView)
         mPRecyclerView.layoutManager = LinearLayoutManager(mContext)
@@ -81,11 +75,6 @@ class EnterPriseDataActivity : BaseActivity() {
         mVRRecyclerView.layoutManager = LinearLayoutManager(mContext)
         mVRRecyclerView.addItemDecoration(RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL, 1, ContextCompat.getColor(mContext, R.color.app_bg)))
         mVRRecyclerView.addOnItemTouchListener(onItemClick)
-        DataCtrlClass.getEnterPriseData(this, "1", intent.getStringExtra(Intent_EnterPriseDataActivity_id) ?: "") {
-            if (it != null)
-                mEAdapter.setNewData(it.enterpriseData)
-            tv_EPlan.visibility = if (mEAdapter.data.size == 0) View.GONE else View.VISIBLE
-        }
         DataCtrlClass.getEnterPriseData(this, "2", intent.getStringExtra(Intent_EnterPriseDataActivity_id) ?: "") {
             if (it != null)
                 mPAdapter.setNewData(it.enterpriseData)

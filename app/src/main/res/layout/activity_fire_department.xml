@@ -52,21 +52,22 @@
                 android:layout_height="match_parent"
                 app:realtimeBlurRadius="10dp"
                 app:realtimeOverlayColor="@color/blur_bg_white" />
+
             <com.flyco.roundview.RoundTextView
+                android:id="@+id/bt_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/bt_search"
-                app:rv_cornerRadius="@dimen/margin_5"
-                android:padding="@dimen/dp_10"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/margin_15"
                 android:layout_marginEnd="@dimen/margin_15"
-                android:text="搜索各支队、大队、中队、微型消防站"
+                android:layout_marginStart="@dimen/margin_15"
                 android:drawablePadding="@dimen/dp_10"
-                android:textColor="@color/MaterialGrey600"
                 android:drawableStart="@mipmap/icon_search"
+                android:padding="@dimen/dp_10"
+                android:text="搜索各支队、大队、中队"
+                android:textColor="@color/MaterialGrey600"
                 android:textSize="14sp"
-                app:rv_backgroundColor="@color/app_bg" />
+                app:rv_backgroundColor="@color/app_bg"
+                app:rv_cornerRadius="@dimen/margin_5" />
         </RelativeLayout>
     </LinearLayout>
 

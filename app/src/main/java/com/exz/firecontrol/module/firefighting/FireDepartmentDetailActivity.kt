@@ -90,7 +90,7 @@ class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
                     val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                     lp.setMargins(0, 0, 0, 10)
                     val textView = TextView(mContext)
-                    textView.text = String.format("${VehicleAdapter.getCarTyeStr(it.carType.toString())}(${it.carCount})")
+                    textView.text = String.format("${VehicleAdapter.getCarTyeStr(it.carType.toString())}(${it.carCount}辆)")
                     textView.textColor = ContextCompat.getColor(mContext, R.color.MaterialBlueGrey800)
                     textView.textSize = 14f
                     textView.gravity = Gravity.END

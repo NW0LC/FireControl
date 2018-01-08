@@ -21,11 +21,16 @@ import com.exz.firecontrol.pop.SlideFromBottomPopupMap
 import com.exz.firecontrol.utils.SZWUtils
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.GPSUtil
+import com.szw.framelibrary.utils.GPSUtil.x_pi
 import com.szw.framelibrary.utils.RecycleViewDivider
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_unit_detail.*
 import java.net.URISyntaxException
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 /**
  * Created by pc on 2017/12/19.
@@ -69,11 +74,17 @@ class UnitDetailActivity : BaseActivity() {
             when (v.id) {
                 R.id.tx_1 -> if (AppUtils.isInstallApp("com.baidu.BaiduMap")) {
                     try {
-                        val gcj02_to_bd09 = GPSUtil.gcj02_To_Bd09(lon.toDouble(), lat.toDouble())
+                        val gcj02_to_bd09 = GPSUtil.gcj02_To_Bd09(lon, lat)
+                        val x = lon
+                        val y = lat
+                        val z = sqrt(x * x + y * y) + 0.00002 * sin(y * x_pi)
+                        val theta = atan2(y, x) + 0.000003 * cos(x * x_pi)
+                        val bd_lon = z * cos(theta) + 0.0065
+                        val bd_lat = z * sin(theta) + 0.006
                         intent = Intent.parseUri("intent://map/direction?" +
                                 //"origin=latlng:"+"34.264642646862,108.95108518068&" +   //起点  此处不传值默认选择当前位置
-                                "destination=latlng:" + gcj02_to_bd09[0] + "," +
-                                gcj02_to_bd09[1] + "|name:我的目的地" +        //终点
+                                "destination=latlng:" + bd_lat + "," +
+                                bd_lon + "|name:我的目的地" +        //终点
 
                                 "&mode=driving&" +          //导航路线方式
 
