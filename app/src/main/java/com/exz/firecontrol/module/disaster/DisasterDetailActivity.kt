@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.blankj.utilcode.util.TimeUtils
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
+import com.exz.firecontrol.bean.FireInfoListBean
 import com.exz.firecontrol.bean.UserBean
 import com.exz.firecontrol.module.MaprTrafficActivity
 import com.exz.firecontrol.module.live.LiveListActivity
@@ -36,7 +37,6 @@ import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_disaster_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by pc on 2017/12/21.
@@ -47,7 +47,6 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
 
 
     private lateinit var mPop: SchemePop
-    private var userInfos:ArrayList<UserInfo>?=null
     override fun initToolbar(): Boolean {
         mTitle.text = "灾情详情"
         mTitle.setTextColor(ContextCompat.getColor(mContext, R.color.White))
@@ -66,7 +65,6 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
         (actionView as TextView).text = "建议方案"
         actionView.movementMethod = ScrollingMovementMethod.getInstance()
         actionView.setOnClickListener {
-            if (mPop.data.isNotEmpty())
             mPop.showPopupWindow()
         }
         return false
@@ -77,8 +75,6 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun init() {
-        userInfos= ArrayList()
-        userInfos?.add(UserInfo("1111","1111",Uri.parse("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1629089538,987246310&fm=27&gp=0.jpg")))
         initView()
         iniData()
     }
@@ -102,14 +98,7 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
                         mPop.data=it.advisePlan?.advise?:""
                     }
                 }
-                DataCtrlClass.getWeather(mContext, fireInfoBean?.cityName ?: "") {
-                    if (it != null) {
-                        tv_temp.text = String.format(it.temperature + "%s", "°")
-                        tv_weather.text = it.type ?: ""
-                        tv_windy.text = String.format((it.windDirection ?: "") + (it.windForce ?: ""))
-                        tv_date.text = String.format("${TimeUtils.date2String(TimeUtils.getNowDate(), SimpleDateFormat("MM-dd", Locale.CHINA))} ${TimeUtils.getChineseWeek(TimeUtils.getNowDate())}")
-                    }
-                }
+                initWeather(fireInfoBean)
                 comId = fireInfoBean?.comid.toString()
                 id = fireInfoBean?.id.toString()
                 lon= fireInfoBean?.lon.toString()
@@ -137,6 +126,19 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
                 lay_back.visibility = if ((fireInfoBean?.endDate ?: "").isEmpty()) View.GONE else View.VISIBLE
             }
 
+        }
+    }
+
+    private fun initWeather(fireInfoBean :FireInfoListBean.FireInfoBean?) {
+        DataCtrlClass.getWeather(mContext, fireInfoBean?.cityName ?: "") {
+            if (it != null) {
+                tv_temp.text = String.format(it.temperature + "%s", "℃")
+                tv_weather.text =(it.type ?: "")+"  湿度:"+(it.humidity?:"")
+                tv_windy.text = String.format((it.windDirection ?: "") + (it.windForce ?: ""))
+                tv_date.text = String.format("${TimeUtils.date2String(TimeUtils.getNowDate(), SimpleDateFormat("MM-dd", Locale.CHINA))} ${TimeUtils.getChineseWeek(TimeUtils.getNowDate())}")
+            }else{
+                android.os.Handler().postDelayed({initWeather(fireInfoBean)},5000)
+            }
         }
     }
 
@@ -210,18 +212,21 @@ class DisasterDetailActivity : BaseActivity(), View.OnClickListener {
                  * 连接融云成功
                  * @param userid 当前 token 对应的用户 id
                  */
+                var index=0
                 override fun onSuccess(userid: String) {
                     Log.i("connect", "--onSuccess" + userid)
                     RongIM.getInstance()
-                            .setCurrentUserInfo(UserInfo(MyApplication.loginUserId, (MyApplication.user as UserBean).RoleName, Uri.parse("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1629089538,987246310&fm=27&gp=0.jpg")))
+                            .setCurrentUserInfo(UserInfo(MyApplication.loginUserId,(MyApplication.user as UserBean).LoginId, Uri.EMPTY))
 //                    RongIM.getInstance().startConversation(mContext, Conversation.ConversationType.CHATROOM, "1", "聊天室 I");
 //                    ConversationActivity.Chat_Class_Name = id
                                     RongIM.getInstance().startChatRoomChat(mContext, id, true)
-//                    RongIM.setUserInfoProvider(this, true)
+//                    RongIM.setUserInfoProvider(this, false)
+
+                    RongIM.getInstance().setMessageAttachedUserInfo(true)
                 }
 
                 override fun getUserInfo(p0: String?): UserInfo {
-                    return userInfos?.get(0)?: UserInfo("","", Uri.EMPTY)}
+                    return UserInfo(p0,p0, Uri.EMPTY)}
                 /**
                  * 连接融云失败
                  * @param errorCode 错误码，可到官网 查看错误码对应的注释

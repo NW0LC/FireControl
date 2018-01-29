@@ -4,7 +4,6 @@ import android.content.Intent
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.amap.api.maps.model.LatLng
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.exz.firecontrol.DataCtrlClass
@@ -12,8 +11,9 @@ import com.exz.firecontrol.R
 import com.exz.firecontrol.adapter.MFSAdapter
 import com.exz.firecontrol.bean.FireDataListBean
 import com.exz.firecontrol.bean.UserBean
-import com.exz.firecontrol.module.MapLocationActivity
-import com.exz.firecontrol.module.MapLocationActivity.Companion.Intent_Lat
+import com.exz.firecontrol.module.firefighting.FireBrigadeActivity.Companion.Intent_Class_Name
+import com.exz.firecontrol.module.firefighting.FireDepartmentDetailActivity.Companion.Intent_Type
+import com.exz.firecontrol.module.firefighting.FireDepartmentDetailActivity.Companion.Intent_getOrgDetailById_Id
 import com.exz.firecontrol.utils.SZWUtils
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
@@ -72,10 +72,10 @@ class MFSActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.RequestL
         refreshLayout.setOnRefreshListener(this)
         mRecyclerView.addOnItemTouchListener(object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                val intent = Intent(mContext, MapLocationActivity::class.java)
-                val latLngList = ArrayList<LatLng>()
-                latLngList.add(LatLng(mAdapter.data[position].Latitude, mAdapter.data[position].Longitude))
-                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name, mAdapter.data[position].Name)
+                val intent = Intent(mContext, FireDepartmentDetailActivity::class.java)
+                intent.putExtra(Intent_getOrgDetailById_Id,mAdapter.data[position].Id.toString())
+                intent.putExtra(Intent_Class_Name,mAdapter.data[position].Name)
+                intent.putExtra(Intent_Type,"2")
                 startActivity(intent)
             }
         })

@@ -42,7 +42,7 @@ open class FireDataListBean: AbsNetBean {
         var Longitude         : Double = 0.toDouble()
         var Latitude	         : Double = 0.toDouble()
         var Altitude	         : Double = 0.toDouble()
-        var Description	     : String? = null
+        var description	     : String? = null
         var city	             : String? = null
         var Address	         : String? = null
         var Artificial	         : String? = null
@@ -50,5 +50,6 @@ open class FireDataListBean: AbsNetBean {
         var phone	         : String? = null
         var flag	             : Int = 0
         var comid	         : String? = null
+        var firedatacol	         : String? = null
     }
 }

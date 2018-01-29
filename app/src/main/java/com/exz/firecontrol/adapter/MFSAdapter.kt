@@ -18,6 +18,6 @@ class MFSAdapter<T: FireDataListBean.FireDataBean> : BaseQuickAdapter<T, BaseVie
         v.tv_people.text=item.Liable
         v.iv_state.setBackgroundResource(R.mipmap.icon_firefighting_stand)
         v.tv_more.visibility= View.GONE
-        v.tv_see_details.text="查看位置"
+        v.tv_see_details.text="查看详情"
     }
 }

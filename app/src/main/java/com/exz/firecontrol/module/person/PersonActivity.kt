@@ -53,7 +53,7 @@ class PersonActivity : BaseActivity(), OnRefreshListener, BaseQuickAdapter.Reque
         }
         SZWUtils.setPaddingSmart(mRecyclerView, 55f)
         SZWUtils.setMargin(header, 55f)
-        edTitle.hint = "搜索人员信息"
+        edTitle.hint = "搜索人员姓名"
         return false
     }
 

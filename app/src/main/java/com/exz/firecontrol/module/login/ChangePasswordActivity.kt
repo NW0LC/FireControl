@@ -3,6 +3,8 @@ package com.exz.firecontrol.module.login
 import android.text.TextUtils
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
+import com.exz.firecontrol.module.login.LoginActivity.Companion.USER_PWD
+import com.szw.framelibrary.app.MyApplication
 import com.szw.framelibrary.base.BaseActivity
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
@@ -32,7 +34,6 @@ class ChangePasswordActivity : BaseActivity() {
     }
 
     override fun init() {
-        super.init()
         bt_submit.setOnClickListener {
             val oldPwd = ed_old_password.text.toString().trim()
             if (TextUtils.isEmpty(oldPwd)) {
@@ -41,6 +42,7 @@ class ChangePasswordActivity : BaseActivity() {
             }
 
             val newPwd = ed_new_password.text.toString().trim()
+            val edPassword = ed_password.text.toString().trim()
             if (TextUtils.isEmpty(newPwd)) {
                 ed_new_password.setShakeAnimation()
                 return@setOnClickListener
@@ -50,7 +52,11 @@ class ChangePasswordActivity : BaseActivity() {
                 ed_password.setShakeAnimation()
                 return@setOnClickListener
             }
-            if (newPwd != oldPwd){
+            if (oldPwd!= MyApplication.getSPUtils(this)?.getString(USER_PWD) ?: ""){
+                toast("原密码验证不正确!")
+                return@setOnClickListener
+            }
+            if (newPwd == oldPwd&&oldPwd==edPassword){
                 toast("旧密码与新密码相同!")
                 return@setOnClickListener
             }
@@ -60,6 +66,7 @@ class ChangePasswordActivity : BaseActivity() {
             }
             DataCtrlClass.changePwd(this,oldPwd,newPwd){
                 if (it!=null){
+                    MyApplication.getSPUtils(this)?.put(USER_PWD, newPwd)
                     finish()
                 }
             }

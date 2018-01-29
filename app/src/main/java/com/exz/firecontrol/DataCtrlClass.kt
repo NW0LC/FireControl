@@ -116,7 +116,7 @@ object DataCtrlClass {
                 false
             }
             else -> {
-                context?.toast(error)
+//                context?.toast(error)
                 false
             }
         }
@@ -1181,18 +1181,18 @@ object DataCtrlClass {
      * */
     fun getFireDataById(context: Context?,
                         id: String,
-                        listener: (l: FireDataListBean.FireDataBean?) -> Unit) {
+                        listener: (l: FireDataEntity?) -> Unit) {
 //      参数名	参数含义	必选	类型及范围	说明
 //      Id	    组织机构id	Y	    int
         val params = HashMap<String, String>()
         params.put("Id", id)
         isSuccess(context, if (ToolApplication.changeKey == null) NetCode_NoKey else HttpCode_Success) {
-            OkGo.post<FireDataListBean.FireDataBean>(Urls.getFireDataById)
+            OkGo.post<FireDataEntity>(Urls.getFireDataById)
                     .params(changeFun(params))
                     .tag(this)
-                    .execute(object : DialogCallback<FireDataListBean.FireDataBean>(context) {
+                    .execute(object : DialogCallback<FireDataEntity>(context) {
                         val function = { getFireDataById(context, id,  listener) }
-                        override fun onSuccess(response: Response<FireDataListBean.FireDataBean>) {
+                        override fun onSuccess(response: Response<FireDataEntity>) {
 
                             if (isSuccess(context, response.body().getCode(), response.body().messError, function)) {
                                 listener.invoke(response.body())
@@ -1201,7 +1201,7 @@ object DataCtrlClass {
                             }
                         }
 
-                        override fun onError(response: Response<FireDataListBean.FireDataBean>) {
+                        override fun onError(response: Response<FireDataEntity>) {
                             if (response.code() == HttpCode_Error_Key)
                                 isSuccess(context, NetCode_NoKey, "", function)
                             else

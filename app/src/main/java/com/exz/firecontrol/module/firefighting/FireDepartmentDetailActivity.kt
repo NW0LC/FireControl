@@ -56,11 +56,44 @@ class FireDepartmentDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun iniData() {
+        if (intent.getStringExtra(Intent_Type)?:""=="2") {
+            DataCtrlClass.getFireDataById(this,intent.getStringExtra(Intent_getOrgDetailById_Id) ?: ""){
+                if (it != null) {
+                    tv_type.text = "消防器材"
+                    tv_type.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_fire_equipment), null, null, null)
+                    tv_organization_name.text=it.name?:""
+                    tv_leader.text=it.artificial
+                    tv_leaderText.text="负责人"
+                    tv_leaderText.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_leader), null, null, null)
+                    tv_name.text="组织名称"
+                    tv_person_num.text=String.format(getString(R.string.people),it.firedatacol.toString())
+                    tv_telephone.text=it.phone?:""
+                    phone=it.phone?:""
+                    tv_address.text=it.address?:""
+                    lon=it.longitude
+                    lat=it.latitude
+                    llLay.removeAllViews()
+                    it.description?.split(";")?.forEach {
+                        val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                        lp.setMargins(0, 0, 0, 10)
+                        val textView = TextView(mContext)
+                        textView.text = it
+                        textView.textColor = ContextCompat.getColor(mContext, R.color.MaterialBlueGrey800)
+                        textView.textSize = 14f
+                        textView.gravity = Gravity.END
+                        textView.maxLines = 1
+                        textView.layoutParams = lp
+                        llLay.addView(textView)
+                    }
+                    }
+            }
+        }else
         DataCtrlClass.getOrgDetailById(this, intent.getStringExtra(Intent_getOrgDetailById_Id) ?: "") {
             if (it != null) {
                 tv_type.text = mContext.getString(R.string.vehicle_type)
                 tv_type.setCompoundDrawablesRelativeWithIntrinsicBounds(ContextCompat.getDrawable(mContext, R.mipmap.icon_vehicle_type), null, null, null)
                 tv_organization_name.text=it.cname?:""
+                tv_name.text="机构名称"
                 tv_leader.text=when (it.levels) {
                     0 -> {
                         "总局"

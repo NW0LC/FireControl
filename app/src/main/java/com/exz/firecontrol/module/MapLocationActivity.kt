@@ -3,11 +3,13 @@ package com.exz.firecontrol.module
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import com.exz.firecontrol.R
 import com.szw.framelibrary.base.BaseActivity
+import com.szw.framelibrary.utils.DialogUtils
 import com.szw.framelibrary.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.action_bar_custom.*
 import kotlinx.android.synthetic.main.activity_map_location.*
@@ -51,6 +53,11 @@ class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener{
         var latLngList = ArrayList<LatLng>()
         if (intent.hasExtra(Intent_Lat)) {
             latLngList = intent.getParcelableArrayListExtra(Intent_Lat)
+            if (latLngList.size==0){
+                DialogUtils.WarningWithListener(this,"当前暂无水源信息", View.OnClickListener {
+                        finish()
+                })
+            }
         } else {
             latLngList.add(LatLng(34.253505, 117.155179))
         }
@@ -88,6 +95,7 @@ class MapLocationActivity : BaseActivity(), AMap.OnMyLocationChangeListener{
             markerOptions.add(markerOption)
         }
         aMap.setOnMyLocationChangeListener(this)
+        aMap.uiSettings.isScaleControlsEnabled=true
         aMap.uiSettings.isMyLocationButtonEnabled = true //显示默认的定位按钮
         aMap.isMyLocationEnabled = true// 可触发定位并显示当前位置
         val myLocationStyle = MyLocationStyle()

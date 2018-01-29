@@ -53,7 +53,7 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
                     val intent = Intent(mContext, MapLocationActivity::class.java)
                     val latLngList = ArrayList<LatLng>()
                     mAdapter.data.mapTo(latLngList) { LatLng(it.Latitude, it.Longitude) }
-                    intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"消火栓")
+                    intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"消防水源")
                     startActivity(intent)
                 }
             }
@@ -96,7 +96,7 @@ class FirewaterSupplyActivity : BaseActivity() , OnRefreshListener, BaseQuickAda
                 val intent = Intent(mContext, MapLocationActivity::class.java)
                 val latLngList = ArrayList<LatLng>()
                 latLngList.add(LatLng(mAdapter.data[position].Latitude, mAdapter.data[position].Longitude))
-                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"消火栓")
+                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,mAdapter.data[position].Name)
                 startActivity(intent)
             }
         })

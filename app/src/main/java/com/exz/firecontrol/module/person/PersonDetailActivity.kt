@@ -83,8 +83,8 @@ class PersonDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
 
                 val intent = Intent(mContext, MapLocationActivity::class.java)
                 val latLngList = ArrayList<LatLng>()
-                latLngList.add(LatLng(lat.toDoubleOrNull()?:0.toDouble(), lon.toDoubleOrNull()?:0.toDouble()))
-                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name,"人员位置")
+                latLngList.add(LatLng(lat.toDoubleOrNull() ?: 0.toDouble(), lon.toDoubleOrNull() ?: 0.toDouble()))
+                intent.putExtra(Intent_Lat, latLngList).putExtra(MapLocationActivity.Intent_Class_Name, "人员位置")
                 startActivity(intent)
             }
         }
@@ -95,11 +95,11 @@ class PersonDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
     private var lon = ""
     private var lat = ""
     private fun initRecycler() {
-        DataCtrlClass.getFireManById(this, intent.getStringExtra(Intent_PersonDetail_Id)?:"") {
+        DataCtrlClass.getFireManById(this, intent.getStringExtra(Intent_PersonDetail_Id) ?: "") {
             if (it != null) {
                 mHeaderView.img_head.setImageURI(it.FireManInfo?.userHead ?: "")
                 mHeaderView.tv_name.text = it.FireManInfo?.Name ?: ""
-                mHeaderView.tv_info.text = String.format(getString(R.string.police_officer), (it.FireManInfo?.PCNumber ?: "")+"  "+(it.FireManInfo?.RoleName ?: ""))
+                mHeaderView.tv_info.text = String.format(getString(R.string.police_officer), (it.FireManInfo?.PCNumber ?: "") + "  " + (it.FireManInfo?.RoleName ?: ""))
                 mHeaderView.tv_is_online.delegate.backgroundColor = ContextCompat.getColor(mContext, if (it.FireManInfo?.IsOnline == 1) R.color.MaterialGreenA400 else R.color.MaterialGrey400)
                 mHeaderView.tv_is_online.text = if (it.FireManInfo?.IsOnline == 1) getString(R.string.on_line) else getString(R.string.off_line)
 //                data1.add(VehicleDetailBean("队伍", it.FireManInfo?.RoleName?:""))
@@ -109,18 +109,25 @@ class PersonDetailActivity : BaseActivity(), Toolbar.OnMenuItemClickListener {
                 data1.add(VehicleDetailBean("电话", it.FireManInfo?.telephone ?: ""))
                 data1.add(VehicleDetailBean("GPS时间", it.FireManInfo?.GPSDate ?: ""))
                 data1.add(VehicleDetailBean("朝向", it.FireManInfo?.direction ?: ""))
-                data1.add(VehicleDetailBean("行走速度", it.FireManInfo?.speed ?: ""))
-                data1.add(VehicleDetailBean("高温报警", it.FireManInfo?.Temp ?: ""))
-                data1.add(VehicleDetailBean("倒地报警", it.FireManInfo?.falldwon ?: ""))
-                data1.add(VehicleDetailBean("静止报警", it.FireManInfo?.staticflag ?: ""))
-                data1.add(VehicleDetailBean("运动状态", it.FireManInfo?.flag ?: ""))
-                data1.add(VehicleDetailBean("手机电量", it.FireManInfo?.Battery ?: ""))
+                data1.add(VehicleDetailBean("行走速度", it.FireManInfo?.speed + " m/s"))
+                data1.add(VehicleDetailBean("行走距离", it.FireManInfo?.distance + " m"))
+                data1.add(VehicleDetailBean("高温报警", if (it.FireManInfo?.Temp == "0") "正常" else "报警"))
+                data1.add(VehicleDetailBean("倒地报警", if (it.FireManInfo?.falldwon == "0") "正常" else "报警"))
+                data1.add(VehicleDetailBean("静止报警", if (it.FireManInfo?.staticflag == "0") "正常" else "报警"))
+                data1.add(VehicleDetailBean("运动状态", when (it.FireManInfo?.flag) {
+                    "0" -> "停止运动"
+                    "1" -> "走动"
+                    "2" -> "跑步"
+                    "3" -> "跳跃"
+                    else -> ""
+                }))
+                data1.add(VehicleDetailBean("手机电量", it.FireManInfo?.Battery+ " %"))
                 data1.add(VehicleDetailBean("经度", it.FireManInfo?.lon ?: ""))
                 data1.add(VehicleDetailBean("纬度", it.FireManInfo?.lat ?: ""))
-                data1.add(VehicleDetailBean("高度", it.FireManInfo?.height ?: ""))
+                data1.add(VehicleDetailBean("高度", it.FireManInfo?.height+" m"))
                 mAdapter.setNewData(data1)
-                lon=it.FireManInfo?.lon?:""
-                lat=it.FireManInfo?.lat?:""
+                lon = it.FireManInfo?.lon ?: ""
+                lat = it.FireManInfo?.lat ?: ""
             }
 
         }

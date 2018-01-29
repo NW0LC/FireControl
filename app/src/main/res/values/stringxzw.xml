@@ -25,7 +25,7 @@
     <string name="leader">负责人</string>
     <string name="person_num">人员数量</string>
     <string name="vehicle_type">车辆类型</string>
-    <string name="vehicle_state">车辆状态</string>
+    <string name="vehicle_state">在线状态</string>
     <string name="onlin_state">在线状态</string>
     <string name="vehicles">%s部车辆</string>
     <string name="numCount">%s位消防员</string>
@@ -72,6 +72,6 @@
     <string name="my_user_phone">联系电话</string>
     <string name="place_post">所在岗位</string>
     <string name="about_us">关于我们</string>
-    <string name="system_update">系统更新</string>
+    <string name="system_update">版本号：</string>
     <string name="police_officer">警员号&#160;%s&#160;</string>
 </resources>

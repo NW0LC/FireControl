@@ -2,6 +2,7 @@ package com.exz.firecontrol.module
 
 import android.content.Intent
 import android.view.View
+import com.blankj.utilcode.util.AppUtils
 import com.exz.firecontrol.DataCtrlClass
 import com.exz.firecontrol.R
 import com.exz.firecontrol.module.login.LoginActivity
@@ -35,7 +36,7 @@ class SettingActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun init() {
-        super.init()
+        bt_system_update.text="v"+AppUtils.getAppVersionName()
         initView()
     }
 
